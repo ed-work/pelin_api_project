@@ -15,8 +15,8 @@ def upload_to(self, filename):
 
 
 STATUS_CHOICES = (
-    (1, 'Dosen'),
-    (2, 'Mahasiswa')
+    (1, 'Teacher'),
+    (2, 'Student')
 )
 
 JURUSAN_CHOICES = (
@@ -77,12 +77,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_profile(self):
         if self.is_teacher():
-            return self.teacher_set
-        return self.student_set
+            return self.teacher
+        return self.student
 
 
 class Teacher(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     nik = models.CharField(max_length=15, blank=True)
     username = models.CharField(
         _('username'), max_length=30, unique=True,
@@ -104,7 +104,7 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     nim = models.CharField(
         max_length=12, unique=True,
         error_messages={

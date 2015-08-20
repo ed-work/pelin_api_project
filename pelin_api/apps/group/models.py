@@ -5,7 +5,7 @@ from apps.core.models import User, Student, Teacher
 
 def generate_filename(self, filename):
     """
-    generate destination FileField generate_filename arg to the following pattern:
+    generate destination FileField filename arg to the following pattern:
     MEDIA_ROOT/<group_name>_<group_id>/filename
     """
     return "%s_%s/%s" % (self.title, self.pk, filename)
@@ -43,9 +43,21 @@ class Discussion(TimeStamped, GroupFileModel):
     file = models.FileField(upload_to=generate_filename, blank=True, null=True)
 
 
-class Lesson(TimeStamped, TitleDescriptionModel, GroupFileModel):
-    pass
+class Lesson(TimeStamped, TitleDescriptionModel):
+    group = models.ForeignKey(Group)
+
+
+class LessonFiles(models.Model):
+    lesson = models.ForeignKey(Lesson)
+    file = models.FileField(upload_to=generate_filename)
 
 
 class Assignment(TimeStamped, TitleDescriptionModel, GroupFileModel):
     due_date = models.DateTimeField()
+
+
+class StudentAssignment(TimeStamped):
+    assignment = models.OneToOneField(Assignment)
+    student = models.OneToOneField(Student)
+    text = models.TextField()
+    file = models.FileField(upload_to=generate_filename)
