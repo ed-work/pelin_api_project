@@ -48,7 +48,7 @@ class Lesson(TimeStamped, TitleDescriptionModel):
 
 
 class LessonFiles(models.Model):
-    lesson = models.ForeignKey(Lesson)
+    lesson = models.ForeignKey(Lesson, related_name="files")
     file = models.FileField(upload_to=generate_filename)
 
 
