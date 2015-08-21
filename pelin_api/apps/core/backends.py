@@ -2,23 +2,23 @@ from apps.core.models import User, Student, Teacher
 
 
 class CustomAuthBackend(object):
-    def authenticate(self, username=None, password=None):
-        if '@' in username:
+    def authenticate(self, email=None, password=None):
+        if '@' in email:
             try:
-                usr = User.objects.get(email=username)
+                usr = User.objects.get(email=email)
                 if usr.check_password(password):
                     return usr
             except User.DoesNotExist:
                 pass
 
         try:
-            usr = Teacher.objects.get(username=username)
+            usr = Teacher.objects.get(username=email)
             usr = usr.user
             if usr.check_password(password):
                 return usr
         except Teacher.DoesNotExist:
             try:
-                usr = Student.objects.get(nim=username)
+                usr = Student.objects.get(nim=email)
                 usr = usr.user
                 if usr.check_password(password):
                     return usr
