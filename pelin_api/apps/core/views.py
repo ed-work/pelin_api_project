@@ -1,4 +1,5 @@
-from rest_framework import views, parsers, renderers
+from rest_framework import views, parsers, renderers, permissions, \
+    authentication
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
@@ -26,3 +27,13 @@ class CustomObtainAuthToken(views.APIView):
         }
 
         return Response(content)
+
+
+class TesView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.TokenAuthentication,)
+
+    def get(self, request):
+        return Response({
+            'wew': 'wooooooowwww'
+        })
