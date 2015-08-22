@@ -7,7 +7,7 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser,
 
 def upload_to(self, filename):
     """
-    generate destination ImageField generate_filename arg to the following pattern:
+    generate destination ImageField to the following pattern:
     MEDIA_ROOT/<user nim>_<username>/profile.jpg
     """
     name = "profile." + filename.split(".")[1]
