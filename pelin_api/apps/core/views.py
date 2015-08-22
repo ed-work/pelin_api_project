@@ -17,7 +17,7 @@ class CustomObtainAuthToken(views.APIView):
     renderer_classes = (renderers.JSONRenderer,)
 
     def post(self, request):
-        serializer = serializers.CustomAuthTokenSerialzer(data=request.data)
+        serializer = serializers.CustomAuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)

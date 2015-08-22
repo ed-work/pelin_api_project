@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from .models import User, Student, Teacher
 
 
-class CustomAuthTokenSerialzer(serializers.Serializer):
+class CustomAuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField()
     password = serializers.CharField()
 
@@ -30,21 +30,21 @@ class CustomAuthTokenSerialzer(serializers.Serializer):
         return attrs
 
 
-class StudentSerialzer(serializers.ModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ('nim', 'jurusan')
 
 
-class TeacherSerialzer(serializers.ModelSerializer):
+class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ('nik', 'username')
 
 
 class UserSerializer(serializers.ModelSerializer):
-    student = StudentSerialzer(read_only=True)
-    teacher = TeacherSerialzer(read_only=True)
+    student = StudentSerializer(read_only=True)
+    teacher = TeacherSerializer(read_only=True)
 
     class Meta:
         model = User
