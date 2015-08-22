@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'django_extensions',
+    'rest_framework.authtoken',
 
     # project apps
     'apps.core'
@@ -113,14 +114,3 @@ AUTH_USER_MODEL = 'core.User'
 AUTHENTICATION_BACKENDS = (
     'apps.core.backends.CustomAuthBackend',
 )
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
-}
