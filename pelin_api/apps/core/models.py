@@ -19,7 +19,7 @@ STATUS_CHOICES = (
     (2, 'Student')
 )
 
-JURUSAN_CHOICES = (
+MAJOR_CHOICES = (
     (1, 'S1 TI'),
     (2, 'D3 TI'),
     (3, 'D3 MI')
@@ -48,10 +48,10 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(blank=True, max_length=100, unique=True)
+    email = models.EmailField(max_length=100, unique=True)
 
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     is_active = models.BooleanField(default=False)
@@ -112,4 +112,4 @@ class Student(models.Model):
                 "A student with that nim already exists."),
         })
 
-    jurusan = models.IntegerField(choices=JURUSAN_CHOICES, default=1)
+    major = models.IntegerField(choices=MAJOR_CHOICES, default=1)

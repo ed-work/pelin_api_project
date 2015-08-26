@@ -31,9 +31,14 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    major = serializers.SerializerMethodField()
+
+    def get_major(self, obj):
+        return obj.get_major_display()
+
     class Meta:
         model = Student
-        fields = ('nim', 'jurusan')
+        fields = ('nim', 'major')
 
 
 class TeacherSerializer(serializers.ModelSerializer):
@@ -43,8 +48,12 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(read_only=True)
+    student = StudentSerializer()
     teacher = TeacherSerializer(read_only=True)
+    status = serializers.SerializerMethodField()
+
+    def get_status(self, obj):
+        return obj.get_status_display()
 
     class Meta:
         model = User
