@@ -68,12 +68,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class NewUserSerializer(serializers.Serializer):
-    nim = serializers.CharField()
+    nim = serializers.CharField(write_only=True)
     email = serializers.EmailField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    password = serializers.CharField()
-    photo = serializers.ImageField(required=False)
+    first_name = serializers.CharField(write_only=True)
+    last_name = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
+    photo = serializers.ImageField(required=False, write_only=True)
 
     def create(self, validated_data):
         usr = User(email=validated_data.get('email'),
@@ -83,8 +83,7 @@ class NewUserSerializer(serializers.Serializer):
         usr.set_password(validated_data.get('password'))
         usr.save()
 
-        student = Student(user=usr, nim=validated_data.get('nim'))
-        student.save()
+        Student.objects.create(user=usr, nim=validated_data.get('nim'))
 
         return usr
 

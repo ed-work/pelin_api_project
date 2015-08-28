@@ -102,6 +102,9 @@ class Teacher(models.Model):
                 "A user with that username already exists."),
         })
 
+    def __unicode__(self):
+        return self.user.first_name
+
 
 class Student(models.Model):
     user = models.OneToOneField(User)
@@ -113,3 +116,6 @@ class Student(models.Model):
         })
 
     major = models.IntegerField(choices=MAJOR_CHOICES, default=1)
+
+    def __unicode__(self):
+        return self.user.first_name

@@ -1,8 +1,8 @@
 from rest_framework import views, parsers, renderers, permissions, \
-    authentication, viewsets
+    authentication, viewsets, status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from . import serializers
+import serializers
 from .models import User
 
 
@@ -42,3 +42,17 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         if self.request.method == 'POST':
             return serializers.NewUserSerializer
         return self.serializer_class
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        headers = self.get_success_headers(serializer.data)
+
+        new_user = User.objects.get(email=serializer.data.get('email'))
+        new_user_serialized = serializers.UserSerializer(new_user)
+
+        return Response(new_user_serialized.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
