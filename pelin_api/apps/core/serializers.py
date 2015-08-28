@@ -33,7 +33,8 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 class StudentSerializer(serializers.ModelSerializer):
     major = serializers.SerializerMethodField()
 
-    def get_major(self, obj):
+    @staticmethod
+    def get_major(obj):
         return obj.get_major_display()
 
     class Meta:
@@ -52,7 +53,8 @@ class UserSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer(required=False)
     status = serializers.SerializerMethodField()
 
-    def get_status(self, obj):
+    @staticmethod
+    def get_status(obj):
         return obj.get_status_display()
 
     class Meta:
@@ -66,11 +68,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class NewUserSerializer(serializers.Serializer):
-    nim = serializers.CharField(write_only=True)
+    nim = serializers.CharField(write_only=True, required=False)
+    nik = serializers.CharField(write_only=True, required=False)
+    username = serializers.CharField(write_only=True, required=False)
+
     email = serializers.EmailField()
-    first_name = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(write_only=True)
-    password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    password = serializers.CharField()
     photo = serializers.ImageField(required=False, write_only=True)
 
     def create(self, validated_data):
@@ -81,7 +86,13 @@ class NewUserSerializer(serializers.Serializer):
         usr.set_password(validated_data.get('password'))
         usr.save()
 
-        Student.objects.create(user=usr, nim=validated_data.get('nim'))
+        if validated_data.get('username') and validated_data.get('nik'):
+            usr.status = 1
+            usr.save()
+            Teacher.objects.create(user=usr, nik=validated_data.get('nik'),
+                                   username=validated_data.get('username'))
+        else:
+            Student.objects.create(user=usr, nim=validated_data.get('nim'))
 
         return usr
 
@@ -92,3 +103,15 @@ class NewUserSerializer(serializers.Serializer):
         instance.save()
 
         return instance
+
+    def validate(self, attrs):
+        if attrs.get('nim') and (attrs.get('username') or attrs.get('nik')):
+            raise serializers.ValidationError('Choose one of nim and username')
+
+        if (not attrs.get('nim')) and (not attrs.get('username')):
+            raise serializers.ValidationError('Must have a valid nim/username')
+
+        if attrs.get('username') and not attrs.get('nik'):
+            raise serializers.ValidationError('Teacher must have a valid nik')
+
+        return attrs
