@@ -48,7 +48,6 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # nim = serializers.CharField()
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
     status = serializers.SerializerMethodField()
@@ -62,8 +61,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'first_name', 'last_name', 'date_joined', 'is_active',
                   'photo')
         extra_kwargs = {
-            'password': {'write_only': True},
-            # 'nim': {'write_only': True}
+            'password': {'write_only': True}
         }
 
 

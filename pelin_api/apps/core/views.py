@@ -38,6 +38,13 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.filter(is_superuser=False)
 
+    def dispatch(self, request, *args, **kwargs):
+        if kwargs.get('pk') == 'me':
+            request = self.initialize_request(request, *args, **kwargs)
+            if request.user.is_authenticated():
+                kwargs['pk'] = request.user.pk
+        return super(UserViewset, self).dispatch(request, *args, **kwargs)
+
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.NewUserSerializer
@@ -50,7 +57,8 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
 
         headers = self.get_success_headers(serializer.data)
 
-        new_user = User.objects.get(email=serializer.data.get('email'))
+        new_user = User.objects.get(
+            email=serializer.validated_data.get('email'))
         new_user_serialized = serializers.UserSerializer(new_user)
 
         return Response(new_user_serialized.data,
