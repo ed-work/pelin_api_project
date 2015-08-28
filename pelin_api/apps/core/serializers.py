@@ -48,8 +48,9 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    student = StudentSerializer()
-    teacher = TeacherSerializer(read_only=True)
+    # nim = serializers.CharField()
+    student = StudentSerializer(required=False)
+    teacher = TeacherSerializer(required=False)
     status = serializers.SerializerMethodField()
 
     def get_status(self, obj):
@@ -57,7 +58,40 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        fields = ('id', 'student', 'teacher', 'status', 'last_login', 'email',
+                  'first_name', 'last_name', 'date_joined', 'is_active',
+                  'photo')
         extra_kwargs = {
             'password': {'write_only': True},
-            'is_superuser': {'write_only': True}
+            # 'nim': {'write_only': True}
         }
+
+
+class NewUserSerializer(serializers.Serializer):
+    nim = serializers.CharField()
+    email = serializers.EmailField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    password = serializers.CharField()
+    photo = serializers.ImageField(required=False)
+
+    def create(self, validated_data):
+        usr = User(email=validated_data.get('email'),
+                   first_name=validated_data.get('first_name'),
+                   last_name=validated_data.get('last_name'))
+
+        usr.set_password(validated_data.get('password'))
+        usr.save()
+
+        student = Student(user=usr, nim=validated_data.get('nim'))
+        student.save()
+
+        return usr
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name')
+        instance.last_name = validated_data.get('last_name')
+        instance.set_password(validated_data.get('password'))
+        instance.save()
+
+        return instance

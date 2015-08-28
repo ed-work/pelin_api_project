@@ -37,3 +37,8 @@ class BaseLoginRequired(object):
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.filter(is_superuser=False)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return serializers.NewUserSerializer
+        return self.serializer_class
