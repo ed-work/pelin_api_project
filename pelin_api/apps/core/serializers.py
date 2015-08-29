@@ -1,6 +1,8 @@
 from rest_framework import serializers, exceptions
+from rest_framework.reverse import reverse
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
+
 from .models import User, Student, Teacher
 
 
@@ -51,17 +53,28 @@ class TeacherSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
+
     status = serializers.SerializerMethodField()
+    is_teacher = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
 
     @staticmethod
     def get_status(obj):
         return obj.get_status_display()
 
+    @staticmethod
+    def get_is_teacher(obj):
+        return obj.is_teacher()
+
+    def get_url(self, obj):
+        return reverse('api:user-detail', kwargs={'pk': obj.pk},
+                       request=self.context['request'])
+
     class Meta:
         model = User
         fields = ('id', 'student', 'teacher', 'status', 'last_login', 'email',
                   'first_name', 'last_name', 'date_joined', 'is_active',
-                  'photo')
+                  'is_teacher', 'url', 'photo')
         extra_kwargs = {
             'password': {'write_only': True}
         }
