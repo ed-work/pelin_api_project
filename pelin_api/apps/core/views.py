@@ -3,7 +3,8 @@ from rest_framework import views, parsers, renderers, permissions, \
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-import serializers
+from . import serializers
+from . import permissions as perm
 from .models import User
 
 
@@ -38,6 +39,13 @@ class BaseLoginRequired(object):
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.filter(is_superuser=False)
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = (perm.CreateUserPermission,)
+        else:
+            self.permission_classes += (perm.CustomUserPermission,)
+        return super(UserViewset, self).get_permissions()
 
     def dispatch(self, request, *args, **kwargs):
         if kwargs.get('pk') == 'me':

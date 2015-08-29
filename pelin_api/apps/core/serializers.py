@@ -68,7 +68,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_url(self, obj):
         return reverse('api:user-detail', kwargs={'pk': obj.pk},
-                       request=self.context['request'])
+                       request=self.context.get('request'))
 
     class Meta:
         model = User
