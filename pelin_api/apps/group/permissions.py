@@ -16,3 +16,8 @@ class GroupPermission(permissions.BasePermission):
             return obj.teacher == request.user
 
         return request.user.is_teacher()
+
+
+class IsStudent(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return not request.user.is_teacher()
