@@ -13,7 +13,7 @@ def generate_filename(self, filename):
 
 class TimeStamped(models.Model):
     created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now=True, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         abstract = True
@@ -37,7 +37,8 @@ class PendingApproval(TimeStamped):
     student = models.ForeignKey(Student)
 
 
-class Discussion(TimeStamped, GroupFileModel):
+class Discussion(TimeStamped):
+    group = models.ForeignKey(Group)
     user = models.ForeignKey(User)
     text = models.TextField()
     file = models.FileField(upload_to=generate_filename, blank=True, null=True)
