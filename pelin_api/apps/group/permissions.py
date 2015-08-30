@@ -15,4 +15,4 @@ class GroupPermission(permissions.BasePermission):
         if request.method == 'DELETE':
             return obj.teacher == request.user
 
-        return  request.user.is_teacher()
+        return request.user.is_teacher()
