@@ -28,8 +28,8 @@ class GroupFileModel(models.Model):
 
 
 class Group(TimeStamped, TitleDescriptionModel):
-    teacher = models.ForeignKey(Teacher)
-    members = models.ManyToManyField(Student)
+    teacher = models.ForeignKey(User, related_name='group_teacher')
+    members = models.ManyToManyField(User, related_name='group_members')
 
 
 class PendingApproval(TimeStamped):
