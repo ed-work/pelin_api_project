@@ -40,6 +40,17 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             status_code = status.HTTP_200_OK
         return Response(msg, status=status_code)
 
+    @detail_route(permission_classes=[IsStudent])
+    def leave(self, request, pk):
+        if request.user in self.get_object().members.all():
+            self.get_object().members.remove(request.user)
+            msg = {'success': 'You left from group.'}
+            status_code = status.HTTP_200_OK
+        else:
+            msg = {'error': 'You are not member of this group.'}
+            status_code = status.HTTP_400_BAD_REQUEST
+        return Response(msg, status=status_code)
+
 
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
@@ -63,4 +74,5 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         group.members.add(obj.student)
         self.perform_destroy(obj)
 
-        return Response
+        return Response({'success': 'User has been added to group.'},
+                        status=status.HTTP_201_CREATED)
