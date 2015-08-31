@@ -1,23 +1,28 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
-class GroupPermission(permissions.BasePermission):
+class GroupPermission(BasePermission):
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in SAFE_METHODS:
             return True
 
         return request.user.is_teacher()
 
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in SAFE_METHODS:
             return True
 
         if request.method == 'DELETE':
-            return obj.teacher == request.user
+            return obj.teacher == request.user or obj.group.teacher == request.user
 
         return request.user.is_teacher()
 
 
-class IsStudent(permissions.BasePermission):
+class IsStudent(BasePermission):
     def has_permission(self, request, view):
         return not request.user.is_teacher()
+
+
+class IsTeacher(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_teacher()
