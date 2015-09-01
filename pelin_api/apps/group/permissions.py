@@ -26,3 +26,8 @@ class IsStudent(BasePermission):
 class IsTeacher(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_teacher()
+
+
+class IsMemberOrTeacherGroup(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.teacher or request.user in obj.members.all()
