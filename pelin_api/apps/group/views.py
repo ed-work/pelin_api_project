@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin
-from apps.core.models import User
+from apps.core.models import User, Student
 
 from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
@@ -56,6 +56,47 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             status_code = status.HTTP_400_BAD_REQUEST
         return Response(msg, status=status_code)
 
+    # TODO: invite other students
+    # + check is query param exist
+    # + check is user exists
+    # - check is user already in group pending requests
+    # - check is user already member of group
+    @detail_route()
+    def invite(self, request, pk):
+        nim = request.query_params.get('nim')
+        if not nim:
+            return Response(
+                {'error': 'Please specify a valid nim in query params.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            try:
+                student = Student.objects.get(nim=nim)
+            except Student.DoesNotExist:
+                student = None
+
+            if not student:
+                return Response(
+                    {'error': 'Student with that nim not found'},
+                    status=status.HTTP_404_NOT_FOUND)
+            else:
+                if self.get_object().pendings.filter(
+                        student__pk=student.user.pk).exists():
+                    return Response(
+                        {'error': 'Student with that nim is in pending approval.'},
+                        status=status.HTTP_400_BAD_REQUEST)
+                elif self.get_object().members.filter(
+                        pk=student.user.pk).exists():
+                    return Response(
+                        {'error': 'Student with that nim already member of this group.'},
+                        status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    PendingApproval.objects.create(
+                        student=student.user, group=self.get_object()
+                    )
+                    msg = {'success': 'Wait for approval.'}
+                    status_code = status.HTTP_200_OK
+                    return Response(msg, status=status_code)
+
 
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
@@ -74,10 +115,7 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
 
     @detail_route(methods=['post'], permission_classes=[IsTeacher])
     def approve(self, request, group_pk, pk):
-        obj = self.get_object()
-        group = Group.objects.get(pk=group_pk)
-        group.members.add(obj.student)
-        self.perform_destroy(obj)
+        self.get_object().approve()
 
         return Response({'success': 'User has been added to group.'},
                         status=status.HTTP_201_CREATED)

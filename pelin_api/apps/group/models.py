@@ -37,8 +37,13 @@ class Group(TimeStamped, TitleDescriptionModel):
 
 
 class PendingApproval(TimeStamped):
-    group = models.ForeignKey(Group)
+    group = models.ForeignKey(Group, related_name='pendings')
     student = models.ForeignKey(User, related_name='pending_approval')
+
+    def approve(self):
+        self.group.members.add(self.student)
+        self.group.save()
+        self.delete()
 
     def __unicode__(self):
         return "%s: %s" % (self.group.title, self.student.first_name)
