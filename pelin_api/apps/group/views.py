@@ -6,7 +6,8 @@ from apps.core.models import User, Student
 
 from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
-from .permissions import GroupPermission, IsStudent, IsTeacher, IsMemberOrTeacherGroup
+from .permissions import GroupPermission, IsStudent, IsTeacher, \
+    IsMemberOrTeacherGroup
 from apps.core.views import BaseLoginRequired
 from apps.core.serializers import UserSerializer
 
@@ -84,7 +85,7 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             elif request.user.is_teacher():
                 self.get_object().members.add(student.user)
                 return Response({'success': 'User has been added to group.'},
-                    status=status.HTTP_201_CREATED)
+                                status=status.HTTP_201_CREATED)
 
             elif self.get_object().members.filter(
                     pk=student.user.pk).exists():
@@ -117,14 +118,14 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         self.permission_classes += (GroupPermission,)
         return super(PendingApprovalViewSet, self).get_permissions()
 
-    @detail_route(methods=['post'], permission_classes=[IsTeacher])
+    @detail_route(permission_classes=[IsTeacher])
     def approve(self, request, group_pk, pk):
         self.get_object().approve()
 
         return Response({'success': 'User has been added to group.'},
                         status=status.HTTP_201_CREATED)
 
-    @list_route(methods=['post'], permission_classes=[IsTeacher])
+    @list_route(permission_classes=[IsTeacher])
     def approve_all(self, request, group_pk):
         group = Group.objects.get(pk=group_pk)
         pendings = self.get_queryset().filter(group=group)
