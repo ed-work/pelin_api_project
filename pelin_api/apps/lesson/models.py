@@ -3,6 +3,7 @@ from django_extensions.db.models import TitleDescriptionModel
 from apps.core.models import TimeStamped, generate_filename
 from apps.group.models import Group
 
+
 class Lesson(TimeStamped, TitleDescriptionModel):
     group = models.ForeignKey(Group)
 

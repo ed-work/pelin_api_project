@@ -6,7 +6,7 @@ from apps.core.serializers import UserSerializer
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    teacher = UserSerializer()
+    teacher = UserSerializer(required=False)
     url = serializers.SerializerMethodField()
     is_in_group = serializers.SerializerMethodField()
     pending_approve = serializers.SerializerMethodField()

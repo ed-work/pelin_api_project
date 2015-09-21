@@ -9,7 +9,7 @@ router.register(r'groups', group_views.GroupViewSet)
 
 pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                      trailing_slash=False)
-pendings_router.register(r'pendings', group_views.PendingApprovalViewSet)
+pendings_router.register(r'pendings', group_views.PendingApprovalViewSet, base_name='pendings')
 
 urlpatterns = [
     url(r'^jwt', 'rest_framework_jwt.views.obtain_jwt_token',
