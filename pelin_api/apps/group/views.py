@@ -90,7 +90,7 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             elif self.get_object().members.filter(
                     pk=student.user.pk).exists():
                 return Response(
-                    {'error': 'The tudent with that nim already\
+                    {'error': 'The student with that nim already\
                      member in this group.'},
                     status=status.HTTP_400_BAD_REQUEST)
 

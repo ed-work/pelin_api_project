@@ -7,7 +7,8 @@ router = DefaultRouter(trailing_slash=False)
 router.register(r'users', core_views.UserViewset)
 router.register(r'groups', group_views.GroupViewSet)
 
-pendings_router = NestedSimpleRouter(router, r'groups', lookup='group', trailing_slash=False)
+pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
+                                     trailing_slash=False)
 pendings_router.register(r'pendings', group_views.PendingApprovalViewSet)
 
 urlpatterns = [
