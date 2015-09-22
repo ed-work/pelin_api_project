@@ -2,12 +2,12 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin
-from apps.core.models import User, Student
 
+from apps.core.models import User, Student
 from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
-from .permissions import GroupPermission, IsStudent, IsTeacher, \
-    IsMemberOrTeacherGroup, IsTeacherGroup
+from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
+    IsTeacherGroup
 from apps.core.views import BaseLoginRequired
 from apps.core.serializers import UserSerializer
 

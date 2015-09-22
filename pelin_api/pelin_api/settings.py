@@ -43,7 +43,8 @@ INSTALLED_APPS = (
 
     # project apps
     'apps.core',
-    'apps.group'
+    'apps.group',
+    'apps.post'
 )
 
 MIDDLEWARE_CLASSES = (
