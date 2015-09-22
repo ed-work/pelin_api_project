@@ -1,13 +1,13 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin
-from apps.core.models import User, Student
 
+from apps.core.models import User, Student
 from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
-from .permissions import GroupPermission, IsStudent, IsTeacher, \
-    IsMemberOrTeacherGroup
+from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
+    IsTeacherGroup
 from apps.core.views import BaseLoginRequired
 from apps.core.serializers import UserSerializer
 
@@ -29,9 +29,10 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         serializer = UserSerializer(members, many=True)
         return Response(serializer.data)
 
-    @detail_route(permission_classes=[IsStudent])
+    @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
     def join(self, request, pk):
-        if PendingApproval.objects.filter(student=request.user).exists():
+        if request.user.pk in self.get_object().pendings.values_list('student',
+                                                                     flat=True):
             msg = {'error': 'Your join request in this group is pending.'}
             status_code = status.HTTP_400_BAD_REQUEST
         elif self.get_object().members.filter(pk=request.user.pk).exists():
@@ -90,7 +91,7 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             elif self.get_object().members.filter(
                     pk=student.user.pk).exists():
                 return Response(
-                    {'error': 'The tudent with that nim already\
+                    {'error': 'The student with that nim already\
                      member in this group.'},
                     status=status.HTTP_400_BAD_REQUEST)
 
@@ -107,34 +108,31 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
                              viewsets.GenericViewSet):
     serializer_class = PendingApproveSerializer
-    queryset = PendingApproval.objects.all()
 
-    def list(self, request, *args, **kwargs):
-        pendings = self.queryset.filter(group__pk=kwargs.get('group_pk'))
-        serializer = PendingApproveSerializer(pendings, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        return PendingApproval.objects.filter(
+            group__pk=self.kwargs.get('group_pk'))
 
     def get_permissions(self):
-        self.permission_classes += (GroupPermission,)
+        self.permission_classes += (IsTeacherGroup,)
         return super(PendingApprovalViewSet, self).get_permissions()
 
-    @detail_route(permission_classes=[IsTeacher])
+    @detail_route(permission_classes=[IsTeacherGroup])
     def approve(self, request, group_pk, pk):
         self.get_object().approve()
 
         return Response({'success': 'User has been added to group.'},
                         status=status.HTTP_201_CREATED)
 
-    @list_route(permission_classes=[IsTeacher])
+    @list_route(permission_classes=[IsTeacherGroup])
     def approve_all(self, request, group_pk):
         group = Group.objects.get(pk=group_pk)
-        pendings = self.get_queryset().filter(group=group)
-        if pendings:
+        if self.get_queryset():
             users = User.objects.filter(
-                pk__in=pendings.values_list('student', flat=True))
+                pk__in=self.get_queryset().values_list('student', flat=True))
             group.members.add(*users)
             group.save()
-            pendings.delete()
+            self.get_queryset().delete()
 
             msg = {'success': 'Users has been added to group.'}
             status_code = status.HTTP_201_CREATED

@@ -26,6 +26,22 @@ MAJOR_CHOICES = (
 )
 
 
+class TimeStamped(models.Model):
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
+def generate_filename(self, filename):
+    """
+    generate destination FileField filename arg to the following pattern:
+    MEDIA_ROOT/<group_name>_<group_id>/filename
+    """
+    return "%s_%s/%s" % (self.title, self.pk, filename)
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         if not email:
