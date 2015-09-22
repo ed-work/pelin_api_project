@@ -11,12 +11,12 @@ router.register(r'groups', group_views.GroupViewSet)
 pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                      trailing_slash=False)
 pendings_router.register(r'pendings', group_views.PendingApprovalViewSet,
-                         base_name='pendings')
+                         base_name='pending')
 
 group_post_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                        trailing_slash=False)
 group_post_router.register(r'posts', group_post_views.GroupPostViewSet,
-                           base_name='posts')
+                           base_name='post')
 
 urlpatterns = [
     url(r'^jwt', 'rest_framework_jwt.views.obtain_jwt_token',
