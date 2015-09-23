@@ -11,7 +11,8 @@ def generate_filename(self, filename):
     MEDIA_ROOT/<group_name>_<group_id>/filename
     """
     filename = urllib2.unquote(filename)
-    return "%s_%s/%s" % (self.pk, self.lesson.group, filename)
+    return "%s_%s/%s" % (
+    self.lesson.group.pk, self.lesson.group.title, filename)
 
 
 class Lesson(TimeStamped, TitleDescriptionModel):
