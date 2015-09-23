@@ -11,8 +11,9 @@ from .models import Lesson
 class LessonViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = LessonSerializer
 
-    # def get_permissions(self):
-    #     self.permission_classes += (IsMemberOrTeacher, LessonPermission)
+    def get_permissions(self):
+        self.permission_classes += (IsMemberOrTeacher, LessonPermission)
+        return super(LessonViewSet, self).get_permissions()
 
     def get_queryset(self):
         return Lesson.objects.filter(group__pk=self.kwargs.get('group_pk'))
