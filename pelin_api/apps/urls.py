@@ -2,6 +2,7 @@ from django.conf.urls import url
 from .core import views as core_views
 from .group import views as group_views
 from .post import views as group_post_views
+from .lesson import views as lesson_views
 from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
 router = DefaultRouter(trailing_slash=False)
@@ -18,6 +19,11 @@ group_post_router = NestedSimpleRouter(router, r'groups', lookup='group',
 group_post_router.register(r'posts', group_post_views.GroupPostViewSet,
                            base_name='post')
 
+lesson_router = NestedSimpleRouter(router, r'groups', lookup='group',
+                                   trailing_slash=False)
+lesson_router.register(r'lessons', lesson_views.LessonViewSet,
+                       base_name='lesson')
+
 urlpatterns = [
     url(r'^jwt', 'rest_framework_jwt.views.obtain_jwt_token',
         name='obtain-jwt'),
@@ -28,5 +34,6 @@ urlpatterns = [
 urlpatterns += (
     router.urls +
     pendings_router.urls +
-    group_post_router.urls
+    group_post_router.urls +
+    lesson_router.urls
 )
