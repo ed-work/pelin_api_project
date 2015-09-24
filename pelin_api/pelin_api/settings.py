@@ -45,7 +45,8 @@ INSTALLED_APPS = (
     'apps.core',
     'apps.group',
     'apps.post',
-    'apps.lesson'
+    'apps.lesson',
+    'apps.assignment'
 )
 
 MIDDLEWARE_CLASSES = (
