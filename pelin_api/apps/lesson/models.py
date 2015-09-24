@@ -1,7 +1,18 @@
+import urllib2
 from django.db import models
 from django_extensions.db.models import TitleDescriptionModel
-from apps.core.models import TimeStamped, generate_filename
+from apps.core.models import TimeStamped
 from apps.group.models import Group
+
+
+def generate_filename(self, filename):
+    """
+    generate destination FileField filename arg to the following pattern:
+    MEDIA_ROOT/<group_name>_<group_id>/filename
+    """
+    filename = urllib2.unquote(filename)
+    return "%s_%s/%s" % (
+    self.lesson.group.pk, self.lesson.group.title, filename)
 
 
 class Lesson(TimeStamped, TitleDescriptionModel):
