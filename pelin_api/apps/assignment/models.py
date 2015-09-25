@@ -26,7 +26,7 @@ class Assignment(TimeStamped, TitleDescriptionModel):
 
 
 class AssignmentFiles(models.Model):
-    assignment = models.ForeignKey(Assignment)
+    assignment = models.ForeignKey(Assignment, related_name="files")
     file = models.FileField(upload_to=generate_filename)
 
 
