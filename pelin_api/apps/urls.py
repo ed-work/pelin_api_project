@@ -25,7 +25,7 @@ lesson_router = NestedSimpleRouter(router, r'groups', lookup='group',
 lesson_router.register(r'lessons', lesson_views.LessonViewSet,
                        base_name='lesson')
 
-assignment_router = NestedSimpleRouter(router, r'assignments', lookup='group',
+assignment_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                        trailing_slash=False)
 assignment_router.register(r'assignments', assignment_views.AssignmentViewSet,
                            base_name='assignment')
