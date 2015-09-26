@@ -23,7 +23,7 @@ class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         self.permission_classes += (GroupPermission,)
         return super(GroupViewSet, self).get_permissions()
 
-    @detail_route()
+    @detail_route(methods=['get'])
     def members(self, request, pk):
         members = self.get_object().members.all()
         serializer = UserSerializer(members, many=True)

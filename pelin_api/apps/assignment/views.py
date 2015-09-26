@@ -1,11 +1,15 @@
 import datetime
-from rest_framework import viewsets
+
+from rest_framework import viewsets, status
 from rest_framework.decorators import detail_route
+
+from rest_framework.response import Response
+
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
 from apps.group.permissions import IsMemberOrTeacher
 from apps.lesson.permissions import LessonPermission
-from .serializers import AssignmentSerializer
+from .serializers import AssignmentSerializer, SubmittedAssignmentSerializer
 from .models import Assignment
 
 
@@ -27,7 +31,22 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         group = Group.objects.get(pk=self.kwargs.get('group_pk'))
         serializer.save(group=group)
 
-    @detail_route()
+    @detail_route(methods=['post'])
     def submit(self, request, group_pk, pk):
-        # TODO: student assignment
-        pass
+        if request.user.is_teacher():
+            return Response({'detail': 'You are not student.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        assignment = Assignment.objects.get(pk=pk)
+
+        if datetime.datetime.now() < assignment.due_date.now():
+            serializer = SubmittedAssignmentSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(assignment=assignment)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors,
+                                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'The assignment has passed deadline.'},
+                            status=status.HTTP_403_FORBIDDEN)

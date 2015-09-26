@@ -4,7 +4,8 @@ from apps.group.models import Group
 
 class LessonPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.method == 'GET':
+        print view.action
+        if request.method == 'GET' or view.action == 'submit':
             return True
 
         group = Group.objects.get(pk=view.kwargs.get('group_pk'))

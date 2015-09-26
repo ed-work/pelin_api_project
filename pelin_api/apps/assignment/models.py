@@ -30,7 +30,7 @@ class AssignmentFiles(models.Model):
     file = models.FileField(upload_to=generate_filename)
 
 
-class StudentAssignment(TimeStamped):
+class SubmittedAssignment(TimeStamped):
     assignment = models.OneToOneField(Assignment)
     student = models.OneToOneField(User)
     text = models.TextField()
