@@ -40,16 +40,12 @@ class IsMemberOrTeacherGroup(BasePermission):
 class IsTeacherGroup(BasePermission):
     def has_permission(self, request, view):
         group = Group.objects.get(pk=view.kwargs.get('group_pk'))
-        return (
-            request.user.is_teacher() and
-            request.user == group.teacher
-        )
+        return request.user == group.teacher
 
 
 class IsMemberOrTeacher(BasePermission):
     def has_permission(self, request, view):
         group = Group.objects.get(pk=view.kwargs.get('group_pk'))
         return (
-            request.user in group.members.all() or
-            ( request.user.is_teacher() and request.user == group.teacher)
+            request.user in group.members.all() or request.user == group.teacher
         )
