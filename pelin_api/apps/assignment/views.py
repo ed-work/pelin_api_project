@@ -24,8 +24,8 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     def get_queryset(self):
         assignments = Assignment.objects.filter(
             group__pk=self.kwargs.get('group_pk'))
-        if not self.request.user.is_teacher():
-            return assignments.filter(due_date__gt=datetime.datetime.now())
+        # if not self.request.user.is_teacher():
+        #     return assignments.filter(due_date__gt=datetime.datetime.now())
         return assignments
 
     def perform_create(self, serializer):
@@ -38,10 +38,9 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             return Response({'detail': 'You are not student.'},
                             status=status.HTTP_403_FORBIDDEN)
 
-        assignment = get_object_or_404(Assignment, pk=pk,
-                                       due_date__gt=datetime.datetime.now())
+        assignment = get_object_or_404(Assignment, pk=pk)
 
-        if datetime.datetime.now() < assignment.due_date.now():
+        if datetime.datetime.now() < assignment.due_date.replace(tzinfo=None):
             serializer = SubmittedAssignmentSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save(assignment=assignment)
