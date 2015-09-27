@@ -21,6 +21,7 @@ class AssignmentFilesSerializer(serializers.ModelSerializer):
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    is_submitted = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
     files = AssignmentFilesSerializer(required=False, read_only=True, many=True)
 
@@ -30,9 +31,24 @@ class AssignmentSerializer(serializers.ModelSerializer):
             'group': {'required': False, 'write_only': True}
         }
 
+    def __init__(self, *args, **kwargs):
+        super(AssignmentSerializer, self).__init__(*args, **kwargs)
+        if self.context.get('request').user.is_teacher():
+            self.fields.pop('is_submitted')
+
     def get_group_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.group.pk},
                        request=self.context.get('request'))
+
+    def get_is_submitted(self, obj):
+        try:
+            assignment = SubmittedAssignment.objects.get(
+                student=self.context.get('request').user, assignment=obj)
+        except SubmittedAssignment.DoesNotExist:
+            assignment = None
+
+        if assignment: return True
+        return False
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
