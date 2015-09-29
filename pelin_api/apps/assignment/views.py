@@ -43,7 +43,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         if datetime.datetime.now() < assignment.due_date.replace(tzinfo=None):
             serializer = SubmittedAssignmentSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.save(assignment=assignment)
+                serializer.save(assignment=assignment, student=request.user)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors,
