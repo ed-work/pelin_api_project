@@ -47,14 +47,25 @@ class AssignmentSerializer(serializers.ModelSerializer):
         except SubmittedAssignment.DoesNotExist:
             assignment = None
 
-        if assignment: return True
+        if assignment:
+            return True
         return False
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
+    assignment_url = serializers.SerializerMethodField()
+
+    def get_assignment_url(self, obj):
+        return reverse('api:assignment-detail',
+                       kwargs={
+                           'pk': obj.assignment.pk,
+                           'group_pk': obj.assignment.group.pk
+                       },
+                       request=self.context.get('request', None))
+
     class Meta:
         model = SubmittedAssignment
         extra_kwargs = {
-            'assignment': {'required': False, 'write_only': True},
+            'assignment': {'required': False},
             'student': {'required': False}
         }

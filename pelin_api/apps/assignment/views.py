@@ -11,7 +11,7 @@ from apps.group.models import Group
 from apps.group.permissions import IsMemberOrTeacher
 from .permissions import AssignmentPermission
 from .serializers import AssignmentSerializer, SubmittedAssignmentSerializer
-from .models import Assignment
+from .models import Assignment, SubmittedAssignment
 
 
 class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
@@ -51,3 +51,23 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         else:
             return Response({'error': 'The assignment has passed deadline.'},
                             status=status.HTTP_403_FORBIDDEN)
+
+    @detail_route(methods=['GET'])
+    def submitted(self, request, group_pk, pk):
+        if request.user.is_teacher():
+            submitted_assignments = SubmittedAssignment.objects.filter(
+                assignment__pk=pk)
+            serializer = SubmittedAssignmentSerializer(
+                submitted_assignments, context={'request': request})
+            return Response(serializer.data)
+        else:
+            try:
+                submitted_assignment = SubmittedAssignment.objects.get(
+                    assignment__pk=pk)
+                serializer = SubmittedAssignmentSerializer(
+                    submitted_assignment, context={'request': request})
+                return Response(serializer.data)
+            except SubmittedAssignment.DoesNotExist:
+                return Response(
+                    {'error': 'You have not submitted to this assignment.'},
+                    status=status.HTTP_400_BAD_REQUEST)
