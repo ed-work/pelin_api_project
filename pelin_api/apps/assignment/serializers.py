@@ -1,4 +1,5 @@
 from os.path import basename
+import datetime
 
 from rest_framework import serializers
 from rest_framework.reverse import reverse
@@ -22,6 +23,7 @@ class AssignmentFilesSerializer(serializers.ModelSerializer):
 
 class AssignmentSerializer(serializers.ModelSerializer):
     is_submitted = serializers.SerializerMethodField()
+    is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
     files = AssignmentFilesSerializer(required=False, read_only=True, many=True)
 
@@ -50,6 +52,9 @@ class AssignmentSerializer(serializers.ModelSerializer):
         if assignment:
             return True
         return False
+
+    def get_is_passed(self, obj):
+        return datetime.datetime.now() > obj.due_date.replace(tzinfo=None)
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
