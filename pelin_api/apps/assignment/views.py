@@ -69,7 +69,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             submitted_assignments = SubmittedAssignment.objects.filter(
                 assignment__pk=pk)
             serializer = SubmittedAssignmentSerializer(
-                submitted_assignments, context={'request': request})
+                submitted_assignments, many=True, context={'request': request})
             return Response(serializer.data)
         else:
             try:
