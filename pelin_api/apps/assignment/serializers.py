@@ -3,6 +3,7 @@ import datetime
 
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from apps.core.serializers import UserSerializer
 
 from .models import Assignment, AssignmentFiles, SubmittedAssignment
 
@@ -70,8 +71,15 @@ class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
+    student = UserSerializer(
+        fields=('id', 'first_name', 'last_name', 'student', 'url'))
     assignment_url = serializers.SerializerMethodField()
     file = serializers.SerializerMethodField()
+
+    def __init__(self, *args, **kwargs):
+        super(SubmittedAssignmentSerializer, self).__init__(*args, **kwargs)
+        if not self.context.get('request').user.is_teacher():
+            self.fields.pop('student')
 
     def get_file(self, obj):
         serializer = SubmittedAssignmentFileSerializer(obj, context={

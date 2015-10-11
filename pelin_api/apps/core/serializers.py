@@ -58,6 +58,15 @@ class UserSerializer(serializers.ModelSerializer):
     is_teacher = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
 
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(UserSerializer, self).__init__(*args, **kwargs)
+
+        if fields:
+            for field in self.fields:
+                if field not in fields:
+                    self.fields.pop(field)
+
     @staticmethod
     def get_status(obj):
         return obj.get_status_display()
