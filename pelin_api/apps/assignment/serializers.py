@@ -58,7 +58,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
-    assignment_url = serializers.SerializerMethodField()
+    assignment_url = serializers.SerializerMethodField(read_only=True)
 
     def get_assignment_url(self, obj):
         return reverse('api:assignment-detail',

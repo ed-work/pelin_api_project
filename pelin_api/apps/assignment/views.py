@@ -48,8 +48,8 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
                 submitted_assignment = None
 
             if submitted_assignment:
-                serializer = SubmittedAssignmentSerializer(submitted_assignment,
-                                                           data=request.data)
+                serializer = SubmittedAssignmentSerializer(
+                    submitted_assignment, data=request.data, partial=True)
             else:
                 serializer = SubmittedAssignmentSerializer(data=request.data)
 
@@ -74,7 +74,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         else:
             try:
                 submitted_assignment = SubmittedAssignment.objects.get(
-                    assignment__pk=pk)
+                    assignment__pk=pk, student=request.user)
                 serializer = SubmittedAssignmentSerializer(
                     submitted_assignment, context={'request': request})
                 return Response(serializer.data)
