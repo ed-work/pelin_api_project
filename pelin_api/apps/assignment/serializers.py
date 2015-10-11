@@ -57,8 +57,26 @@ class AssignmentSerializer(serializers.ModelSerializer):
         return datetime.datetime.now() > obj.due_date.replace(tzinfo=None)
 
 
+class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    url = serializers.FileField(source='file')
+
+    def get_name(self, obj):
+        return basename(obj.file.name)
+
+    class Meta:
+        model = SubmittedAssignment
+        fields = ('url', 'name')
+
+
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
-    assignment_url = serializers.SerializerMethodField(read_only=True)
+    assignment_url = serializers.SerializerMethodField()
+    file = serializers.SerializerMethodField()
+
+    def get_file(self, obj):
+        serializer = SubmittedAssignmentFileSerializer(obj, context={
+            'request': self.context.get('request')})
+        return serializer.data
 
     def get_assignment_url(self, obj):
         return reverse('api:assignment-detail',
