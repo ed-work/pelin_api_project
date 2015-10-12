@@ -3,6 +3,7 @@ from .core import views as core_views
 from .group import views as group_views
 from .post import views as group_post_views
 from .lesson import views as lesson_views
+from .assignment import views as assignment_views
 from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
 router = DefaultRouter(trailing_slash=False)
@@ -24,6 +25,11 @@ lesson_router = NestedSimpleRouter(router, r'groups', lookup='group',
 lesson_router.register(r'lessons', lesson_views.LessonViewSet,
                        base_name='lesson')
 
+assignment_router = NestedSimpleRouter(router, r'groups', lookup='group',
+                                       trailing_slash=False)
+assignment_router.register(r'assignments', assignment_views.AssignmentViewSet,
+                           base_name='assignment')
+
 urlpatterns = [
     url(r'^jwt', 'rest_framework_jwt.views.obtain_jwt_token',
         name='obtain-jwt'),
@@ -35,5 +41,6 @@ urlpatterns += (
     router.urls +
     pendings_router.urls +
     group_post_router.urls +
-    lesson_router.urls
+    lesson_router.urls +
+    assignment_router.urls
 )

@@ -8,14 +8,14 @@ from apps.core.serializers import UserSerializer
 class GroupSerializer(serializers.ModelSerializer):
     teacher = UserSerializer(required=False)
     url = serializers.SerializerMethodField()
-    is_in_group = serializers.SerializerMethodField()
+    is_joined = serializers.SerializerMethodField()
     pending_approve = serializers.SerializerMethodField()
 
     def get_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.pk},
                        request=self.context.get('request'))
 
-    def get_is_in_group(self, obj):
+    def get_is_joined(self, obj):
         return self.context['request'].user in obj.members.all()
 
     def get_pending_approve(self, obj):

@@ -1,3 +1,4 @@
+import urllib2
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -39,7 +40,8 @@ def generate_filename(self, filename):
     generate destination FileField filename arg to the following pattern:
     MEDIA_ROOT/<group_name>_<group_id>/filename
     """
-    return "%s_%s/%s" % (self.title, self.pk, filename)
+    filename = urllib2.unquote(filename)
+    return "%s_%s/%s" % (self.pk, self.title, filename)
 
 
 class UserManager(BaseUserManager):

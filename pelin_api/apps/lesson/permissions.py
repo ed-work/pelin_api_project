@@ -11,4 +11,4 @@ class LessonPermission(permissions.BasePermission):
         return request.user.is_teacher() and request.user == group.teacher
 
     def has_object_permission(self, request, view, obj):
-        return request.user == obj.lesson.group.teacher
+        return request.user == obj.group.teacher
