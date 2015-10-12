@@ -1,10 +1,13 @@
 from rest_framework import views, parsers, renderers, permissions, \
     authentication, viewsets, status
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from . import serializers
 from . import permissions as perm
+from apps.group.models import Group
+from apps.group.serializers import GroupSerializer
 from .models import User
 
 
@@ -48,6 +51,7 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         return super(UserViewset, self).get_permissions()
 
     def dispatch(self, request, *args, **kwargs):
+        print kwargs
         if kwargs.get('pk') == 'me':
             request = self.initialize_request(request, *args, **kwargs)
             if request.user.is_authenticated():
@@ -75,3 +79,11 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         return Response(new_user_serialized.data,
                         status=status.HTTP_201_CREATED,
                         headers=headers)
+
+    @detail_route(methods=['GET'],
+                  permission_classes=(permissions.IsAuthenticated,))
+    def groups(self, request, pk):
+        joined_groups = self.get_object().group_members.all()
+        serializer = GroupSerializer(joined_groups, many=True,
+                                     context={'request': request})
+        return Response(serializer.data)
