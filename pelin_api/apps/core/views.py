@@ -83,7 +83,12 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     @detail_route(methods=['GET'],
                   permission_classes=(permissions.IsAuthenticated,))
     def groups(self, request, pk):
-        joined_groups = self.get_object().group_members.all()
+        user = self.get_object()
+        if user.is_teacher():
+            joined_groups = user.group_teacher.all()
+        else:
+            joined_groups = user.group_members.all()
+
         serializer = GroupSerializer(joined_groups, many=True,
                                      context={'request': request})
         return Response(serializer.data)
