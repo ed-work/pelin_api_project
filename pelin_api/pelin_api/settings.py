@@ -123,3 +123,9 @@ AUTH_USER_MODEL = 'core.User'
 AUTHENTICATION_BACKENDS = (
     'apps.core.backends.CustomAuthBackend',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'url_filter.integrations.drf.DjangoFilterBackend',
+    ]
+}
