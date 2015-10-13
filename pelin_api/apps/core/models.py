@@ -41,7 +41,7 @@ def generate_filename(self, filename):
     MEDIA_ROOT/<group_name>_<group_id>/filename
     """
     filename = urllib2.unquote(filename)
-    return "%s_%s/%s" % (self.pk, self.title, filename)
+    return "groups/%s/%s" % (self.pk, filename)
 
 
 class UserManager(BaseUserManager):
