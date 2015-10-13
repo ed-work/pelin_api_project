@@ -1,9 +1,11 @@
 import urllib2
+
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser,
                                         PermissionsMixin)
+from versatileimagefield.fields import VersatileImageField
 
 
 def upload_to(self, filename):
@@ -12,7 +14,7 @@ def upload_to(self, filename):
     MEDIA_ROOT/<user nim>_<username>/profile.jpg
     """
     name = "profile." + filename.split(".")[1]
-    return "%s_%s/%s" % (self.user.nim, self.user.username, name)
+    return "users/%s/%s" % (self.pk, name)
 
 
 STATUS_CHOICES = (
@@ -41,7 +43,7 @@ def generate_filename(self, filename):
     MEDIA_ROOT/<group_name>_<group_id>/filename
     """
     filename = urllib2.unquote(filename)
-    return "%s_%s/%s" % (self.pk, self.title, filename)
+    return "groups/%s/%s" % (self.pk, filename)
 
 
 class UserManager(BaseUserManager):
@@ -74,8 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(default=False)
 
-    photo = models.ImageField(upload_to=upload_to, blank=True, null=True)
-    # photo_thumb
+    photo = VersatileImageField(upload_to=upload_to, blank=True, null=True)
 
     status = models.IntegerField(
         choices=STATUS_CHOICES, default=2)

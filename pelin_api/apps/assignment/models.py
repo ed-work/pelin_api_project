@@ -8,13 +8,9 @@ from apps.group.models import GroupFileModel, Group
 
 
 def generate_filename(self, filename):
-    """
-    generate destination FileField filename arg to the following pattern:
-    MEDIA_ROOT/<group_name>_<group_id>/filename
-    """
     filename = urllib2.unquote(filename)
-    return "%s_%s/%s" % (
-    self.assignment.group.pk, self.assignment.group.title, filename)
+    return "groups/%s/%s" % (
+    self.assignment.group.pk, filename)
 
 
 class Assignment(TimeStamped, TitleDescriptionModel):
