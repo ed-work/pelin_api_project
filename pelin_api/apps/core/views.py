@@ -51,7 +51,6 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         return super(UserViewset, self).get_permissions()
 
     def dispatch(self, request, *args, **kwargs):
-        print kwargs
         if kwargs.get('pk') == 'me':
             request = self.initialize_request(request, *args, **kwargs)
             if request.user.is_authenticated():
