@@ -16,6 +16,7 @@ from .models import Assignment, SubmittedAssignment
 
 class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = AssignmentSerializer
+    filter_fields = ['id', 'group', 'due_date']
 
     def get_permissions(self):
         self.permission_classes += (IsMemberOrTeacher, AssignmentPermission)
@@ -24,8 +25,6 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     def get_queryset(self):
         assignments = Assignment.objects.filter(
             group__pk=self.kwargs.get('group_pk'))
-        # if not self.request.user.is_teacher():
-        #     return assignments.filter(due_date__gt=datetime.datetime.now())
         return assignments
 
     def perform_create(self, serializer):

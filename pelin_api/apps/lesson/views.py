@@ -10,6 +10,7 @@ from .models import Lesson
 
 class LessonViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = LessonSerializer
+    filter_fields = ['title', 'description']
 
     def get_permissions(self):
         self.permission_classes += (IsMemberOrTeacher, LessonPermission)

@@ -15,6 +15,7 @@ from apps.core.serializers import UserSerializer
 class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
+    filter_fields = ['id', 'teacher', 'members', 'title']
 
     def perform_create(self, serializer):
         serializer.save(teacher=self.request.user)
@@ -108,6 +109,7 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
                              viewsets.GenericViewSet):
     serializer_class = PendingApproveSerializer
+    filter_fields = ['student',]
 
     def get_queryset(self):
         return PendingApproval.objects.filter(

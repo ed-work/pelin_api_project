@@ -42,6 +42,7 @@ class BaseLoginRequired(object):
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.filter(is_superuser=False)
+    filter_fields = ['id', 'student', 'teacher', 'email', 'status']
 
     def get_permissions(self):
         if self.request.method == 'POST':

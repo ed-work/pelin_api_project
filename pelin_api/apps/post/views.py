@@ -10,6 +10,7 @@ from apps.group.permissions import IsMemberOrTeacher
 
 class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = GroupPostSerializer
+    filter_fields = ['user', 'created_at', 'text']
 
     def get_queryset(self):
         return Post.objects.filter(
