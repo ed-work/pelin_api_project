@@ -127,5 +127,6 @@ AUTHENTICATION_BACKENDS = (
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'url_filter.integrations.drf.DjangoFilterBackend',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
 }
