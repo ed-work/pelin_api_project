@@ -47,7 +47,8 @@ INSTALLED_APPS = (
     'apps.group',
     'apps.post',
     'apps.lesson',
-    'apps.assignment'
+    'apps.assignment',
+    'apps.message'
 )
 
 MIDDLEWARE_CLASSES = (

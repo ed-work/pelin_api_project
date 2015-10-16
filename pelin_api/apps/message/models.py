@@ -7,9 +7,10 @@ STATUS_CHOICES = (
     ('r', 'Read'),
 )
 
+
 class Conversation(models.Model):
-    user_1 = models.ForeignKey(User)
-    user_2 = models.ForeignKey(User)
+    user_1 = models.ForeignKey(User, related_name='_from')
+    user_2 = models.ForeignKey(User, related_name='_to')
     created_at = models.DateTimeField(auto_now_add=True)
 
 
