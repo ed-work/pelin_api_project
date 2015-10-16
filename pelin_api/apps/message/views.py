@@ -15,12 +15,23 @@ class ConversationViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             Q(user_1=self.request.user) | Q(user_2=self.request.user))
 
     def retrieve(self, request, *args, **kwargs):
-        conversation_with = kwargs.get('pk')
-        target_user = User.objects.get_with(conversation_with)
-        # get conversation by target_user
-        conversation = self.get_object()
-        messages = Message.objects.filter(conversation=conversation)
-        messages_page = self.paginate_queryset(messages)
-        serializer = MessageSerializer(messages_page, many=True)
-        return Response(serializer.data)
+        try:
+            conversation = self.get_object()
+        except:
+            try:
+                target_user = User.objects.get_with(kwargs.get('pk'))
+                conversation =  Conversation.objects.get(
+                    (Q(user_1=request.user) & Q(user_2=target_user)) |
+                    (Q(user_1=target_user) & Q(user_2=request.user))
+                )
+            except:
+                conversation = None
+
+        if conversation:
+            messages = Message.objects.filter(conversation=conversation)
+            messages_page = self.paginate_queryset(messages)
+            serializer = MessageSerializer(messages_page, many=True)
+            return Response(serializer.data)
+        else:
+            return super(ConversationViewSet, self).retrieve(request, *args, **kwargs)
 
