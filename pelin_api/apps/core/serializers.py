@@ -72,9 +72,8 @@ class UserSerializer(serializers.ModelSerializer):
         super(UserSerializer, self).__init__(*args, **kwargs)
 
         if fields:
-            for field in self.fields:
-                if field not in fields:
-                    self.fields.pop(field)
+            [self.fields.pop(field) for field in self.fields if
+             field not in fields]
 
     @staticmethod
     def get_status(obj):

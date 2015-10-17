@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, mixins
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from apps.core.models import User
@@ -8,12 +8,15 @@ from .models import Conversation, Message
 from django.db.models import Q
 
 
-class ConversationViewSet(BaseLoginRequired, viewsets.ModelViewSet):
+class ConversationViewSet(BaseLoginRequired,
+                          mixins.RetrieveModelMixin,
+                          viewsets.GenericViewSet):
     serializer_class = ConversationSerializer
 
     def get_queryset(self):
         return Conversation.objects.filter(
-            Q(user_1=self.request.user) | Q(user_2=self.request.user))
+            Q(user_1=self.request.user) | Q(user_2=self.request.user)
+        ).order_by('-created_at')
 
     def get_conversation(self):
         try:
@@ -35,7 +38,8 @@ class ConversationViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         print conversation
 
         if conversation:
-            messages = Message.objects.filter(conversation=conversation)
+            messages = Message.objects.filter(
+                conversation=conversation).order_by('-sent')
             messages_page = self.paginate_queryset(messages)
             serializer = MessageSerializer(messages_page, many=True,
                                            context={'request': request})
