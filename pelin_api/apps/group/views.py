@@ -14,7 +14,7 @@ from apps.core.serializers import UserSerializer
 
 class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = GroupSerializer
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().select_related('teacher')
     filter_fields = ['id', 'teacher', 'members', 'title']
 
     def perform_create(self, serializer):

@@ -41,7 +41,8 @@ class BaseLoginRequired(object):
 
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
-    queryset = User.objects.filter(is_superuser=False)
+    queryset = User.objects.filter(is_superuser=False)\
+        .select_related('student', 'teacher')
     filter_fields = ['id', 'student', 'teacher', 'email', 'status']
 
     def get_permissions(self):

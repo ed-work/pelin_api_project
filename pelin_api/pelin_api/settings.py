@@ -48,7 +48,9 @@ INSTALLED_APPS = (
     'apps.post',
     'apps.lesson',
     'apps.assignment',
-    'apps.message'
+    'apps.message',
+
+    'debug_toolbar'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,6 +130,7 @@ AUTHENTICATION_BACKENDS = (
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'drf_ujson.renderers.UJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_FILTER_BACKENDS': [
         'url_filter.integrations.drf.DjangoFilterBackend',
