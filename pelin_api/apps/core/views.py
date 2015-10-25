@@ -9,6 +9,7 @@ from . import permissions as perm
 from apps.group.models import Group
 from apps.group.serializers import GroupSerializer
 from .models import User
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 class CustomObtainAuthToken(views.APIView):
@@ -37,6 +38,7 @@ class CustomObtainAuthToken(views.APIView):
 class BaseLoginRequired(object):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
+    # authentication_classes = (JSONWebTokenAuthentication,)
 
 
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):

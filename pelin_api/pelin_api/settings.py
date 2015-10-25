@@ -137,3 +137,5 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
 }
+
+API_CACHE_TIMEOUT = 300
