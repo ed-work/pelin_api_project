@@ -47,7 +47,10 @@ INSTALLED_APPS = (
     'apps.group',
     'apps.post',
     'apps.lesson',
-    'apps.assignment'
+    'apps.assignment',
+    'apps.message',
+
+    'debug_toolbar'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -127,9 +130,12 @@ AUTHENTICATION_BACKENDS = (
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'drf_ujson.renderers.UJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_FILTER_BACKENDS': [
         'url_filter.integrations.drf.DjangoFilterBackend',
     ],
     'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
 }
+
+API_CACHE_TIMEOUT = 300

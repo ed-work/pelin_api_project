@@ -10,11 +10,13 @@ from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
     IsTeacherGroup
 from apps.core.views import BaseLoginRequired
 from apps.core.serializers import UserSerializer
+from apps.core.cache import CachedResourceMixin
 
 
-class GroupViewSet(BaseLoginRequired, viewsets.ModelViewSet):
+class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
+                   viewsets.ModelViewSet):
     serializer_class = GroupSerializer
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().select_related('teacher')
     filter_fields = ['id', 'teacher', 'members', 'title']
 
     def perform_create(self, serializer):
@@ -109,7 +111,7 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
                              viewsets.GenericViewSet):
     serializer_class = PendingApproveSerializer
-    filter_fields = ['student',]
+    filter_fields = ['student', ]
 
     def get_queryset(self):
         return PendingApproval.objects.filter(
