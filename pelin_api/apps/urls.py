@@ -39,6 +39,8 @@ urlpatterns = [
     #     name='obtain-jwt'),
     url(r'^auth', core_views.CustomObtainAuthToken.as_view(),
         name='obtain-token'),
+    url(r'^my_assignments', assignment_views.MyAssignments.as_view(),
+        name='get-my-assignments')
 ]
 
 urlpatterns += (

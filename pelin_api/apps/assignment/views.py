@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework import viewsets, status
 from rest_framework.decorators import detail_route
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, ListAPIView
 
 from rest_framework.response import Response
 
@@ -81,3 +81,14 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
                 return Response(
                     {'error': 'You have not submitted to this assignment.'},
                     status=status.HTTP_400_BAD_REQUEST)
+
+
+class MyAssignments(BaseLoginRequired, ListAPIView):
+    def list(self, request, *args, **kwargs):
+        group_ids = request.user.group_members.values_list('id', flat=True)
+        print group_ids
+        assignments = Assignment.objects.filter(group__pk__in=group_ids)
+        serializer = AssignmentSerializer(assignments, many=True,
+                                          context={'request': request})
+
+        return Response(serializer.data)
