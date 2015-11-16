@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'rest_framework.authtoken',
     'versatileimagefield',
+    'corsheaders',
 
     # project apps
     'apps.core',
@@ -55,6 +56,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -135,7 +137,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'url_filter.integrations.drf.DjangoFilterBackend',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
+    #'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
 }
 
 API_CACHE_TIMEOUT = 300
+
+CORS_ORIGIN_ALLOW_ALL = True

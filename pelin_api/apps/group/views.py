@@ -68,43 +68,72 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
             return Response(
                 {'error': 'Please specify a valid nim in query params.'},
                 status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            student = Student.objects.get(nim=nim)
+        except Student.DoesNotExist:
+            student = None
+
+        if not student:
+            return Response(
+                {'error': 'The student with that nim doesn\'t exist.'},
+                status=status.HTTP_404_NOT_FOUND)
+
+        if self.get_object().pendings.filter(
+                student__pk=student.user.pk).exists():
+            return Response(
+                {'error': 'The student with that nim\
+                 is in pending approval.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        elif request.user.is_teacher():
+            self.get_object().members.add(student.user)
+            return Response({'success': 'User has been added to group.'},
+                            status=status.HTTP_201_CREATED)
+
+        elif self.get_object().members.filter(
+                pk=student.user.pk).exists():
+            return Response(
+                {'error': 'The student with that nim already\
+                 member in this group.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
         else:
-            try:
-                student = Student.objects.get(nim=nim)
-            except Student.DoesNotExist:
-                student = None
+            PendingApproval.objects.create(
+                student=student.user, group=self.get_object()
+            )
+            msg = {'success': 'Wait for approval.'}
+            status_code = status.HTTP_200_OK
+            return Response(msg, status=status_code)
 
-            if not student:
-                return Response(
-                    {'error': 'The student with that nim doesn\'t exist.'},
-                    status=status.HTTP_404_NOT_FOUND)
+    @detail_route(permission_classes=[IsTeacherGroup])
+    def kick(self, request, pk):
+        nim = request.query_params.get('nim')
+        if not nim:
+            return Response(
+                {'error': 'Please specify a valid nim in query params.'},
+                status=status.HTTP_400_BAD_REQUEST)
 
-            if self.get_object().pendings.filter(
-                    student__pk=student.user.pk).exists():
-                return Response(
-                    {'error': 'The student with that nim\
-                     is in pending approval.'},
-                    status=status.HTTP_400_BAD_REQUEST)
+        try:
+            student = Student.objects.get(nim=nim)
+        except Student.DoesNotExist:
+            student = None
 
-            elif request.user.is_teacher():
-                self.get_object().members.add(student.user)
-                return Response({'success': 'User has been added to group.'},
-                                status=status.HTTP_201_CREATED)
+        if not student:
+            return Response(
+                {'error': 'The student with that nim doesn\'t exist.'},
+                status=status.HTTP_404_NOT_FOUND)
 
-            elif self.get_object().members.filter(
-                    pk=student.user.pk).exists():
-                return Response(
-                    {'error': 'The student with that nim already\
-                     member in this group.'},
-                    status=status.HTTP_400_BAD_REQUEST)
-
-            else:
-                PendingApproval.objects.create(
-                    student=student.user, group=self.get_object()
-                )
-                msg = {'success': 'Wait for approval.'}
-                status_code = status.HTTP_200_OK
-                return Response(msg, status=status_code)
+        if student in self.get_object().members.all():
+            self.get_object().members.remove(student)
+            return Response(
+                {'success': 'Member successfully removed.'}
+            )
+        else:
+            return Response(
+                {'error': 'The student with that nim' +
+                          'isn\'t member of this group.'},
+                status=status.HTTP_404_NOT_FOUND)
 
 
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
