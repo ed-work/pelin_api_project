@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+from apps.group.models import Group
 
 
 class GroupPermission(BasePermission):
@@ -13,7 +14,10 @@ class GroupPermission(BasePermission):
             return True
 
         if request.method == 'DELETE':
-            return obj.teacher == request.user or obj.group.teacher == request.user
+            return (
+                obj.teacher == request.user or
+                obj.group.teacher == request.user
+            )
 
         return request.user.is_teacher()
 
@@ -31,3 +35,17 @@ class IsTeacher(BasePermission):
 class IsMemberOrTeacherGroup(BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user == obj.teacher or request.user in obj.members.all()
+
+
+class IsTeacherGroup(BasePermission):
+    def has_permission(self, request, view):
+        group = Group.objects.get(pk=view.kwargs.get('group_pk'))
+        return request.user == group.teacher
+
+
+class IsMemberOrTeacher(BasePermission):
+    def has_permission(self, request, view):
+        group = Group.objects.get(pk=view.kwargs.get('group_pk'))
+        return (
+            request.user in group.members.all() or request.user == group.teacher
+        )

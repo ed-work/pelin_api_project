@@ -1,8 +1,11 @@
+import urllib2
+
 from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser,
                                         PermissionsMixin)
+from versatileimagefield.fields import VersatileImageField
 
 
 def upload_to(self, filename):
@@ -11,7 +14,7 @@ def upload_to(self, filename):
     MEDIA_ROOT/<user nim>_<username>/profile.jpg
     """
     name = "profile." + filename.split(".")[1]
-    return "%s_%s/%s" % (self.user.nim, self.user.username, name)
+    return "users/%s/%s" % (self.pk, name)
 
 
 STATUS_CHOICES = (
@@ -26,6 +29,23 @@ MAJOR_CHOICES = (
 )
 
 
+class TimeStamped(models.Model):
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
+def generate_filename(self, filename):
+    """
+    generate destination FileField filename arg to the following pattern:
+    MEDIA_ROOT/<group_name>_<group_id>/filename
+    """
+    filename = urllib2.unquote(filename)
+    return "groups/%s/%s" % (self.pk, filename)
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         if not email:
@@ -38,6 +58,14 @@ class UserManager(BaseUserManager):
         user.save()
 
         return user
+
+    def get_with(self, key):
+        try:
+            student = Student.objects.get(nim=key)
+            return student.user
+        except Student.DoesNotExist:
+            teacher = Teacher.objects.get(username=key)
+            return teacher.user
 
     def create_superuser(self, email, password, **kwargs):
         user = self.create_user(email, password, **kwargs)
@@ -56,8 +84,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(default=False)
 
-    photo = models.ImageField(upload_to=upload_to, blank=True, null=True)
-    # photo_thumb
+    photo = VersatileImageField(upload_to=upload_to, blank=True, null=True)
 
     status = models.IntegerField(
         choices=STATUS_CHOICES, default=2)

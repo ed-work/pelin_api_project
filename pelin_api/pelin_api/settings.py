@@ -40,14 +40,23 @@ INSTALLED_APPS = (
     'rest_framework',
     'django_extensions',
     'rest_framework.authtoken',
+    'versatileimagefield',
+    'corsheaders',
 
     # project apps
     'apps.core',
-    'apps.group'
+    'apps.group',
+    'apps.post',
+    'apps.lesson',
+    'apps.assignment',
+    'apps.message',
+
+    'debug_toolbar'
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -83,8 +92,12 @@ WSGI_APPLICATION = 'pelin_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pelin_api',
+        'USER': 'pelin_api',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
@@ -115,3 +128,18 @@ AUTH_USER_MODEL = 'core.User'
 AUTHENTICATION_BACKENDS = (
     'apps.core.backends.CustomAuthBackend',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'drf_ujson.renderers.UJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'url_filter.integrations.drf.DjangoFilterBackend',
+    ],
+    #'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
+}
+
+API_CACHE_TIMEOUT = 300
+
+CORS_ORIGIN_ALLOW_ALL = True

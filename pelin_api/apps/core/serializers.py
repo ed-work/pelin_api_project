@@ -2,6 +2,7 @@ from rest_framework import serializers, exceptions
 from rest_framework.reverse import reverse
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from .models import User, Student, Teacher
 
@@ -53,10 +54,26 @@ class TeacherSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
+    photo = VersatileImageFieldSerializer(
+        sizes=[
+            ('full', 'url'),
+            ('medium', 'thumbnail__350x350'),
+            ('small', 'thumbnail__100x100'),
+            ('thumbnail', 'thumbnail__50x50')
+        ]
+    )
 
     status = serializers.SerializerMethodField()
     is_teacher = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(UserSerializer, self).__init__(*args, **kwargs)
+
+        if fields:
+            [self.fields.pop(field) for field in self.fields if
+             field not in fields]
 
     @staticmethod
     def get_status(obj):

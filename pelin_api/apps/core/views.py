@@ -1,11 +1,15 @@
 from rest_framework import views, parsers, renderers, permissions, \
     authentication, viewsets, status
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from . import serializers
 from . import permissions as perm
+from apps.group.models import Group
+from apps.group.serializers import GroupSerializer
 from .models import User
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 class CustomObtainAuthToken(views.APIView):
@@ -34,11 +38,14 @@ class CustomObtainAuthToken(views.APIView):
 class BaseLoginRequired(object):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
+    # authentication_classes = (JSONWebTokenAuthentication,)
 
 
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
-    queryset = User.objects.filter(is_superuser=False)
+    queryset = User.objects.filter(is_superuser=False)\
+        .select_related('student', 'teacher')
+    filter_fields = ['id', 'student', 'teacher', 'email', 'status']
 
     def get_permissions(self):
         if self.request.method == 'POST':
@@ -75,3 +82,16 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         return Response(new_user_serialized.data,
                         status=status.HTTP_201_CREATED,
                         headers=headers)
+
+    @detail_route(methods=['GET'],
+                  permission_classes=(permissions.IsAuthenticated,))
+    def groups(self, request, pk):
+        user = self.get_object()
+        if user.is_teacher():
+            joined_groups = user.group_teacher.all()
+        else:
+            joined_groups = user.group_members.all()
+
+        serializer = GroupSerializer(joined_groups, many=True,
+                                     context={'request': request})
+        return Response(serializer.data)
