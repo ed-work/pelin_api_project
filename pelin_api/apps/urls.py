@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
 from .core import views as core_views
@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^auth', core_views.CustomObtainAuthToken.as_view(),
         name='obtain-token'),
     url(r'^my_assignments', assignment_views.MyAssignments.as_view(),
-        name='get-my-assignments')
+        name='get-my-assignments'),
 ]
 
 urlpatterns += (

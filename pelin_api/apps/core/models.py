@@ -25,7 +25,8 @@ STATUS_CHOICES = (
 MAJOR_CHOICES = (
     (1, 'S1 TI'),
     (2, 'D3 TI'),
-    (3, 'D3 MI')
+    (3, 'D3 MI'),
+    (4, 'S1 DKV')
 )
 
 
