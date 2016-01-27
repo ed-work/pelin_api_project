@@ -26,7 +26,8 @@ class AssignmentSerializer(serializers.ModelSerializer):
     is_submitted = serializers.SerializerMethodField()
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
-    files = AssignmentFilesSerializer(required=False, read_only=True, many=True)
+    files = AssignmentFilesSerializer(
+        required=False, read_only=True, many=True)
 
     class Meta:
         model = Assignment
@@ -72,7 +73,7 @@ class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
     student = UserSerializer(
-        fields=('id', 'first_name', 'last_name', 'student', 'url'))
+        fields=('id', 'first_name', 'name', 'student', 'url'))
     assignment_url = serializers.SerializerMethodField()
     file = serializers.SerializerMethodField()
 

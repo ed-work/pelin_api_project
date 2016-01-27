@@ -43,7 +43,7 @@ class BaseLoginRequired(object):
 
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
-    queryset = User.objects.filter(is_superuser=False)\
+    queryset = User.objects.filter(is_superuser=False) \
         .select_related('student', 'teacher')
     filter_fields = ['id', 'student', 'teacher', 'email', 'status']
 
@@ -63,10 +63,8 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         return super(UserViewset, self).dispatch(request, *args, **kwargs)
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return serializers.NewUserSerializer
-
-        return self.serializer_class
+        return serializers.NewUserSerializer \
+            if self.request.method == 'POST' else self.serializer_class
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -76,8 +74,9 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         new_user = User.objects.get(
-            email=serializer.validated_data.get('email'))
-        new_user_serialized = serializers.UserSerializer(new_user)
+                email=serializer.validated_data.get('email'))
+        new_user_serialized = serializers.UserSerializer(new_user, context={
+            'request': self.request})
 
         return Response(new_user_serialized.data,
                         status=status.HTTP_201_CREATED,
@@ -85,7 +84,7 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
 
     @detail_route(methods=['GET'],
                   permission_classes=(permissions.IsAuthenticated,))
-    def groups(self, request, pk):
+    def groups(self, request, pk=None):
         user = self.get_object()
         if user.is_teacher():
             joined_groups = user.group_teacher.all()

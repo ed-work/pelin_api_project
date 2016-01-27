@@ -1,5 +1,8 @@
 import os
+from .base import *
 from .apps import INSTALLED_APPS
+
+DEBUG = False
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -13,4 +16,3 @@ DATABASES = {
         'PORT': os.environ.get('OPENSHIFT_POSTGRESQL_DB_PORT')
     }
 }
-
