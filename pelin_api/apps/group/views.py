@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin
 
 from apps.core.models import User, Student
+from apps.core.functions import get_object_or_none
 from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
 from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
@@ -28,13 +29,14 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
         return super(GroupViewSet, self).get_permissions()
 
     @detail_route(methods=['get'])
-    def members(self, request, pk):
-        members = self.get_object().members.all()
-        serializer = UserSerializer(members, many=True)
+    def members(self, request=None, pk=None):
+        members = self.get_object().members.all().select_related('student')
+        serializer = UserSerializer(members, many=True,
+                                    context={'request': self.request})
         return Response(serializer.data)
 
     @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
-    def join(self, request, pk):
+    def join(self, request, pk=None):
         if request.user.pk in self.get_object().pendings.values_list('student',
                                                                      flat=True):
             msg = {'error': 'Your join request in this group is pending.'}
@@ -70,34 +72,17 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
                 {'error': 'Please specify a valid nim in query params.'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            student = Student.objects.get(nim=nim)
-        except Student.DoesNotExist:
-            student = None
+        student = get_object_or_none(Student, nim=nim)
 
         if not student:
             return Response(
-                {'error': 'The student with that nim doesn\'t exist.'},
+                {'error': 'Student not found.'},
                 status=status.HTTP_404_NOT_FOUND)
 
-        if self.get_object().pendings.filter(
-                student__pk=student.user.pk).exists():
-            return Response(
-                {'error': 'The student with that nim\
-                 is in pending approval.'},
-                status=status.HTTP_400_BAD_REQUEST)
-
-        elif request.user.is_teacher():
+        if request.user.is_teacher():
             self.get_object().members.add(student.user)
             return Response({'success': 'User has been added to group.'},
                             status=status.HTTP_201_CREATED)
-
-        elif self.get_object().members.filter(
-                pk=student.user.pk).exists():
-            return Response(
-                {'error': 'The student with that nim already\
-                 member in this group.'},
-                status=status.HTTP_400_BAD_REQUEST)
 
         else:
             PendingApproval.objects.create(
@@ -136,6 +121,18 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
                           'isn\'t member of this group.'},
                 status=status.HTTP_404_NOT_FOUND)
 
+    def check_student_group(self, student):
+        if self.get_object().members.filter(
+                pk=student.user.pk).exists():
+            return Response(
+                {'error': 'Already member in this group.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        if self.get_object().pendings.filter(
+                student__pk=student.user.pk).exists():
+            return Response(
+                {'error': 'Student in pending approval.'},
+                status=status.HTTP_400_BAD_REQUEST)
 
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
