@@ -1,7 +1,9 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import detail_route, list_route
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from apps.core.models import User, Student
 from apps.core.functions import get_object_or_none
@@ -14,8 +16,7 @@ from apps.core.serializers import UserSerializer
 from apps.core.cache import CachedResourceMixin
 
 
-class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
-                   viewsets.ModelViewSet):
+class GroupViewSet(BaseLoginRequired, CachedResourceMixin, ModelViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all().select_related('teacher',
                                                   'teacher__teacher')
@@ -27,13 +28,6 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
     def get_permissions(self):
         self.permission_classes += (GroupPermission,)
         return super(GroupViewSet, self).get_permissions()
-
-    @detail_route(methods=['get'])
-    def members(self, request=None, pk=None):
-        members = self.get_object().members.all().select_related('student')
-        serializer = UserSerializer(members, many=True,
-                                    context={'request': self.request})
-        return Response(serializer.data)
 
     @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
     def join(self, request, pk=None):
@@ -139,8 +133,7 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
 
 
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
-                             DestroyModelMixin,
-                             viewsets.GenericViewSet):
+                             DestroyModelMixin, GenericViewSet):
     serializer_class = PendingApproveSerializer
     filter_fields = ['student', ]
 
@@ -176,3 +169,17 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
             status_code = status.HTTP_400_BAD_REQUEST
 
         return Response(msg, status=status_code)
+
+
+class MemberList(BaseLoginRequired, CachedResourceMixin, ListAPIView,
+                 GenericViewSet):
+    serializer_class = UserSerializer
+    filter_fields = ['nim']
+
+    def get_queryset(self):
+        group = Group.objects.get(pk=self.kwargs.get('group_pk'))
+        return group.members.select_related('student')
+
+    def get_permissions(self):
+        self.permission_classes += (GroupPermission,)
+        return super(MemberList, self).get_permissions()

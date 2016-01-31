@@ -21,6 +21,11 @@ pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
 pendings_router.register(r'pendings', group_views.PendingApprovalViewSet,
                          base_name='pending')
 
+members_router = NestedSimpleRouter(router, r'groups', lookup='group',
+                                    trailing_slash=False)
+members_router.register(r'members', group_views.MemberList,
+                        base_name='member')
+
 # group_post_router = NestedSimpleRouter(router, r'groups', lookup='group',
 #                                        trailing_slash=False)
 # group_post_router.register(r'posts', group_post_views.GroupPostViewSet,
@@ -48,6 +53,7 @@ urlpatterns = [
 urlpatterns += (
     router.urls +
     pendings_router.urls +
+    members_router.urls +
     # group_post_router.urls +
     lesson_router.urls +
     assignment_router.urls
