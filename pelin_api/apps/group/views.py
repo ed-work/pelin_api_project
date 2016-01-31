@@ -16,7 +16,8 @@ from apps.core.cache import CachedResourceMixin
 class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
                    viewsets.ModelViewSet):
     serializer_class = GroupSerializer
-    queryset = Group.objects.all().select_related('teacher')
+    queryset = Group.objects.all().select_related('teacher',
+                                                  'teacher__teacher')
     filter_fields = ['id', 'teacher', 'members', 'title']
 
     def perform_create(self, serializer):

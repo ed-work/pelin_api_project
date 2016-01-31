@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.status import HTTP_404_NOT_FOUND
 
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
@@ -24,3 +26,7 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     def perform_create(self, serializer):
         group = Group.objects.get(pk=self.kwargs.get('group_pk'))
         serializer.save(user=self.request.user, group=group)
+
+    def list(self, request, *args, **kwargs):
+        return Response({'msg': 'No resources found.'},
+                        status=HTTP_404_NOT_FOUND)
