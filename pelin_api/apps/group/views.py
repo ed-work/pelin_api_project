@@ -58,35 +58,6 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin, ModelViewSet):
             status_code = status.HTTP_400_BAD_REQUEST
         return Response(msg, status=status_code)
 
-    @detail_route(permission_classes=[IsTeacherGroup])
-    def kick(self, request, pk=None):
-        nim = request.query_params.get('nim')
-        if not nim:
-            return Response(
-                {'error': 'Please specify a valid nim in query params.'},
-                status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            student = Student.objects.get(nim=nim)
-        except Student.DoesNotExist:
-            student = None
-
-        if not student:
-            return Response(
-                {'error': 'The student with that nim doesn\'t exist.'},
-                status=status.HTTP_404_NOT_FOUND)
-
-        if student in self.get_object().members.all():
-            self.get_object().members.remove(student)
-            return Response(
-                {'success': 'Member successfully removed.'}
-            )
-        else:
-            return Response(
-                {'error': 'The student with that nim' +
-                          'isn\'t member of this group.'},
-                status=status.HTTP_404_NOT_FOUND)
-
 
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin, GenericViewSet):
@@ -127,23 +98,12 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         return Response(msg, status=status_code)
 
 
-class MemberList(BaseLoginRequired, CachedResourceMixin, ListAPIView,
-                 GenericViewSet):
+class MemberListViewSet(BaseLoginRequired, CachedResourceMixin, ListAPIView,
+                        GenericViewSet):
     serializer_class = UserSerializer
 
-    def get_queryset(self):
-        group = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
-        return group.members.select_related('student')
-
-    def get_permissions(self):
-        self.permission_classes += (GroupPermission,)
-        return super(MemberList, self).get_permissions()
-
-    def get_group(self):
-        return Group.objects.get(pk=self.kwargs.get('group_pk'))
-
     @list_route(permission_classes=[IsMemberOrTeacherGroup])
-    def invite(self, request, group_pk):
+    def invite(self, request, group_pk=None):
         nim = request.query_params.get('nim')
         if not nim:
             return Response(
@@ -159,9 +119,35 @@ class MemberList(BaseLoginRequired, CachedResourceMixin, ListAPIView,
         return self.check_student_group(student) or self.add_or_pending(request,
                                                                         student)
 
+    @list_route(permission_classes=[IsTeacherGroup])
+    def kick(self, request, group_pk=None):
+        nim = request.query_params.get('nim')
+        if not nim:
+            return Response(
+                {'error': 'Please specify a valid nim in query params.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        student = get_object_or_none(Student, nim=nim)
+        if not student:
+            return Response(
+                {'error': 'Student not found.'},
+                status=status.HTTP_404_NOT_FOUND)
+
+        return self.kick_student(student)
+
+    def get_queryset(self):
+        group = self.get_group()
+        return group.members.select_related('student')
+
+    def get_permissions(self):
+        self.permission_classes += (GroupPermission,)
+        return super(MemberListViewSet, self).get_permissions()
+
+    def get_group(self):
+        return get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
+
     def check_student_group(self, student):
-        if self.get_group().members.filter(
-                pk=student.user.pk).exists():
+        if student in self.get_group().members.all():
             return Response(
                 {'error': 'Already member in this group.'},
                 status=status.HTTP_400_BAD_REQUEST)
@@ -185,3 +171,14 @@ class MemberList(BaseLoginRequired, CachedResourceMixin, ListAPIView,
             msg = {'success': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
             return Response(msg, status=status_code)
+
+    def kick_student(self, student):
+        if student.user in self.get_group().members.all():
+            self.get_group().members.remove(student.user)
+            return Response(
+                {'success': 'Member successfully removed.'}
+            )
+        else:
+            return Response(
+                {'error': 'Student is not member of this group.'},
+                status=status.HTTP_404_NOT_FOUND)

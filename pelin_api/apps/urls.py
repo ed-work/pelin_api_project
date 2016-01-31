@@ -23,7 +23,7 @@ pendings_router.register(r'pendings', group_views.PendingApprovalViewSet,
 
 members_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                     trailing_slash=False)
-members_router.register(r'members', group_views.MemberList,
+members_router.register(r'members', group_views.MemberListViewSet,
                         base_name='member')
 
 # group_post_router = NestedSimpleRouter(router, r'groups', lookup='group',
