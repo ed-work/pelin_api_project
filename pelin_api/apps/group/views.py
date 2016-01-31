@@ -1,6 +1,6 @@
 from rest_framework import status, permissions
 from rest_framework.decorators import detail_route, list_route
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -132,7 +132,7 @@ class MemberList(BaseLoginRequired, CachedResourceMixin, ListAPIView,
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        group = Group.objects.get(pk=self.kwargs.get('group_pk'))
+        group = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
         return group.members.select_related('student')
 
     def get_permissions(self):
