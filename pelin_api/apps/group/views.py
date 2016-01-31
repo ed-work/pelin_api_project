@@ -53,7 +53,7 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
         return Response(msg, status=status_code)
 
     @detail_route(permission_classes=[IsStudent])
-    def leave(self, request, pk):
+    def leave(self, request, pk=None):
         if self.get_object().members.filter(pk=request.user.pk).exists():
             self.get_object().members.remove(request.user)
             self.get_object().save()
@@ -73,27 +73,16 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
                 status=status.HTTP_400_BAD_REQUEST)
 
         student = get_object_or_none(Student, nim=nim)
-
         if not student:
             return Response(
                 {'error': 'Student not found.'},
                 status=status.HTTP_404_NOT_FOUND)
 
-        if request.user.is_teacher():
-            self.get_object().members.add(student.user)
-            return Response({'success': 'User has been added to group.'},
-                            status=status.HTTP_201_CREATED)
-
-        else:
-            PendingApproval.objects.create(
-                student=student.user, group=self.get_object()
-            )
-            msg = {'success': 'Wait for approval.'}
-            status_code = status.HTTP_200_OK
-            return Response(msg, status=status_code)
+        return self.check_student_group(student) or self.add_or_pending(request,
+                                                                        student)
 
     @detail_route(permission_classes=[IsTeacherGroup])
-    def kick(self, request, pk):
+    def kick(self, request, pk=None):
         nim = request.query_params.get('nim')
         if not nim:
             return Response(
@@ -134,6 +123,21 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin,
                 {'error': 'Student in pending approval.'},
                 status=status.HTTP_400_BAD_REQUEST)
 
+    def add_or_pending(self, request, student):
+        if request.user.is_teacher():
+            self.get_object().members.add(student.user)
+            return Response({'success': 'User has been added to group.'},
+                            status=status.HTTP_201_CREATED)
+
+        else:
+            PendingApproval.objects.create(
+                student=student.user, group=self.get_object()
+            )
+            msg = {'success': 'Wait for approval.'}
+            status_code = status.HTTP_200_OK
+            return Response(msg, status=status_code)
+
+
 class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
                              DestroyModelMixin,
                              viewsets.GenericViewSet):
@@ -149,7 +153,7 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         return super(PendingApprovalViewSet, self).get_permissions()
 
     @detail_route(permission_classes=[IsTeacherGroup])
-    def approve(self, request, group_pk, pk):
+    def approve(self, request=None, group_pk=None, pk=None):
         self.get_object().approve()
 
         return Response({'success': 'User has been added to group.'},
