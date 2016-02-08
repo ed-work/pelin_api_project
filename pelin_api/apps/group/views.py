@@ -16,7 +16,7 @@ from apps.core.serializers import UserSerializer
 from apps.core.cache import CachedResourceMixin
 
 
-class GroupViewSet(BaseLoginRequired, CachedResourceMixin, ModelViewSet):
+class GroupViewSet(BaseLoginRequired, ModelViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all().select_related('teacher',
                                                   'teacher__teacher')
@@ -31,16 +31,17 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin, ModelViewSet):
 
     @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
     def join(self, request, pk=None):
-        if request.user.pk in self.get_object().pendings.values_list('student',
-                                                                     flat=True):
+        user = request.user
+        if self.get_object().pendings.filter(
+                student__pk=user.pk).exists():
             msg = {'error': 'Your join request in this group is pending.'}
             status_code = status.HTTP_400_BAD_REQUEST
-        elif self.get_object().members.filter(pk=request.user.pk).exists():
+        elif self.get_object().members.filter(pk=user.pk).exists():
             msg = {'error': 'You are member in this group.'}
             status_code = status.HTTP_400_BAD_REQUEST
         else:
             PendingApproval.objects.create(
-                student=request.user, group=self.get_object()
+                student=user, group=self.get_object()
             )
             msg = {'success': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
@@ -48,9 +49,11 @@ class GroupViewSet(BaseLoginRequired, CachedResourceMixin, ModelViewSet):
 
     @detail_route(permission_classes=[IsStudent])
     def leave(self, request, pk=None):
-        if self.get_object().members.filter(pk=request.user.pk).exists():
-            self.get_object().members.remove(request.user)
-            self.get_object().save()
+        user = request.user
+        obj = self.get_object()
+        if obj.members.filter(pk=user.pk).exists():
+            obj.members.remove(user)
+            obj.save()
             msg = {'success': 'You left from group.'}
             status_code = status.HTTP_200_OK
         else:
@@ -98,42 +101,28 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         return Response(msg, status=status_code)
 
 
-class MemberListViewSet(BaseLoginRequired, CachedResourceMixin, ListAPIView,
+class MemberListViewSet(BaseLoginRequired, ListAPIView,
                         GenericViewSet):
     serializer_class = UserSerializer
 
     @list_route(permission_classes=[IsMemberOrTeacherGroup])
     def invite(self, request, group_pk=None):
-        nim = request.query_params.get('nim')
-        if not nim:
-            return Response(
-                {'error': 'Please specify a valid nim in query params.'},
-                status=status.HTTP_400_BAD_REQUEST)
-
+        nim = self.request.query_params.get('nim')
         student = get_object_or_none(Student, nim=nim)
-        if not student:
-            return Response(
-                {'error': 'Student not found.'},
-                status=status.HTTP_404_NOT_FOUND)
 
-        return self.check_student_group(student) or self.add_or_pending(request,
-                                                                        student)
+        return self.check_nim_exist(nim) or\
+            self.check_student_exist(student) or\
+            self.check_student_group(student) or \
+            self.add_or_pending(request, student)
 
     @list_route(permission_classes=[IsTeacherGroup])
     def kick(self, request, group_pk=None):
-        nim = request.query_params.get('nim')
-        if not nim:
-            return Response(
-                {'error': 'Please specify a valid nim in query params.'},
-                status=status.HTTP_400_BAD_REQUEST)
-
+        nim = self.request.query_params.get('nim')
         student = get_object_or_none(Student, nim=nim)
-        if not student:
-            return Response(
-                {'error': 'Student not found.'},
-                status=status.HTTP_404_NOT_FOUND)
 
-        return self.kick_student(student)
+        return self.check_nim_exist(nim) or\
+            self.check_student_exist(student) or\
+            self.kick_student(student)
 
     def get_queryset(self):
         group = self.get_group()
@@ -143,16 +132,29 @@ class MemberListViewSet(BaseLoginRequired, CachedResourceMixin, ListAPIView,
         self.permission_classes += (GroupPermission,)
         return super(MemberListViewSet, self).get_permissions()
 
+    def check_nim_exist(self, nim):
+        if not nim:
+            return Response(
+                {'error': 'Please specify a valid nim in query params.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+    def check_student_exist(self, student):
+        if not student:
+            return Response(
+                {'error': 'Student not found.'},
+                status=status.HTTP_404_NOT_FOUND)
+
     def get_group(self):
         return get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
 
     def check_student_group(self, student):
-        if student in self.get_group().members.all():
+        group = self.get_group()
+        if student in group.members.all():
             return Response(
                 {'error': 'Already member in this group.'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        if self.get_group().pendings.filter(
+        if group.pendings.filter(
                 student__pk=student.user.pk).exists():
             return Response(
                 {'error': 'Student in pending approval.'},
@@ -166,7 +168,7 @@ class MemberListViewSet(BaseLoginRequired, CachedResourceMixin, ListAPIView,
 
         else:
             PendingApproval.objects.create(
-                student=student.user, group=self.get_object()
+                student=student.user, group=self.get_group()
             )
             msg = {'success': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
