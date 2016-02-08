@@ -95,7 +95,6 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
     @detail_route(permission_classes=[IsTeacherGroup])
     def approve(self, request=None, group_pk=None, pk=None):
         self.get_object().approve()
-
         return Response({'success': 'User has been added to group.'},
                         status=status.HTTP_201_CREATED)
 
@@ -116,6 +115,12 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
             status_code = status.HTTP_400_BAD_REQUEST
 
         return Response(msg, status=status_code)
+
+    @detail_route(permission_classes=[IsTeacherGroup])
+    def decline(self, request, group_pk, pk):
+        self.get_object().delete()
+        return Response({'detail': 'User has been declined.'},
+                        status=status.HTTP_200_OK)
 
 
 class MemberListViewSet(BaseLoginRequired, ListAPIView,
