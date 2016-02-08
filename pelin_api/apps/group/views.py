@@ -13,7 +13,6 @@ from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
     IsTeacherGroup
 from apps.core.views import BaseLoginRequired
 from apps.core.serializers import UserSerializer
-from apps.core.cache import CachedResourceMixin
 
 
 class GroupViewSet(BaseLoginRequired, ModelViewSet):
@@ -32,18 +31,20 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
     @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
     def join(self, request, pk=None):
         user = request.user
-        if self.get_object().pendings.filter(
+        obj = self.get_object()
+
+        if obj.pendings.filter(
                 student__pk=user.pk).exists():
-            msg = {'error': 'Your join request in this group is pending.'}
+            msg = {'detail': 'Your join request in this group is pending.'}
             status_code = status.HTTP_400_BAD_REQUEST
-        elif self.get_object().members.filter(pk=user.pk).exists():
-            msg = {'error': 'You are member in this group.'}
+        elif obj.members.filter(pk=user.pk).exists():
+            msg = {'detail': 'You are member in this group.'}
             status_code = status.HTTP_400_BAD_REQUEST
         else:
             PendingApproval.objects.create(
                 student=user, group=self.get_object()
             )
-            msg = {'success': 'Wait for approval.'}
+            msg = {'detail': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
         return Response(msg, status=status_code)
 
@@ -51,6 +52,7 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
     def leave(self, request, pk=None):
         user = request.user
         obj = self.get_object()
+
         if obj.members.filter(pk=user.pk).exists():
             obj.members.remove(user)
             obj.save()
@@ -59,6 +61,21 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
         else:
             msg = {'error': 'You are not member of this group.'}
             status_code = status.HTTP_400_BAD_REQUEST
+        return Response(msg, status=status_code)
+
+    @detail_route(permission_classes=[IsStudent])
+    def cancel(self, request, pk=None):
+        user = request.user
+        pending = get_object_or_none(PendingApproval, student__id=user.id)
+
+        if pending:
+            pending.delete()
+            msg = {'detail': 'You cancelled join request.'}
+            status_code = status.HTTP_200_OK
+        else:
+            msg = {'detail': 'You are not joining this group.'}
+            status_code = status.HTTP_400_BAD_REQUEST
+
         return Response(msg, status=status_code)
 
 
@@ -84,8 +101,8 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
 
     @list_route(permission_classes=[IsTeacherGroup])
     def approve_all(self, request, group_pk):
-        group = Group.objects.get(pk=group_pk)
         if self.get_queryset():
+            group = Group.objects.get(pk=group_pk)
             users = User.objects.filter(
                 pk__in=self.get_queryset().values_list('student', flat=True))
             group.members.add(*users)
