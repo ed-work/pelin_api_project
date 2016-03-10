@@ -5,10 +5,12 @@ from .models import Post
 
 class GroupPostSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
-    votes_count = serializers.IntegerField(source='get_votes_count')
+    votes_count = serializers.IntegerField(source='get_votes_count',
+                                           required=False)
 
     class Meta:
         model = Post
         extra_kwargs = {
-            'group': {'required': False}
+            'group': {'required': False},
+            'votes': {'read_only': True}
         }

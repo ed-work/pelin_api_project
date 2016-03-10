@@ -21,7 +21,7 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
     def get_permissions(self):
         permission = (IsMemberOrTeacher,)
-        if self.action != 'retrieve':
+        if self.action not in ('retrieve', 'vote'):
             permission += (IsPostOwnerOrTeacher,)
         self.permission_classes += permission
         return super(GroupPostViewSet, self).get_permissions()
@@ -30,6 +30,13 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         group = Group.objects.get(pk=self.kwargs.get('group_pk'))
         serializer.save(user=self.request.user, group=group)
 
-    @detail_route(methods=['GET'])
+    @detail_route(methods=['GET'], permission_classes=[IsMemberOrTeacher])
     def vote(self, request, group_pk=None, pk=None):
-        return Response({'msg': 'voted'})
+        user = request.user
+        post = self.get_object()
+        if user not in post.votes.all():
+            post.votes.add(user)
+            return Response({'msg': 'voted'})
+        else:
+            post.votes.remove(user)
+            return Response({'msg': 'devoted'})
