@@ -20,4 +20,4 @@ class Post(TimeStamped):
     file = models.FileField(upload_to=generate_filename, blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s" % (self.user.first_name, self.group.title)
+        return "%s: %s" % (self.user.name, self.group.title)

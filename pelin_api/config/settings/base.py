@@ -12,9 +12,14 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from .apps import INSTALLED_APPS
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_DIR = os.path.dirname(BASE_DIR)
+WSGI_DIR = os.path.join(PROJECT_DIR, 'wsgi')
 
+INSTALLED_APPS = INSTALLED_APPS
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -27,34 +32,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'django_extensions',
-    'rest_framework.authtoken',
-    'versatileimagefield',
-
-    # project apps
-    'apps.core',
-    'apps.group',
-    'apps.post',
-    'apps.lesson',
-    'apps.assignment',
-    'apps.message',
-
-    'debug_toolbar'
-)
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,7 +44,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'pelin_api.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -82,23 +62,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pelin_api.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pelin_api',
-        'USER': 'pelin_api',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': ''
-    }
-}
-
+WSGI_APPLICATION = 'config.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -135,7 +99,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'url_filter.integrations.drf.DjangoFilterBackend',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
+    # 'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
 }
 
 API_CACHE_TIMEOUT = 300
+
+CORS_ORIGIN_ALLOW_ALL = True

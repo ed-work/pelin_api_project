@@ -33,4 +33,4 @@ class SubmittedAssignment(TimeStamped):
     file = models.FileField(upload_to=generate_filename)
 
     def __unicode__(self):
-        return "%s: %s" % (self.student.first_name, self.assignment.title)
+        return "%s: %s" % (self.student.name, self.assignment.title)

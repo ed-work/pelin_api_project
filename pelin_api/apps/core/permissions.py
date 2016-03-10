@@ -11,6 +11,7 @@ class CustomUserPermission(permissions.BasePermission):
 
         return (obj == request.user) or request.user.is_superuser
 
+
 class CreateUserPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS) or (

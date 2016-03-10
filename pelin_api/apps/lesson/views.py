@@ -20,7 +20,7 @@ class LessonViewSet(BaseLoginRequired, CachedResourceMixin,
 
     def get_queryset(self):
         return Lesson.objects.filter(group__pk=self.kwargs.get('group_pk')) \
-            .select_related('group')
+            .select_related('group').prefetch_related('files')
 
     def perform_create(self, serializer):
         group = Group.objects.get(pk=self.kwargs.get('group_pk'))

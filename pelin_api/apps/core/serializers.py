@@ -8,6 +8,13 @@ from .models import User, Student, Teacher
 
 
 class CustomAuthTokenSerializer(serializers.Serializer):
+    def create(self, validated_data):
+        return super(CustomAuthTokenSerializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super(CustomAuthTokenSerializer, self).update(instance,
+                                                             validated_data)
+
     email = serializers.CharField()
     password = serializers.CharField()
 
@@ -55,12 +62,12 @@ class UserSerializer(serializers.ModelSerializer):
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
     photo = VersatileImageFieldSerializer(
-        sizes=[
-            ('full', 'url'),
-            ('medium', 'thumbnail__350x350'),
-            ('small', 'thumbnail__100x100'),
-            ('thumbnail', 'thumbnail__50x50')
-        ]
+            sizes=[
+                ('full', 'url'),
+                ('medium', 'thumbnail__350x350'),
+                ('small', 'thumbnail__100x100'),
+                ('thumbnail', 'thumbnail__50x50')
+            ]
     )
 
     status = serializers.SerializerMethodField()
@@ -90,7 +97,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'student', 'teacher', 'status', 'last_login', 'email',
-                  'first_name', 'last_name', 'date_joined', 'is_active',
+                  'name', 'name', 'date_joined', 'is_active',
                   'is_teacher', 'url', 'photo')
         extra_kwargs = {
             'password': {'write_only': True}
@@ -103,15 +110,13 @@ class NewUserSerializer(serializers.Serializer):
     username = serializers.CharField(write_only=True, required=False)
 
     email = serializers.EmailField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
+    name = serializers.CharField()
     password = serializers.CharField()
     photo = serializers.ImageField(required=False, write_only=True)
 
     def create(self, validated_data):
         usr = User(email=validated_data.get('email'),
-                   first_name=validated_data.get('first_name'),
-                   last_name=validated_data.get('last_name'))
+                   name=validated_data.get('name'))
 
         usr.set_password(validated_data.get('password'))
         usr.save()
@@ -127,8 +132,7 @@ class NewUserSerializer(serializers.Serializer):
         return usr
 
     def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name')
-        instance.last_name = validated_data.get('last_name')
+        instance.name = validated_data.get('name')
         instance.set_password(validated_data.get('password'))
         instance.save()
 
