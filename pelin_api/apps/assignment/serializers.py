@@ -26,6 +26,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
     is_submitted = serializers.SerializerMethodField()
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
     files = AssignmentFilesSerializer(
         required=False, read_only=True, many=True)
 
@@ -43,6 +44,14 @@ class AssignmentSerializer(serializers.ModelSerializer):
     def get_group_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.group.pk},
                        request=self.context.get('request'))
+
+    def get_url(self, obj):
+        return reverse('api:assignment-detail',
+                       kwargs={
+                           'pk': obj.pk,
+                           'group_pk': obj.group.pk
+                       },
+                       request=self.context.get('request', None))
 
     def get_is_submitted(self, obj):
         try:

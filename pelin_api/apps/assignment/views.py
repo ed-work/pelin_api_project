@@ -86,7 +86,6 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 class MyAssignments(BaseLoginRequired, ListAPIView):
     def list(self, request, *args, **kwargs):
         group_ids = request.user.group_members.values_list('id', flat=True)
-        print group_ids
         assignments = Assignment.objects.filter(group__pk__in=group_ids)
         serializer = AssignmentSerializer(assignments, many=True,
                                           context={'request': request})
