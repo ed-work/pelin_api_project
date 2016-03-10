@@ -24,7 +24,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
     def get_queryset(self):
         assignments = Assignment.objects.filter(
-            group__pk=self.kwargs.get('group_pk'))
+            group__pk=self.kwargs.get('group_pk')).select_related('group')
         return assignments
 
     def perform_create(self, serializer):
@@ -86,7 +86,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 class MyAssignments(BaseLoginRequired, ListAPIView):
     def list(self, request, *args, **kwargs):
         group_ids = request.user.group_members.values_list('id', flat=True)
-        assignments = Assignment.objects.filter(group__pk__in=group_ids)
+        assignments = Assignment.objects.filter(group__pk__in=group_ids).select_related('group')
         serializer = AssignmentSerializer(assignments, many=True,
                                           context={'request': request})
 
