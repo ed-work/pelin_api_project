@@ -62,10 +62,10 @@ class UserManager(BaseUserManager):
 
     def get_with(self, key):
         try:
-            student = Student.objects.get(nim=key)
+            student = Student.objects.select_related('user').get(nim=key)
             return student.user
         except Student.DoesNotExist:
-            teacher = Teacher.objects.get(username=key)
+            teacher = Teacher.objects.select_related('user').get(username=key)
             return teacher.user
 
     def create_superuser(self, email, password, **kwargs):
