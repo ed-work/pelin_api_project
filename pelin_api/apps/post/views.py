@@ -39,4 +39,4 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
             return Response({'msg': 'voted'})
         else:
             post.votes.remove(user)
-            return Response({'msg': 'devoted'})
+            return Response({'msg': 'unvote'})
