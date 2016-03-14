@@ -10,26 +10,32 @@ from django.db.models import Q
 
 class ConversationViewSet(BaseLoginRequired,
                           mixins.RetrieveModelMixin,
+                          mixins.ListModelMixin,
                           viewsets.GenericViewSet):
     serializer_class = ConversationSerializer
 
     def get_queryset(self):
         return Conversation.objects.filter(
             Q(user_1=self.request.user) | Q(user_2=self.request.user)
-        ).order_by('-created_at')
+            )\
+            .select_related('user_1')\
+            .select_related('user_2').order_by('-created_at')
 
     def get_conversation(self):
         try:
             conversation = self.get_object()
         except:
+            target_user = User.objects.get_with(self.kwargs.get('pk'))
             try:
-                target_user = User.objects.get_with(self.kwargs.get('pk'))
                 conversation = Conversation.objects.get(
                     (Q(user_1=self.request.user) & Q(user_2=target_user)) |
                     (Q(user_1=target_user) & Q(user_2=self.request.user))
                 )
             except Conversation.DoesNotExist:
-                conversation = None
+                # conversation = None
+                conversation = Conversation.objects.create(
+                    user_1=self.request.user,
+                    user_2=target_user)
 
         return conversation
 
@@ -55,7 +61,7 @@ class ConversationViewSet(BaseLoginRequired,
 
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, conversation=conversation)
-            return Response({'success': 'Your message has sent.'},
+            return Response({'text': request.data.get('text')},
                             status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors,
