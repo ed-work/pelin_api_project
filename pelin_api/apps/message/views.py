@@ -14,11 +14,20 @@ class ConversationViewSet(BaseLoginRequired,
                           viewsets.GenericViewSet):
     serializer_class = ConversationSerializer
 
+    def initial(self, request, *args, **kwargs):
+        super(ConversationViewSet, self).initial(request, *args, **kwargs)
+        self.user = self.request.user
+
     def get_queryset(self):
         return Conversation.objects.filter(
             Q(user_1=self.request.user) | Q(user_2=self.request.user))\
             .select_related('user_1')\
             .select_related('user_2').order_by('-created_at')
+
+    def get_serializer_context(self):
+        c = super(ConversationViewSet, self).get_serializer_context()
+        c['user'] = self.request.user
+        return c
 
     def get_object(self):
         other_user = User.objects.get_with(self.kwargs.get('pk'))
@@ -28,10 +37,10 @@ class ConversationViewSet(BaseLoginRequired,
                 (Q(user_1=other_user) & Q(user_2=self.request.user))
             )
         except Conversation.DoesNotExist:
-            # conversation = None
-            conversation = Conversation.objects.create(
-                user_1=self.request.user,
-                user_2=self.other_user)
+            conversation = None
+            # conversation = Conversation.objects.create(
+            #     user_1=self.request.user,
+            #     user_2=other_user)
 
         return conversation
 
@@ -39,27 +48,24 @@ class ConversationViewSet(BaseLoginRequired,
         conversation = self.get_object()
 
         if conversation:
-            # TODO: get message visible_to certain user
-            messages = conversation.message_set.all()\
+            # TODO: get messages visible_to certain user
+            messages = conversation.message_set.select_related('user')\
                 .select_related('user')\
                 .order_by('-sent')
             # messages_page = self.paginate_queryset(messages)
             serializer = MessageSerializer(
                 messages, many=True,
-                context={
-                    'request': self.request,
-                    'user': self.request.user,
-                    'other_user': self.other_user
-                    })
+                context={'request': self.request, 'user': self.user})
             # return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         else:
-            return super(ConversationViewSet, self).retrieve(request, *args,
-                                                             **kwargs)
+            # return super(ConversationViewSet, self).retrieve(request, *args,
+            #                                                  **kwargs)
+            return Response([])
 
     @detail_route(methods=['POST'])
     def reply(self, request, pk):
-        conversation = self.get_conversation()
+        conversation = self.get_object()
         serializer = MessageSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):

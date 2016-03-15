@@ -10,10 +10,17 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(ConversationSerializer, self).__init__(*args, **kwargs)
-        self.user = self.context.get('request').user
+        self.user = self.context.get('user')
 
     def get_target_user(self, obj):
-        user_serializer = UserSerializer(self.user)
+        if self.user.is_teacher():
+            status = 'teacher'
+        else:
+            status = 'student'
+        user_serializer = UserSerializer(
+            self.user,
+            fields=['id', 'name', 'url', 'photo', status],
+            context={'request': self.context.get('request')})
         return user_serializer.data
 
     def get_url(self, obj):
@@ -32,7 +39,8 @@ class ConversationSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     me = serializers.SerializerMethodField()
-    user = UserSerializer(required=False)
+    user = UserSerializer(required=False,
+                          fields=['id', 'url', 'photo'])
 
     def get_me(self, obj):
         return obj.user == self.context.get('user')
@@ -40,6 +48,6 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         extra_kwargs = {
-            'conversation': {'required': False},
+            'conversation': {'required': False, 'write_only': True},
             'user': {'required': False}
         }
