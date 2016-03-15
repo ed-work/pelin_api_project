@@ -19,7 +19,7 @@ class ConversationSerializer(serializers.ModelSerializer):
             status = 'student'
         user_serializer = UserSerializer(
             self.user,
-            fields=['id', 'name', 'url', 'photo', status],
+            fields=['name', 'url', 'photo', status],
             context={'request': self.context.get('request')})
         return user_serializer.data
 

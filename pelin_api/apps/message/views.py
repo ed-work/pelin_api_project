@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status, mixins
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
+from rest_framework import status
 from apps.core.models import User
 from apps.core.views import BaseLoginRequired
 from .serializers import ConversationSerializer, MessageSerializer
@@ -11,6 +12,7 @@ from django.db.models import Q
 class ConversationViewSet(BaseLoginRequired,
                           mixins.RetrieveModelMixin,
                           mixins.ListModelMixin,
+                          mixins.DestroyModelMixin,
                           viewsets.GenericViewSet):
     serializer_class = ConversationSerializer
 
@@ -20,9 +22,9 @@ class ConversationViewSet(BaseLoginRequired,
 
     def get_queryset(self):
         return Conversation.objects.filter(
-            Q(user_1=self.request.user) | Q(user_2=self.request.user))\
-            .select_related('user_1')\
-            .select_related('user_2').order_by('-created_at')
+            Q(sender=self.request.user) | Q(reciever=self.request.user))\
+            .select_related('sender')\
+            .select_related('reciever').order_by('-created_at')
 
     def get_serializer_context(self):
         c = super(ConversationViewSet, self).get_serializer_context()
@@ -33,23 +35,29 @@ class ConversationViewSet(BaseLoginRequired,
         other_user = User.objects.get_with(self.kwargs.get('pk'))
         try:
             conversation = Conversation.objects.get(
-                (Q(user_1=self.request.user) & Q(user_2=other_user)) |
-                (Q(user_1=other_user) & Q(user_2=self.request.user))
+                (Q(sender=self.request.user) & Q(reciever=other_user)) |
+                (Q(sender=other_user) & Q(reciever=self.request.user))
             )
         except Conversation.DoesNotExist:
             conversation = None
             # conversation = Conversation.objects.create(
-            #     user_1=self.request.user,
-            #     user_2=other_user)
+            #     sender=self.request.user,
+            #     reciever=other_user)
 
         return conversation
+
+    def destroy(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.clear_message_history(self.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def retrieve(self, request, *args, **kwargs):
         conversation = self.get_object()
 
         if conversation:
-            # TODO: get messages visible_to certain user
-            messages = conversation.message_set.select_related('user')\
+            messages = conversation.message_set\
+                .filter(Q(visible_to=self.user) | Q(visible_to=None))\
+                .select_related('user')\
                 .select_related('user')\
                 .order_by('-sent')
             # messages_page = self.paginate_queryset(messages)
@@ -66,6 +74,12 @@ class ConversationViewSet(BaseLoginRequired,
     @detail_route(methods=['POST'])
     def reply(self, request, pk):
         conversation = self.get_object()
+
+        if not conversation:
+            other_user = User.objects.get_with(self.kwargs.get('pk'))
+            conversation = conversation = Conversation.objects.create(
+                sender=self.request.user,
+                reciever=other_user)
         serializer = MessageSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
