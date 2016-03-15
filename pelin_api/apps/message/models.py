@@ -21,7 +21,7 @@ class Conversation(models.Model):
 
     def clear_message_history(self, by_user):
         other_user = self.get_target_user(by_user)
-        messages = self.message_set.filter(visible_to=other_user)
+        messages = self.message_set.filter(~models.Q(visible_to=None))
         if messages:
             self.message_set.all().delete()
         else:
