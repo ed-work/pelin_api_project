@@ -18,6 +18,11 @@ class Post(TimeStamped):
     user = models.ForeignKey(User)
     text = models.TextField()
     file = models.FileField(upload_to=generate_filename, blank=True, null=True)
+    votes = models.ManyToManyField(User, related_name='user_votes')
+
+    @property
+    def get_votes_count(self):
+        return self.votes.count()
 
     def __unicode__(self):
         return "%s: %s" % (self.user.name, self.group.title)

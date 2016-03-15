@@ -1,13 +1,13 @@
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.status import HTTP_404_NOT_FOUND
-
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
+from apps.group.permissions import IsMemberOrTeacher
 from apps.post.permissions import IsPostOwnerOrTeacher
+from rest_framework import viewsets
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
+
 from .models import Post
 from .serializers import GroupPostSerializer
-from apps.group.permissions import IsMemberOrTeacher
 
 
 class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
@@ -20,13 +20,23 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         ).order_by('-created_at')
 
     def get_permissions(self):
-        self.permission_classes += (IsMemberOrTeacher, IsPostOwnerOrTeacher)
+        permission = (IsMemberOrTeacher,)
+        if self.action not in ('retrieve', 'vote'):
+            permission += (IsPostOwnerOrTeacher,)
+        self.permission_classes += permission
         return super(GroupPostViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
         group = Group.objects.get(pk=self.kwargs.get('group_pk'))
         serializer.save(user=self.request.user, group=group)
 
-    def list(self, request, *args, **kwargs):
-        return Response({'msg': 'No resources found.'},
-                        status=HTTP_404_NOT_FOUND)
+    @detail_route(methods=['GET'], permission_classes=[IsMemberOrTeacher])
+    def vote(self, request, group_pk=None, pk=None):
+        user = request.user
+        post = self.get_object()
+        if user not in post.votes.all():
+            post.votes.add(user)
+            return Response({'msg': 'voted'})
+        else:
+            post.votes.remove(user)
+            return Response({'msg': 'unvote'})
