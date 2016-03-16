@@ -5,8 +5,9 @@ from apps.post.permissions import IsPostOwnerOrTeacher
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
 
-from .models import Post, Comment
+from .models import Comment
 from .serializers import GroupPostSerializer, CommentSerializer
 
 
@@ -14,10 +15,18 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = GroupPostSerializer
     filter_fields = ['user', 'created_at', 'text']
 
+    def initial(self, request, *args, **kwargs):
+        super(GroupPostViewSet, self).initial(request, *args, **kwargs)
+        self.group = self.get_group()
+
+    def get_group(self):
+        return get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
+
     def get_queryset(self):
-        return Post.objects.filter(
-            group__pk=self.kwargs.get('group_pk')
-        ).select_related('user').order_by('-created_at')
+        return self.group.post_set\
+            .select_related('user', 'user__teacher', 'user__student')\
+            .prefetch_related('votes')\
+            .order_by('-created_at')
 
     def get_permissions(self):
         permission = (IsMemberOrTeacher,)
@@ -27,8 +36,7 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         return super(GroupPostViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
-        group = Group.objects.get(pk=self.kwargs.get('group_pk'))
-        serializer.save(user=self.request.user, group=group)
+        serializer.save(user=self.request.user, group=self.group)
 
     @detail_route(methods=['GET'], permission_classes=[IsMemberOrTeacher])
     def vote(self, request, group_pk=None, pk=None):
