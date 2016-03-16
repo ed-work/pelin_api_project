@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apps.core.serializers import UserSerializer
-from .models import Post
+from .models import Post, Comment
 
 
 class GroupPostSerializer(serializers.ModelSerializer):
@@ -14,3 +14,8 @@ class GroupPostSerializer(serializers.ModelSerializer):
             'group': {'required': False},
             'votes': {'read_only': True}
         }
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment

@@ -7,7 +7,7 @@ from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from .models import Post
-from .serializers import GroupPostSerializer
+from .serializers import GroupPostSerializer, CommentSerializer
 
 
 class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
@@ -40,3 +40,7 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         else:
             post.votes.remove(user)
             return Response({'msg': 'unvote'})
+
+
+class CommentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
+    serializer_class = CommentSerializer

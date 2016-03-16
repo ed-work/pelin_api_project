@@ -26,3 +26,8 @@ class Post(TimeStamped):
 
     def __unicode__(self):
         return "%s: %s" % (self.user.name, self.group.title)
+
+
+class Comment(TimeStamped):
+    user = models.ForeignKey(User, related_name='user_comments')
+    text = models.TextField()
