@@ -17,8 +17,11 @@ from apps.core.serializers import UserSerializer
 
 class GroupViewSet(BaseLoginRequired, ModelViewSet):
     serializer_class = GroupSerializer
-    queryset = Group.objects.all().select_related('teacher',
-                                                  'teacher__teacher')
+    queryset = Group.objects\
+        .select_related('teacher')\
+        .select_related('teacher__teacher')\
+        .prefetch_related('members')\
+        .prefetch_related('pendings')
     filter_fields = ['id', 'teacher', 'members', 'title']
 
     def perform_create(self, serializer):

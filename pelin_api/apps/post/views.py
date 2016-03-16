@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from .models import Post
+from .models import Post, Comment
 from .serializers import GroupPostSerializer, CommentSerializer
 
 
@@ -17,7 +17,7 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     def get_queryset(self):
         return Post.objects.filter(
             group__pk=self.kwargs.get('group_pk')
-        ).order_by('-created_at')
+        ).select_related('user').order_by('-created_at')
 
     def get_permissions(self):
         permission = (IsMemberOrTeacher,)
@@ -44,3 +44,12 @@ class GroupPostViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
 class CommentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.filter(
+            post__pk=self.kwargs.get('post_pk')
+        ).select_related('user').order_by('-created_at')
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user,
+                        post__pk=self.kwargs.get('post_pk'))

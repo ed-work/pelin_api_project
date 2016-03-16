@@ -19,3 +19,7 @@ class GroupPostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
+        extra_kwargs = {
+            'post': {'required': False, 'write_only': True},
+            'user': {'required': False}
+        }
