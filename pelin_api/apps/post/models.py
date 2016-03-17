@@ -29,6 +29,6 @@ class Post(TimeStamped):
 
 
 class Comment(TimeStamped):
-    user = models.ForeignKey(User, related_name='user_comments')
-    post = models.ForeignKey(Post, related_name='post_comments')
+    user = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
     text = models.TextField()

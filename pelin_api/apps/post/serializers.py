@@ -29,6 +29,20 @@ class GroupPostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, obj):
+        if obj.user.is_teacher():
+            status = 'teacher'
+        else:
+            status = 'student'
+
+        user_serializer = UserSerializer(
+            obj.user,
+            fields=['name', 'url', 'photo', status],
+            context={'request': self.context.get('request')})
+        return user_serializer.data
+
     class Meta:
         model = Comment
         extra_kwargs = {
