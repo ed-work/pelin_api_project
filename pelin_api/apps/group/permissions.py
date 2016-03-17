@@ -1,5 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from apps.group.models import Group
+from apps.post.models import Post
 
 
 class GroupPermission(BasePermission):
@@ -51,4 +52,7 @@ class IsMemberOrTeacher(BasePermission):
     #     )
     def has_object_permission(self, request, view, obj):
         u = request.user
+        if type(obj) == Post:
+            obj = obj.group
+
         return u in obj.members.all() or u == obj.teacher
