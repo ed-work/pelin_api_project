@@ -8,3 +8,12 @@ class IsPostOwnerOrTeacher(permissions.BasePermission):
                 obj.user == request.user or
                 request.user.is_teacher() and request.user == obj.group.teacher
             )
+
+
+class DeleteCommentPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        u = request.user
+        return (
+            obj.user == u or
+            obj.post.group.teacher == u
+        )

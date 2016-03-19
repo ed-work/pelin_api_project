@@ -1,13 +1,14 @@
+from apps.core.permissions import IsObjectOwner
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
 from apps.group.permissions import IsMemberOrTeacher
-from apps.post.permissions import IsPostOwnerOrTeacher
-from rest_framework import viewsets, status
+from apps.post.permissions import IsPostOwnerOrTeacher, DeleteCommentPermission
+from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
-from .models import Comment, Post
+from .models import Post
 from .serializers import GroupPostSerializer, CommentSerializer
 
 
@@ -75,3 +76,8 @@ class CommentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, post=self.p)
+
+    def get_permissions(self):
+        if self.action == 'destroy':
+            self.permission_classes += (DeleteCommentPermission,)
+        return super(CommentViewSet, self).get_permissions()

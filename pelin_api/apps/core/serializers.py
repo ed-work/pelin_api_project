@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
+from apps.core.mixins import DynamicFieldsSerializer
 from .models import User, Student, Teacher
 
 
@@ -58,7 +59,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = ('nik', 'username')
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
     photo = VersatileImageFieldSerializer(
@@ -74,18 +75,18 @@ class UserSerializer(serializers.ModelSerializer):
     is_teacher = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
 
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        remove_fields = kwargs.pop('remove_fields', None)
-        super(UserSerializer, self).__init__(*args, **kwargs)
-
-        if fields:
-            [self.fields.pop(field) for field in self.fields if
-             field not in fields]
-
-        if remove_fields:
-            [self.fields.pop(field) for field in self.fields if
-             field in remove_fields]
+    # def __init__(self, *args, **kwargs):
+    #     fields = kwargs.pop('fields', None)
+    #     remove_fields = kwargs.pop('remove_fields', None)
+    #     super(UserSerializer, self).__init__(*args, **kwargs)
+    #
+    #     if fields:
+    #         [self.fields.pop(field) for field in self.fields if
+    #          field not in fields]
+    #
+    #     if remove_fields:
+    #         [self.fields.pop(field) for field in self.fields if
+    #          field in remove_fields]
 
     @staticmethod
     def get_status(obj):

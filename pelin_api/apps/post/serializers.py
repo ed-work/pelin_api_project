@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from apps.core.mixins import RequestContextSerializer
 from apps.core.serializers import UserSerializer
 from .models import Post, Comment
 
@@ -28,8 +30,9 @@ class GroupPostSerializer(serializers.ModelSerializer):
         }
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(RequestContextSerializer, serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
+    me = serializers.SerializerMethodField()
 
     def get_user(self, obj):
         if obj.user.is_teacher():
@@ -40,8 +43,11 @@ class CommentSerializer(serializers.ModelSerializer):
         user_serializer = UserSerializer(
             obj.user,
             fields=['name', 'url', 'photo', status],
-            context={'request': self.context.get('request')})
+            context={'request': self.request})
         return user_serializer.data
+
+    def get_me(self, obj):
+        return obj.user == self.user
 
     class Meta:
         model = Comment

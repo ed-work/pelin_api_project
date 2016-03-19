@@ -17,3 +17,8 @@ class CreateUserPermission(permissions.BasePermission):
         return (request.method in permissions.SAFE_METHODS) or (
             request.method == 'POST' and (
                 not request.user.is_authenticated() or request.user.is_superuser))
+
+
+class IsObjectOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.user
