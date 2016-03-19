@@ -25,4 +25,10 @@ class Post(TimeStamped):
         return self.votes.count()
 
     def __unicode__(self):
-        return "%s: %s" % (self.user.name, self.group.title)
+        return self.text
+
+
+class Comment(TimeStamped):
+    user = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
+    text = models.TextField()

@@ -6,10 +6,11 @@ from apps.core.serializers import UserSerializer
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    teacher = UserSerializer(required=False)
+    teacher = UserSerializer(required=False, remove_fields=['student'])
     url = serializers.SerializerMethodField()
     is_joined = serializers.SerializerMethodField()
     pending_approve = serializers.SerializerMethodField()
+    members = serializers.SerializerMethodField()
 
     def get_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.pk},
@@ -19,8 +20,10 @@ class GroupSerializer(serializers.ModelSerializer):
         return self.context['request'].user in obj.members.all()
 
     def get_pending_approve(self, obj):
-        return PendingApproval.objects.filter(
-            student=self.context['request'].user).exists()
+        return self.context['request'].user in obj.pendings.all()
+
+    def get_members(self, obj):
+        return obj.members.count()
 
     class Meta:
         model = Group

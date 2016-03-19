@@ -13,8 +13,8 @@ router.register(r'users', core_views.UserViewset)
 router.register(r'groups', group_views.GroupViewSet)
 router.register(r'messages', message_views.ConversationViewSet,
                 base_name='message')
-router.register(r'posts', group_post_views.GroupPostViewSet,
-                base_name='post')
+# router.register(r'posts', group_post_views.GroupPostViewSet,
+#                 base_name='post')
 
 pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                      trailing_slash=False)
@@ -30,6 +30,12 @@ group_post_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                        trailing_slash=False)
 group_post_router.register(r'posts', group_post_views.GroupPostViewSet,
                            base_name='post')
+
+group_postcomment_router = NestedSimpleRouter(group_post_router,
+                                              r'posts', lookup='post',
+                                              trailing_slash=False)
+group_postcomment_router.register(r'comments', group_post_views.CommentViewSet,
+                                  base_name='comment')
 
 lesson_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                    trailing_slash=False)
@@ -55,6 +61,7 @@ urlpatterns += (
     pendings_router.urls +
     members_router.urls +
     group_post_router.urls +
+    group_postcomment_router.urls +
     lesson_router.urls +
     assignment_router.urls
 )

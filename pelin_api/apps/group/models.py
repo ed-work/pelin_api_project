@@ -17,8 +17,7 @@ class Group(TimeStamped, TitleDescriptionModel):
     members = models.ManyToManyField(User, related_name='group_members')
 
     def __unicode__(self):
-        return "%s (%s)" % (
-            self.title, self.teacher.name)
+        return self.title
 
 
 class PendingApproval(TimeStamped):
