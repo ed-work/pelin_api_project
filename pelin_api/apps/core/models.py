@@ -25,7 +25,8 @@ STATUS_CHOICES = (
 MAJOR_CHOICES = (
     (1, 'S1 TI'),
     (2, 'D3 TI'),
-    (3, 'D3 MI')
+    (3, 'D3 MI'),
+    (4, 'S1 DKV')
 )
 
 
@@ -61,11 +62,16 @@ class UserManager(BaseUserManager):
 
     def get_with(self, key):
         try:
-            student = Student.objects.get(nim=key)
-            return student.user
-        except Student.DoesNotExist:
-            teacher = Teacher.objects.get(username=key)
-            return teacher.user
+            return self.model.objects.get(student__nim=key)
+            # student = Student.objects.select_related('user').get(nim=key)
+            # return student.user
+        except:
+            try:
+                # teacher = Teacher.objects.select_related('user').get(username=key)
+                # return teacher.user
+                return self.model.objects.get(teacher__username=key)
+            except:
+                return None
 
     def create_superuser(self, email, password, **kwargs):
         user = self.create_user(email, password, **kwargs)
@@ -78,8 +84,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=100, unique=True)
 
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     is_active = models.BooleanField(default=False)
@@ -94,10 +99,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     def get_full_name(self):
-        return "%s %s" % (self.first_name, self.last_name)
-
-    def get_short_name(self):
-        return self.first_name
+        return self.name
 
     def is_teacher(self):
         return self.status == 1
@@ -130,7 +132,7 @@ class Teacher(models.Model):
         })
 
     def __unicode__(self):
-        return self.user.first_name
+        return self.user.name
 
 
 class Student(models.Model):
@@ -145,4 +147,4 @@ class Student(models.Model):
     major = models.IntegerField(choices=MAJOR_CHOICES, default=1)
 
     def __unicode__(self):
-        return self.user.first_name
+        return self.user.name

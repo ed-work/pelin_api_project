@@ -26,7 +26,9 @@ class AssignmentSerializer(serializers.ModelSerializer):
     is_submitted = serializers.SerializerMethodField()
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
-    files = AssignmentFilesSerializer(required=False, read_only=True, many=True)
+    url = serializers.SerializerMethodField()
+    files = AssignmentFilesSerializer(
+        required=False, read_only=True, many=True)
 
     class Meta:
         model = Assignment
@@ -42,6 +44,14 @@ class AssignmentSerializer(serializers.ModelSerializer):
     def get_group_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.group.pk},
                        request=self.context.get('request'))
+
+    def get_url(self, obj):
+        return reverse('api:assignment-detail',
+                       kwargs={
+                           'pk': obj.pk,
+                           'group_pk': obj.group.pk
+                       },
+                       request=self.context.get('request', None))
 
     def get_is_submitted(self, obj):
         try:
@@ -72,7 +82,7 @@ class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
     student = UserSerializer(
-        fields=('id', 'first_name', 'last_name', 'student', 'url'))
+        fields=('id', 'first_name', 'name', 'student', 'url'))
     assignment_url = serializers.SerializerMethodField()
     file = serializers.SerializerMethodField()
 
