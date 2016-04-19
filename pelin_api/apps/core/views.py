@@ -37,8 +37,8 @@ class CustomObtainAuthToken(views.APIView):
 
 class BaseLoginRequired(object):
     permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (authentication.TokenAuthentication,)
-    # authentication_classes = (JSONWebTokenAuthentication,)
+    # authentication_classes = (authentication.TokenAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication,)
 
 
 class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):

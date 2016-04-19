@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from .apps import INSTALLED_APPS
+import datetime
 
 BASE_DIR = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -100,6 +101,11 @@ REST_FRAMEWORK = {
         'url_filter.integrations.drf.DjangoFilterBackend',
     ],
     # 'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
 }
 
 API_CACHE_TIMEOUT = 300
