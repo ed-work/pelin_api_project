@@ -135,8 +135,8 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
         nim = self.request.query_params.get('nim')
         student = get_object_or_none(Student, nim=nim)
 
-        return self.check_nim_exist(nim) or\
-            self.check_student_exist(student) or\
+        return self.check_nim_exist(nim) or \
+            self.check_student_exist(student) or \
             self.check_student_group(student) or \
             self.add_or_pending(request, student)
 
@@ -174,7 +174,7 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
 
     def check_student_group(self, student):
         group = self.get_group()
-        if student in group.members.all():
+        if student.user in group.members.all():
             return Response(
                 {'error': 'Already member in this group.'},
                 status=status.HTTP_400_BAD_REQUEST)
