@@ -106,7 +106,7 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         if self.get_queryset():
             group = Group.objects.get(pk=group_pk)
             users = User.objects.filter(
-                pk__in=self.get_queryset().values_list('student', flat=True))
+                pk__in=self.get_queryset().values_list('user', flat=True))
             group.members.add(*users)
             group.save()
             self.get_queryset().delete()
@@ -137,7 +137,7 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
 
         return self.check_nim_exist(nim) or \
             self.check_student_exist(student) or \
-            self.check_student_group(student) or \
+            self.check_student_group(request, student) or \
             self.add_or_pending(request, student)
 
     @list_route(permission_classes=[IsTeacherGroup])
@@ -172,15 +172,19 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
     def get_group(self):
         return get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
 
-    def check_student_group(self, student):
+    def check_student_group(self, request, student):
         group = self.get_group()
         if student.user in group.members.all():
             return Response(
                 {'error': 'Already member in this group.'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        if group.pendings.filter(
-                user__pk=student.user.pk).exists():
+        if group.pendings.filter(user__pk=student.user.pk).exists():
+            if request.user.is_teacher():
+                self.get_group().members.add(student.user)
+                group.pendings.get(user_id=student.user.pk).delete()
+                return Response({'success': 'User has been added to group.'},
+                                status=status.HTTP_201_CREATED)
             return Response(
                 {'error': 'Student in pending approval.'},
                 status=status.HTTP_400_BAD_REQUEST)
@@ -193,7 +197,7 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
 
         else:
             PendingApproval.objects.create(
-                student=student.user, group=self.get_group()
+                user=student.user, group=self.get_group()
             )
             msg = {'success': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
