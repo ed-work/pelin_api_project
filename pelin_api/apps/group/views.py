@@ -180,7 +180,7 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
                 status=status.HTTP_400_BAD_REQUEST)
 
         if group.pendings.filter(
-                student__pk=student.user.pk).exists():
+                user__pk=student.user.pk).exists():
             return Response(
                 {'error': 'Student in pending approval.'},
                 status=status.HTTP_400_BAD_REQUEST)

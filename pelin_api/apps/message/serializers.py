@@ -13,12 +13,13 @@ class ConversationSerializer(serializers.ModelSerializer):
         self.user = self.context.get('user')
 
     def get_target_user(self, obj):
-        if self.user.is_teacher():
+        user = obj.get_target_user(self.user)
+        if user.is_teacher():
             status = 'teacher'
         else:
             status = 'student'
         user_serializer = UserSerializer(
-            self.user,
+            user,
             fields=['name', 'url', 'photo', status],
             context={'request': self.context.get('request')})
         return user_serializer.data
