@@ -8,6 +8,7 @@ from .models import Post, Comment
 class GroupPostSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     me = serializers.SerializerMethodField()
+    comments_count = serializers.SerializerMethodField()
     votes_count = serializers.IntegerField(source='get_votes_count',
                                            required=False)
 
@@ -21,6 +22,9 @@ class GroupPostSerializer(serializers.ModelSerializer):
             fields=['name', 'url', 'photo', status],
             context={'request': self.context.get('request')})
         return user_serializer.data
+
+    def get_comments_count(self, obj):
+        return obj.comment_set.count()
 
     def get_me(self, obj):
         return obj.user == self.context.get('request').user
