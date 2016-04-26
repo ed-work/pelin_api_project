@@ -58,7 +58,7 @@ class ConversationViewSet(BaseLoginRequired,
                 .filter(Q(visible_to=self.user) | Q(visible_to=None))\
                 .select_related('user')\
                 .select_related('user')\
-                .order_by('-sent')
+                .order_by('sent')
             # messages_page = self.paginate_queryset(messages)
             serializer = MessageSerializer(
                 messages, many=True,

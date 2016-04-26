@@ -6,11 +6,15 @@ from apps.core.serializers import UserSerializer
 
 class ConversationSerializer(serializers.ModelSerializer):
     target_user = serializers.SerializerMethodField()
+    user_id = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super(ConversationSerializer, self).__init__(*args, **kwargs)
         self.user = self.context.get('user')
+
+    def get_user_id(self, obj):
+        return self.get_url(obj).split('/')[-1]
 
     def get_target_user(self, obj):
         user = obj.get_target_user(self.user)
@@ -35,7 +39,7 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'created_at', 'target_user', 'url')
+        fields = ('id', 'created_at', 'target_user', 'url', 'user_id')
 
 
 class MessageSerializer(serializers.ModelSerializer):
