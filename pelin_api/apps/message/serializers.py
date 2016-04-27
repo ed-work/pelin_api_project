@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 from .models import Conversation, Message
 from apps.core.serializers import UserSerializer
+from apps.core.mixins import DynamicFieldsSerializer
 
 
 class ConversationSerializer(serializers.ModelSerializer):
@@ -42,7 +43,7 @@ class ConversationSerializer(serializers.ModelSerializer):
         fields = ('id', 'created_at', 'target_user', 'url', 'user_id')
 
 
-class MessageSerializer(serializers.ModelSerializer):
+class MessageSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     me = serializers.SerializerMethodField()
     user = UserSerializer(required=False,
                           fields=['id', 'url', 'photo'])

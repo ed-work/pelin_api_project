@@ -6,16 +6,17 @@ from apps.group.permissions import IsMemberOrTeacher
 from .permissions import LessonPermission
 from .serializers import LessonSerializer
 from .models import Lesson
-from apps.core.cache import CachedResourceMixin
 
 
-class LessonViewSet(BaseLoginRequired, CachedResourceMixin,
-                    viewsets.ModelViewSet):
+class LessonViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = LessonSerializer
     filter_fields = ['title', 'description']
 
     def get_permissions(self):
-        self.permission_classes += (IsMemberOrTeacher, LessonPermission)
+        if self.action == 'destroy':
+            self.permission_classes += (LessonPermission,)
+        else:
+            self.permission_classes += (IsMemberOrTeacher, LessonPermission)
         return super(LessonViewSet, self).get_permissions()
 
     def get_queryset(self):
