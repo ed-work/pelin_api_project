@@ -1,0 +1,1802 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Less",
+				"LessonPermission	class"
+			],
+			[
+				"pendiN",
+				"pendingId"
+			],
+			[
+				"pend",
+				"pending"
+			],
+			[
+				"kick",
+				"kickMember"
+			],
+			[
+				"memb",
+				"memberId"
+			],
+			[
+				"group",
+				"groupId"
+			],
+			[
+				"pendin",
+				"pendingItems"
+			],
+			[
+				"appro",
+				"approveAll"
+			],
+			[
+				"declin",
+				"decline"
+			],
+			[
+				"function",
+				"function"
+			],
+			[
+				"Pedn",
+				"PendingItem"
+			],
+			[
+				"rcc",
+				"rcc	React: component skeleton"
+			],
+			[
+				"Mem",
+				"MemberList"
+			],
+			[
+				"a",
+				"api/"
+			],
+			[
+				"exe",
+				"extends"
+			],
+			[
+				"gro",
+				"groupId"
+			],
+			[
+				"fet",
+				"fetchPendingAction"
+			],
+			[
+				"snac",
+				"snackbarMsg"
+			],
+			[
+				"snack",
+				"snackbarOpen"
+			],
+			[
+				"snackB",
+				"snackbarOpen"
+			],
+			[
+				"Membe",
+				"MemberService"
+			],
+			[
+				"post",
+				"postId"
+			],
+			[
+				"toggle",
+				"toggleComment"
+			],
+			[
+				"new",
+				"NewPostForm"
+			],
+			[
+				"handle",
+				"handleNewPostSubmit"
+			],
+			[
+				"rc",
+				"rcc	React: component skeleton"
+			],
+			[
+				"renderComm",
+				"renderCommentList"
+			],
+			[
+				"dispa",
+				"dispatchProps"
+			],
+			[
+				"feth",
+				"fetchComment"
+			],
+			[
+				"comme",
+				"comment"
+			],
+			[
+				"cdm",
+				"componentDidMount	Life Cycle Method"
+			],
+			[
+				"but",
+				"button"
+			],
+			[
+				"buttON",
+				"buttonStatus"
+			],
+			[
+				"fetMem",
+				"fetchMemberAction"
+			],
+			[
+				"grou",
+				"groups"
+			],
+			[
+				"erro",
+				"error"
+			],
+			[
+				"compon",
+				"componentDidMount	Life Cycle Method"
+			],
+			[
+				"fetchGrou",
+				"fetchGroupAction"
+			],
+			[
+				"grop",
+				"groups"
+			],
+			[
+				"fetch",
+				"fetchSingleGroupAction"
+			],
+			[
+				"Assig",
+				"Assignment"
+			],
+			[
+				"Assign",
+				"AssignmentList"
+			],
+			[
+				"assign",
+				"assignment"
+			],
+			[
+				"log",
+				"log	console"
+			],
+			[
+				"skip",
+				"skipped_number_session"
+			],
+			[
+				"get",
+				"get_exam	function"
+			],
+			[
+				"skipp",
+				"skipped_number_session	statement"
+			],
+			[
+				"skipped",
+				"skipped_number"
+			],
+			[
+				"Mess",
+				"MessageDetail"
+			],
+			[
+				"Messa",
+				"MessageList"
+			],
+			[
+				"extend",
+				"extends"
+			],
+			[
+				"initia",
+				"initialize_request	function"
+			],
+			[
+				"seri",
+				"serializer	statement"
+			],
+			[
+				"get_ob",
+				"get_object_or_404	function"
+			],
+			[
+				"Gro",
+				"Group	class"
+			],
+			[
+				"Group",
+				"GroupPostViewSet	class"
+			],
+			[
+				"group_pk",
+				"group__pk"
+			],
+			[
+				"Comm",
+				"Comment	class"
+			],
+			[
+				"url",
+				"urls	function"
+			],
+			[
+				"base",
+				"base_name	param"
+			],
+			[
+				"Comme",
+				"CommentViewSet	class"
+			],
+			[
+				"group_po",
+				"group_post_views"
+			],
+			[
+				"group_pos",
+				"group_postcomment_router	statement"
+			],
+			[
+				"Model",
+				"ModelSerializer	class"
+			],
+			[
+				"serial",
+				"serializer_class"
+			],
+			[
+				"Modl",
+				"ModelViewSet	class"
+			],
+			[
+				"view",
+				"viewsets	module"
+			],
+			[
+				"HTTP_20",
+				"HTTP_204_NO_CONTENT	statement"
+			],
+			[
+				"stat",
+				"status	module"
+			],
+			[
+				"Convers",
+				"ConversationViewSet	class"
+			],
+			[
+				"field",
+				"fields	function"
+			],
+			[
+				"Con",
+				"ConversationViewSet	class"
+			],
+			[
+				"other",
+				"other_user	statement"
+			],
+			[
+				"contex",
+				"context	statement"
+			],
+			[
+				"message",
+				"messages	statement"
+			],
+			[
+				"Conv",
+				"ConversationViewSet	class"
+			],
+			[
+				"context",
+				"context	function"
+			],
+			[
+				"Conver",
+				"ConversationViewSet"
+			],
+			[
+				"Conve",
+				"ConversationSerializer	class"
+			],
+			[
+				"user",
+				"user_serializer	statement"
+			],
+			[
+				"get_",
+				"get_target_user"
+			],
+			[
+				"requ",
+				"request"
+			],
+			[
+				"Messe",
+				"MessageSerializer	class"
+			],
+			[
+				"Materia",
+				"Material-Theme"
+			],
+			[
+				"permis",
+				"permission_classes"
+			],
+			[
+				"detail",
+				"detail_route	function"
+			],
+			[
+				"Seriali",
+				"SerializerMethodField	class"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"rever",
+				"reverse_lazy	function"
+			],
+			[
+				"bas",
+				"base_name	param"
+			],
+			[
+				"Gr",
+				"GroupPostViewSet	class"
+			],
+			[
+				"autonow",
+				"auto_now_add"
+			],
+			[
+				"MEDIA",
+				"MEDIA_URL"
+			],
+			[
+				"Mater",
+				"Material-Theme"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"ng-bin",
+				"ng-bind-html	AngularJS"
+			],
+			[
+				"$sc",
+				"$scope	AngularJS"
+			],
+			[
+				"err",
+				"error"
+			],
+			[
+				"templa",
+				"templateUrl"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"fa",
+				"false"
+			],
+			[
+				"hide",
+				"hideLoading"
+			],
+			[
+				"sta",
+				"staticu	static URL"
+			],
+			[
+				"STATIC_",
+				"STATICFILES_DIRS"
+			],
+			[
+				"dec",
+				"decorators	module"
+			],
+			[
+				"dja",
+				"django"
+			],
+			[
+				"ad",
+				"admin"
+			],
+			[
+				"fr",
+				"from	keyword"
+			],
+			[
+				"aut",
+				"auth"
+			],
+			[
+				"padd",
+				"padding-right"
+			],
+			[
+				"paddin",
+				"padding-bottom"
+			],
+			[
+				"board",
+				"board_id"
+			],
+			[
+				"card",
+				"card_ids"
+			],
+			[
+				"slide",
+				"slideUp"
+			],
+			[
+				"appen",
+				"appendTo"
+			],
+			[
+				"boa",
+				"board"
+			],
+			[
+				"array",
+				"array"
+			],
+			[
+				"Boa",
+				"board_id"
+			],
+			[
+				"BoardC",
+				"BoardCollaborator"
+			],
+			[
+				"Board",
+				"BoardCollaborator"
+			],
+			[
+				"ketem",
+				"ketemu_member"
+			],
+			[
+				"ketemu",
+				"ketemu_admin"
+			],
+			[
+				"konek",
+				"koneksi"
+			],
+			[
+				"expires",
+				"discount_expires"
+			],
+			[
+				"date",
+				"datepicker"
+			],
+			[
+				"Http",
+				"Http404	class"
+			],
+			[
+				"item_",
+				"item_id"
+			],
+			[
+				"price",
+				"priceForm	statement"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "apps/post/serializers.py",
+			"settings":
+			{
+				"buffer_size": 2099,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "jsx",
+		"selected_items":
+		[
+			[
+				"jsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"jex",
+				"Snippet: jQuery.parseXML"
+			],
+			[
+				"gitignore",
+				"Git: Update Project Ignored Files"
+			],
+			[
+				"todo",
+				"Set Syntax: ToDone"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"pomodoro",
+				"pomodoro"
+			],
+			[
+				"setjsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"set jsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"set synt jsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"set syntax jsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"setsyntaxbabel",
+				"Set Syntax: JavaScript (Babel)"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"pep",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"todorev",
+				"TodoReview: Open Files"
+			],
+			[
+				"syntax: todo",
+				"Set Syntax: ToDone"
+			],
+			[
+				"isort",
+				"ImportSort: Sort imports"
+			],
+			[
+				"activ",
+				"Virtualenv: Activate"
+			],
+			[
+				"pep8",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"ionlist",
+				"Snippet: ionic-list"
+			],
+			[
+				"ionlis",
+				"Snippet: ionic-list"
+			],
+			[
+				"html",
+				"HTMLBeautify"
+			],
+			[
+				"aut",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"vir",
+				"Virtualenv: Activate"
+			],
+			[
+				"activa",
+				"Virtualenv: Activate"
+			],
+			[
+				"virtual",
+				"Virtualenv: Activate"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"nstal",
+				"Package Control: Install Package"
+			],
+			[
+				"hg st",
+				"Hg: Status"
+			],
+			[
+				"active",
+				"Virtualenv: Activate"
+			],
+			[
+				"hgrc",
+				"Hg: Open local hgrc"
+			],
+			[
+				"hg push",
+				"Hg: Push"
+			],
+			[
+				"hgst",
+				"Hg: Status"
+			],
+			[
+				"ignore",
+				"Hg: Open local hgignore"
+			],
+			[
+				"hg igno",
+				"Hg: Open user hgignore"
+			],
+			[
+				"hg ig",
+				"Hg: Open user hgignore"
+			],
+			[
+				"hg ",
+				"Hg: Status"
+			],
+			[
+				"hg pus",
+				"Hg: Push"
+			],
+			[
+				"hg com",
+				"Hg: Quick Commit"
+			],
+			[
+				"hg add",
+				"Hg: Choose File To Add"
+			],
+			[
+				"hg rem",
+				"SublimeLinter: Choose Gutter Theme"
+			],
+			[
+				"hg revert",
+				"Hg: Choose File To Revert"
+			],
+			[
+				"hg sta",
+				"Hg: Status"
+			],
+			[
+				"hg for",
+				"Hg: Choose File To Remove"
+			],
+			[
+				"hg statu",
+				"Hg: Status"
+			],
+			[
+				"hg remo",
+				"Hg: Choose File To Remove"
+			],
+			[
+				"hg",
+				"Hg: Status"
+			],
+			[
+				"acti",
+				"Virtualenv: Activate"
+			],
+			[
+				"Package Control: rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"acvi",
+				"Virtualenv: Activate"
+			],
+			[
+				"virtua",
+				"Virtualenv: Activate"
+			]
+		],
+		"width": 872.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api"
+	],
+	"file_history":
+	[
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/views.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/permissions.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/permissions.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/views.py",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/NewGroupModal.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/LessonAdd.js",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/mixins.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/serializers.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/serializers.py",
+		"/media/d/dev/projects/skripsi/pelin_web/src/routes/group.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/Lessons.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/LessonContainer.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/AssignmentAdd.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/routes/index.js",
+		"/media/d/dev/projects/skripsi/pelin_web/.gitignore",
+		"/media/d/dev/dj/pelinapi/wsgi/pelin_api/apps/post/serializers.py",
+		"/media/d/dev/dj/pelinapi/wsgi/pelin_api/apps/post/views.py",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/PendingItem.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/MemberList.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/MemberItem.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/member.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/actions/member.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/Members.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/PendingList.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/index.js",
+		"/media/d/dev/dj/pelinapi/wsgi/pelin_api/apps/group/models.py",
+		"/media/d/dev/dj/pelinapi/wsgi/pelin_api/apps/group/views.py",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/post.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/App.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/member.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/NavMenu.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/user.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/lesson.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/assignment.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/group.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/auth.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/InviteMemberForm.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/actions/group.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/GroupDetail.js",
+		"/home/e/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/NewPostForm.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/post.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/Posts.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/PostItem.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/NewCommentForm.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/actions/post.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/config/bindFunctions.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/AssignmentList.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/auth/LoginForm.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/actions/index.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/index.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/actions/assignment.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/actions/lesson.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/CommentList.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/CommentItem.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/Assignment.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/PostList.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/assignment.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/reducers/post",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/user/Home.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/GroupTabs.js",
+		"/home/e/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/GroupList.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/Groups.js",
+		"/media/d/dev/projects/skripsi/pelin_api_project/.gitignore",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/group.js",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/urls.py",
+		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/Group.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/api/auth.js",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/exam/take.html",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/static/js/take-exam.js",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/applications/exam/views.py",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/applications/exam/urls.py",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/applications/quiz/views.py",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/config/settings/base.py",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/config/settings/local.py",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/config/urls.py",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/static/css/user.css",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/home.html",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/exam/detail.html",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/exam/detail-teacher.html",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/quiz/create.html",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/layout/base.html",
+		"/media/d/dev/projects/OnlineExam/backend/online_exam/templates/exam/list.html",
+		"/media/d/dev/projects/skripsi/pelin_web/src/Root.js",
+		"/media/d/dev/projects/skripsi/pelin_web/src/main.js",
+		"/media/d/dev/projects/skripsi/pelin_web/webpack.config.js",
+		"/media/d/dev/projects/skripsi/pelin_web/index.html",
+		"/media/d/dev/projects/skripsi/pelin_web/.babelrc",
+		"/media/d/development/projects/react/pelin_web/src/main.js",
+		"/media/d/development/projects/react/pelin_web/webpack.config.js",
+		"/media/d/development/projects/react/pelin_web/index.html",
+		"/media/d/development/projects/react/pelin_web/package.json",
+		"/media/d/development/projects/react/todo_list/.babelrc",
+		"/media/d/development/projects/react/pelin_web/.babelrc",
+		"/media/d/development/projects/react/todo_list/package.json",
+		"/media/d/development/projects/react/pelin_web/src/components/Api.js",
+		"/media/d/development/projects/react/pelin_web/src/routes.js",
+		"/media/d/development/projects/react/todo_list/webpack.config.js",
+		"/media/d/development/projects/react/redux-tutorial/11_src/src/promise-middleware.js",
+		"/media/d/development/projects/react/redux-tutorial/11_src/src/action-creators.js",
+		"/media/d/development/projects/react/redux-tutorial/11_src/webpack.config.js",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/views.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/models.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
+		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/mixins.py",
+		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/generics.py",
+		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/viewsets.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/message/views.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/message/serializers.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/urls.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/post/serializers.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/post/views.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/group/views.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/group/serializers.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/message/models.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/serializers.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/serializers.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/views.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/permissions.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/cache.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/config/settings/base.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/config/settings/local.py",
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/manage.py"
+	],
+	"find":
+	{
+		"height": 31.0
+	},
+	"find_in_files":
+	{
+		"height": 92.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"items",
+			"Back",
+			"back",
+			"data",
+			"Data",
+			"data",
+			"get_seria",
+			"remove",
+			"span",
+			"FlatActionButton",
+			"sencondary",
+			"student",
+			"KICK_MEMBER",
+			"id",
+			"memberId",
+			"nim",
+			"id",
+			"action",
+			".filter",
+			"nim",
+			"props",
+			"h4",
+			"div",
+			"PendingList",
+			"initialState",
+			"fetchPendings",
+			"initialState",
+			"fetchMemberAction",
+			"members",
+			"fetchMemberAction",
+			"var",
+			"showSn",
+			"groupI",
+			"callback",
+			"store.dispatch",
+			"clean",
+			"FlatButton",
+			"FontIcon",
+			"this.context",
+			"show",
+			"showSnackbar",
+			"showSnack",
+			"openSnackbar",
+			"setState",
+			"SerializerMethodField",
+			"renderCommentText",
+			"button",
+			"bindFunctions",
+			"Assignment",
+			"A",
+			"a",
+			"Assignment",
+			"assignment",
+			"assignments",
+			"renderAssignment",
+			"AssignmentList",
+			"fetchPostAction",
+			"posts",
+			"groupId",
+			"fetchPostAction",
+			"'\n",
+			"this.props.",
+			"p",
+			"MemberItem",
+			"MemberList",
+			"member",
+			"Member",
+			"member",
+			"renderMember",
+			"members",
+			"renderMembers",
+			"renderposts",
+			"Members",
+			"members",
+			"Members",
+			"members",
+			"fetchPosts",
+			"s",
+			"fetchPosts",
+			"fetchMemberAction",
+			"members",
+			"MemberService",
+			"fetchMemberAction",
+			"members",
+			"createInitialState",
+			"h4",
+			"button",
+			"router",
+			"fetchGroup(",
+			"fetchGroup",
+			"const",
+			"groups",
+			"Groups",
+			"groups",
+			"myGroups.items",
+			"items",
+			"groupId",
+			"handleActive",
+			"Edit Soal",
+			"MessageContainer",
+			"pages",
+			"MyProfile",
+			"Signup",
+			"commons",
+			"Login",
+			"\"",
+			"NotFound",
+			"def dispat",
+			"def dispatch(",
+			"get_object_or",
+			"initial",
+			"def initial(",
+			"self",
+			"status = ",
+			"user_2",
+			"user_1",
+			"user_2",
+			"user_1",
+			"is_teac",
+			"self.other",
+			"other_user",
+			"self.oth",
+			"self.user",
+			"self",
+			"self.user",
+			"get('target",
+			"self.target_user",
+			"self.target"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"'",
+			"reciever",
+			"sender",
+			"p",
+			"u",
+			"'admin",
+			"src=\"{% static "
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "apps/post/serializers.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2099,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1545,
+								1545
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"bh_regions":
+							[
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 936.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 70.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.CSS Extended Completions":
+	{
+		"height": 0.0
+	},
+	"output.anaconda_documentation":
+	{
+		"height": 102.0
+	},
+	"output.autopep8":
+	{
+		"height": 102.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.hg":
+	{
+		"height": 102.0
+	},
+	"pinned_build_system": "",
+	"project": "pelin_api.sublime-project",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"post/mode",
+				"apps/post/models.py"
+			],
+			[
+				"post/seri",
+				"apps/post/serializers.py"
+			],
+			[
+				"message/view",
+				"apps/message/views.py"
+			],
+			[
+				"lesson/perm",
+				"apps/lesson/permissions.py"
+			],
+			[
+				"group/perm",
+				"apps/group/permissions.py"
+			],
+			[
+				"lesson/view",
+				"apps/lesson/views.py"
+			],
+			[
+				"reducer/les",
+				"src/reducers/lesson.js"
+			],
+			[
+				"action/les",
+				"src/actions/lesson.js"
+			],
+			[
+				"api/les",
+				"src/api/lesson.js"
+			],
+			[
+				"newgr",
+				"src/components/group/NewGroupModal.js"
+			],
+			[
+				"lessons",
+				"src/pages/group/Lessons.js"
+			],
+			[
+				"lessonli",
+				"src/components/group/LessonList.js"
+			],
+			[
+				"lessoncon",
+				"src/pages/group/LessonContainer.js"
+			],
+			[
+				"lessonad",
+				"src/pages/group/LessonAdd.js"
+			],
+			[
+				"assignmentadd",
+				"src/pages/group/AssignmentAdd.js"
+			],
+			[
+				"routes/gr",
+				"src/routes/group.js"
+			],
+			[
+				"route/ind",
+				"src/routes/index.js"
+			],
+			[
+				"route/in",
+				"src/routes/index.js"
+			],
+			[
+				"message/vi",
+				"apps/message/views.py"
+			],
+			[
+				"post/v",
+				"apps/post/views.py"
+			],
+			[
+				"home",
+				"src/pages/user/Home.js"
+			],
+			[
+				"invitefo",
+				"src/components/group/InviteMemberForm.js"
+			],
+			[
+				"pendingi",
+				"src/components/group/PendingItem.js"
+			],
+			[
+				"pendingli",
+				"src/components/group/PendingList.js"
+			],
+			[
+				"action/mem",
+				"src/actions/member.js"
+			],
+			[
+				"memberli",
+				"src/components/group/MemberList.js"
+			],
+			[
+				"reducer/ind",
+				"src/reducers/index.js"
+			],
+			[
+				"reducer/post",
+				"src/reducers/post.js"
+			],
+			[
+				"memberite",
+				"src/components/group/MemberItem.js"
+			],
+			[
+				"actions/mem",
+				"src/actions/member.js"
+			],
+			[
+				"members.js",
+				"src/pages/group/Members.js"
+			],
+			[
+				"app.js",
+				"src/components/App.js"
+			],
+			[
+				"reducer/mem",
+				"src/reducers/member.js"
+			],
+			[
+				"api/memb",
+				"src/api/member.js"
+			],
+			[
+				"pendingite",
+				"src/components/group/PendingItem.js"
+			],
+			[
+				"pendinglis",
+				"src/components/group/PendingList.js"
+			],
+			[
+				"member.js",
+				"src/pages/group/Members.js"
+			],
+			[
+				"api/user",
+				"src/api/user.js"
+			],
+			[
+				"routein",
+				"src/routes/index.js"
+			],
+			[
+				"routes/inde",
+				"src/routes/index.js"
+			],
+			[
+				"nav",
+				"src/components/NavMenu.js"
+			],
+			[
+				"pendingl",
+				"src/components/group/PendingList.js"
+			],
+			[
+				"members",
+				"src/pages/group/Members.js"
+			],
+			[
+				"reducindex",
+				"src/reducers/index.js"
+			],
+			[
+				"action/grop",
+				"src/actions/group.js"
+			],
+			[
+				"reducer/gr",
+				"src/reducers/group.js"
+			],
+			[
+				"invite",
+				"src/components/group/InviteMemberForm.js"
+			],
+			[
+				"pages/members",
+				"src/pages/group/Members.js"
+			],
+			[
+				"action/membe",
+				"src/actions/member.js"
+			],
+			[
+				"api/mem",
+				"src/api/member.js"
+			],
+			[
+				"pages/groupdeta.js",
+				"src/pages/group/GroupDetail.js"
+			],
+			[
+				"memberit",
+				"src/components/group/MemberItem.js"
+			],
+			[
+				"components/memb",
+				"src/components/group/InviteMemberForm.js"
+			],
+			[
+				"post/seria",
+				"apps/post/serializers.py"
+			],
+			[
+				"api/post",
+				"src/api/post.js"
+			],
+			[
+				"newpo",
+				"src/components/group/NewPostForm.js"
+			],
+			[
+				"new",
+				"src/components/group/NewPostForm.js"
+			],
+			[
+				"postite",
+				"src/components/group/PostItem.js"
+			],
+			[
+				"login.js",
+				"src/components/auth/LoginForm.js"
+			],
+			[
+				"assignmentlis",
+				"src/components/group/AssignmentList.js"
+			],
+			[
+				"posts.js",
+				"src/pages/group/Posts.js"
+			],
+			[
+				"action/group",
+				"src/actions/group.js"
+			],
+			[
+				"action/post",
+				"src/actions/post.js"
+			],
+			[
+				"commentite",
+				"src/components/group/CommentItem.js"
+			],
+			[
+				"componentassignment.js",
+				"src/components/group/Assignment.js"
+			],
+			[
+				"assignmentli",
+				"src/components/group/AssignmentList.js"
+			],
+			[
+				"postli",
+				"src/components/group/PostList.js"
+			],
+			[
+				"groupdetai",
+				"src/pages/group/GroupDetail.js"
+			],
+			[
+				"postitem",
+				"src/components/group/PostItem.js"
+			],
+			[
+				"posts",
+				"src/pages/group/Posts.js"
+			],
+			[
+				"loginform",
+				"src/components/auth/LoginForm.js"
+			],
+			[
+				"postlis",
+				"src/components/group/PostList.js"
+			],
+			[
+				"memberitem",
+				"src/components/group/MemberItem.js"
+			],
+			[
+				"reducer/in",
+				"src/reducers/index.js"
+			],
+			[
+				"groupdetail",
+				"src/pages/group/GroupDetail.js"
+			],
+			[
+				"reducer",
+				"src/reducers/group.js"
+			],
+			[
+				"grouptab",
+				"src/components/group/GroupTabs.js"
+			],
+			[
+				"reducer/group",
+				"src/reducers/group.js"
+			],
+			[
+				"grouplist",
+				"src/components/group/GroupList.js"
+			],
+			[
+				"meme",
+				"src/pages/group/Members.js"
+			],
+			[
+				"groups.js",
+				"src/pages/group/Groups.js"
+			],
+			[
+				"group.js",
+				"src/reducers/group.js"
+			],
+			[
+				"page/group",
+				"src/pages/group/Posts.js"
+			],
+			[
+				"redcer/group",
+				"src/reducers/group.js"
+			],
+			[
+				"base.py",
+				"config/settings/base.py"
+			],
+			[
+				"action/groups",
+				"src/actions/group.js"
+			],
+			[
+				"reducer/groups",
+				"src/reducers/group.js"
+			],
+			[
+				"reducer/assign",
+				"src/reducers/assignment.js"
+			],
+			[
+				"reducers/group",
+				"src/reducers/group.js"
+			],
+			[
+				"api/groups",
+				"src/api/group.js"
+			],
+			[
+				"api/index",
+				"src/api/index.js"
+			],
+			[
+				"actions/group",
+				"src/actions/group.js"
+			],
+			[
+				"apps/ur",
+				"apps/urls.py"
+			],
+			[
+				"core/views",
+				"apps/core/views.py"
+			],
+			[
+				"api/users",
+				"src/api/user.js"
+			],
+			[
+				"api/auth",
+				"src/api/auth.js"
+			],
+			[
+				"src/page/group.js",
+				"src/pages/group/Group.js"
+			],
+			[
+				"src/action/assign",
+				"src/actions/assignment.js"
+			],
+			[
+				"routes/ind",
+				"src/routes/index.js"
+			],
+			[
+				"src/app",
+				"src/components/App.js"
+			],
+			[
+				"take-ex",
+				"static/js/take-exam.js"
+			],
+			[
+				"base.",
+				"config/settings/base.py"
+			],
+			[
+				"settin",
+				"config/settings/local.py"
+			],
+			[
+				"take",
+				"templates/exam/take.html"
+			],
+			[
+				"base.ht",
+				"templates/layout/base.html"
+			],
+			[
+				"user.css",
+				"static/css/user.css"
+			],
+			[
+				"gro",
+				"src/routes/group.js"
+			],
+			[
+				"main",
+				"src/main.js"
+			],
+			[
+				".bab",
+				".babelrc"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"core/mod",
+				"apps/core/models.py"
+			],
+			[
+				"coreser",
+				"apps/core/serializers.py"
+			],
+			[
+				"corevi",
+				"apps/core/views.py"
+			],
+			[
+				"corev",
+				"apps/core/views.py"
+			],
+			[
+				"urls",
+				"apps/urls.py"
+			],
+			[
+				"post/serial",
+				"apps/post/serializers.py"
+			],
+			[
+				"post/model",
+				"apps/post/models.py"
+			],
+			[
+				"base",
+				"config/settings/base.py"
+			],
+			[
+				"mana",
+				"manage.py"
+			],
+			[
+				"local",
+				"config/settings/local.py"
+			],
+			[
+				"models",
+				"apps/group/models.py"
+			],
+			[
+				"app.s",
+				"www/js/app.js"
+			],
+			[
+				"loading.h",
+				"www/templates/loading.html"
+			],
+			[
+				"sty",
+				"www/css/style.css"
+			],
+			[
+				"index",
+				"www/index.html"
+			],
+			[
+				"ion",
+				"ionic.project"
+			],
+			[
+				"serv",
+				"www/js/services.js"
+			],
+			[
+				"app.j",
+				"www/js/app.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 188.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
