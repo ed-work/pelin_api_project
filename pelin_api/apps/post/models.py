@@ -10,7 +10,7 @@ def generate_filename(self, filename):
     MEDIA_ROOT/<group_id>_<group_name>/filename
     """
     filename = urllib2.unquote(filename)
-    return "%s_%s/%s" % (self.group.pk, self.group.title, filename)
+    return "%s_%s/%s" % (self.group_pk, self.group.title, filename)
 
 
 class Post(TimeStamped):

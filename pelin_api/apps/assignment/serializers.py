@@ -33,7 +33,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
         extra_kwargs = {
-            'group': {'required': False, 'write_only': True}
+            'group': {'required': False}
         }
 
     def __init__(self, *args, **kwargs):
@@ -66,6 +66,20 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     def get_is_passed(self, obj):
         return datetime.datetime.now() > obj.due_date.replace(tzinfo=None)
+
+    def create(self, validated_data):
+        assignment = super(AssignmentSerializer, self).create(validated_data)
+
+        if self.context['request'].FILES:
+            try:
+                files = self.context['request'].FILES.getlist('files')
+                for f in files:
+                    AssignmentFiles.objects.create(
+                        assignment=assignment, file=f)
+            except Exception as e:
+                print e
+
+        return assignment
 
 
 class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):

@@ -1,7 +1,6 @@
 from django.db import models
 from django_extensions.db.models import TitleDescriptionModel
-from apps.core.models import User, Student, Teacher, TimeStamped, \
-    generate_filename
+from apps.core.models import User, TimeStamped, generate_filename
 
 
 class GroupFileModel(models.Model):

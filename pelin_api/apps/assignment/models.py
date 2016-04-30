@@ -4,13 +4,13 @@ from django.db import models
 from django_extensions.db.models import TitleDescriptionModel
 
 from apps.core.models import TimeStamped, User
-from apps.group.models import GroupFileModel, Group
+from apps.group.models import Group
 
 
 def generate_filename(self, filename):
     filename = urllib2.unquote(filename)
     return "groups/%s/%s" % (
-    self.assignment.group.pk, filename)
+        self.assignment.group_id, filename)
 
 
 class Assignment(TimeStamped, TitleDescriptionModel):

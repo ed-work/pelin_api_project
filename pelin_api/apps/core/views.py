@@ -1,12 +1,11 @@
 from rest_framework import views, parsers, renderers, permissions, \
-    authentication, viewsets, status
+    viewsets, status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from . import serializers
 from . import permissions as perm
-from apps.group.models import Group
 from apps.group.serializers import GroupSerializer
 from .models import User
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -66,6 +65,13 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         return serializers.NewUserSerializer \
             if self.request.method == 'POST' else self.serializer_class
 
+    def get_object(self):
+        obj = User.objects.get_with(self.kwargs.get('pk'))
+        if not obj:
+            return super(UserViewset, self).get_object()
+        self.check_object_permissions(self.request, obj)
+        return obj
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -74,7 +80,7 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         new_user = User.objects.get(
-                email=serializer.validated_data.get('email'))
+            email=serializer.validated_data.get('email'))
         new_user_serialized = serializers.UserSerializer(new_user, context={
             'request': self.request})
 

@@ -12,7 +12,7 @@ def generate_filename(self, filename):
     """
     filename = urllib2.unquote(filename)
     return "%s_%s/%s" % (
-    self.lesson.group.pk, self.lesson.group.title, filename)
+        self.lesson.group_pk, self.lesson.group.title, filename)
 
 
 class Lesson(TimeStamped, TitleDescriptionModel):

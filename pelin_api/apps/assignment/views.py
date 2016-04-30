@@ -19,7 +19,11 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     filter_fields = ['id', 'group', 'due_date']
 
     def get_permissions(self):
-        self.permission_classes += (IsMemberOrTeacher, AssignmentPermission)
+        if self.action == 'retrieve':
+            self.permission_classes += (AssignmentPermission,)
+        else:
+            self.permission_classes += (IsMemberOrTeacher,
+                                        AssignmentPermission)
         return super(AssignmentViewSet, self).get_permissions()
 
     def get_queryset(self):
@@ -48,9 +52,11 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
             if submitted_assignment:
                 serializer = SubmittedAssignmentSerializer(
-                    submitted_assignment, data=request.data, partial=True)
+                    submitted_assignment, data=request.data, partial=True,
+                    context={'request': request})
             else:
-                serializer = SubmittedAssignmentSerializer(data=request.data)
+                serializer = SubmittedAssignmentSerializer(
+                    data=request.data, context={'request': request})
 
             if serializer.is_valid(raise_exception=True):
                 serializer.save(assignment=assignment, student=request.user)
@@ -59,7 +65,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
                 return Response(serializer.errors,
                                 status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error': 'The assignment has passed deadline.'},
+            return Response({'detail': 'The assignment has passed deadline.'},
                             status=status.HTTP_403_FORBIDDEN)
 
     @detail_route(methods=['GET'])
@@ -79,14 +85,15 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
                 return Response(serializer.data)
             except SubmittedAssignment.DoesNotExist:
                 return Response(
-                    {'error': 'You have not submitted to this assignment.'},
+                    {'detail': 'You have not submitted to this assignment.'},
                     status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyAssignments(BaseLoginRequired, ListAPIView):
     def list(self, request, *args, **kwargs):
         group_ids = request.user.group_members.values_list('id', flat=True)
-        assignments = Assignment.objects.filter(group__pk__in=group_ids).select_related('group')
+        assignments = Assignment.objects.filter(
+            group__pk__in=group_ids).select_related('group')
         serializer = AssignmentSerializer(assignments, many=True,
                                           context={'request': request})
 

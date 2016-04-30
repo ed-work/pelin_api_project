@@ -21,15 +21,6 @@ class ConversationViewSet(BaseLoginRequired,
 
     def get_queryset(self):
         user = self.user
-        # return Conversation.objects.filter(
-        #     Q(sender=user) | Q(reciever=user)) \
-        #     .filter(
-        #         Q(message__isnull=False) &
-        #         Q(message__visible_to=None) |
-        #         Q(message__visible_to=user)
-        #     ) \
-        #     .select_related('sender', 'reciever') \
-        #     .distinct().order_by('-created_at')
         return Conversation.objects\
             .filter(
                 (Q(sender=user) | Q(reciever=user)) &
