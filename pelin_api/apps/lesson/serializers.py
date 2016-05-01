@@ -42,7 +42,7 @@ class LessonSerializer(serializers.ModelSerializer):
                 files = self.context['request'].FILES.getlist('files')
                 for f in files:
                     LessonFiles.objects.create(lesson=lesson, file=f)
-            except e:
+            except Exception as e:
                 print e
 
         return lesson

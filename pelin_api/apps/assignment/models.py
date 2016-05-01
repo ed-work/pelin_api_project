@@ -28,9 +28,9 @@ class AssignmentFiles(models.Model):
 
 class SubmittedAssignment(TimeStamped):
     assignment = models.ForeignKey(Assignment)
-    student = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     text = models.TextField()
     file = models.FileField(upload_to=generate_filename)
 
     def __unicode__(self):
-        return "%s: %s" % (self.student.name, self.assignment.title)
+        return "%s: %s" % (self.user.name, self.assignment.title)

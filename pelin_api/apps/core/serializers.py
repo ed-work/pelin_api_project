@@ -63,12 +63,12 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
     photo = VersatileImageFieldSerializer(
-            sizes=[
-                ('full', 'url'),
-                ('medium', 'thumbnail__350x350'),
-                ('small', 'thumbnail__100x100'),
-                ('thumbnail', 'thumbnail__50x50')
-            ]
+        sizes=[
+            ('full', 'url'),
+            ('medium', 'thumbnail__350x350'),
+            ('small', 'thumbnail__100x100'),
+            ('thumbnail', 'thumbnail__50x50')
+        ]
     )
 
     status = serializers.SerializerMethodField()

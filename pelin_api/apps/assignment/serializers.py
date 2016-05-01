@@ -56,7 +56,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
     def get_is_submitted(self, obj):
         try:
             assignment = SubmittedAssignment.objects.get(
-                student=self.context.get('request').user, assignment=obj)
+                user=self.context.get('request').user, assignment=obj)
         except SubmittedAssignment.DoesNotExist:
             assignment = None
 
@@ -95,20 +95,14 @@ class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
-    student = UserSerializer(
+    user = UserSerializer(
         fields=('id', 'first_name', 'name', 'student', 'url'))
     assignment_url = serializers.SerializerMethodField()
-    file = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super(SubmittedAssignmentSerializer, self).__init__(*args, **kwargs)
         if not self.context.get('request').user.is_teacher():
-            self.fields.pop('student')
-
-    def get_file(self, obj):
-        serializer = SubmittedAssignmentFileSerializer(obj, context={
-            'request': self.context.get('request')})
-        return serializer.data
+            self.fields.pop('user')
 
     def get_assignment_url(self, obj):
         return reverse('api:assignment-detail',
@@ -122,5 +116,5 @@ class SubmittedAssignmentSerializer(serializers.ModelSerializer):
         model = SubmittedAssignment
         extra_kwargs = {
             'assignment': {'required': False},
-            'student': {'required': False}
+            'user': {'required': False}
         }

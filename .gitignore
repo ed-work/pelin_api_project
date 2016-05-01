@@ -1,4 +1,5 @@
+.fuse*
 *.pyc
 .idea/
-media/
 *.sublime-*
+media/

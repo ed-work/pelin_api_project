@@ -46,7 +46,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         if datetime.datetime.now() < assignment.due_date.replace(tzinfo=None):
             try:
                 submitted_assignment = SubmittedAssignment.objects.get(
-                    assignment=assignment, student=request.user)
+                    assignment=assignment, user=request.user)
             except SubmittedAssignment.DoesNotExist:
                 submitted_assignment = None
 
@@ -59,7 +59,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
                     data=request.data, context={'request': request})
 
             if serializer.is_valid(raise_exception=True):
-                serializer.save(assignment=assignment, student=request.user)
+                serializer.save(assignment=assignment, user=request.user)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors,
@@ -79,7 +79,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         else:
             try:
                 submitted_assignment = SubmittedAssignment.objects.get(
-                    assignment__pk=pk, student=request.user)
+                    assignment__pk=pk, user=request.user)
                 serializer = SubmittedAssignmentSerializer(
                     submitted_assignment, context={'request': request})
                 return Response(serializer.data)
