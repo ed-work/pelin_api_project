@@ -37,7 +37,7 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
         obj = self.get_object()
 
         if obj.pendings.filter(
-                student__pk=user.pk).exists():
+                user__pk=user.pk).exists():
             msg = {'detail': 'Your join request in this group is pending.'}
             status_code = status.HTTP_400_BAD_REQUEST
         elif obj.members.filter(pk=user.pk).exists():
@@ -45,7 +45,7 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
             status_code = status.HTTP_400_BAD_REQUEST
         else:
             PendingApproval.objects.create(
-                student=user, group=self.get_object()
+                user=user, group=self.get_object()
             )
             msg = {'detail': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
@@ -69,7 +69,7 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
     @detail_route(permission_classes=[IsStudent])
     def cancel(self, request, pk=None):
         user = request.user
-        pending = get_object_or_none(PendingApproval, student__id=user.id)
+        pending = get_object_or_none(PendingApproval, user__id=user.id)
 
         if pending:
             pending.delete()

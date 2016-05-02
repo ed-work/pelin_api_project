@@ -4,6 +4,7 @@ import datetime
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from apps.core.serializers import UserSerializer
+from apps.group.serializers import GroupSerializer
 
 from .models import Assignment, AssignmentFiles, SubmittedAssignment
 
@@ -37,7 +38,12 @@ class AssignmentSerializer(serializers.ModelSerializer):
         }
 
     def __init__(self, *args, **kwargs):
+        group = kwargs.pop('group', None)
         super(AssignmentSerializer, self).__init__(*args, **kwargs)
+        # print self.fields.get('group')
+        if group:
+            self.fields['group'] = GroupSerializer(fields=('title'))
+
         if self.context.get('request').user.is_teacher():
             self.fields.pop('is_submitted')
 
