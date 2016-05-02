@@ -14,6 +14,8 @@ class GroupFileModel(models.Model):
 class Group(TimeStamped, TitleDescriptionModel):
     teacher = models.ForeignKey(User, related_name='group_teacher')
     members = models.ManyToManyField(User, related_name='group_members')
+    semester = models.IntegerField()
+    major = models.CharField(max_length=5)
 
     def __unicode__(self):
         return self.title

@@ -42,7 +42,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
         super(AssignmentSerializer, self).__init__(*args, **kwargs)
         # print self.fields.get('group')
         if group:
-            self.fields['group'] = GroupSerializer(fields=('title'))
+            self.fields['group'] = GroupSerializer(fields=('id', 'title'))
 
         if self.context.get('request').user.is_teacher():
             self.fields.pop('is_submitted')

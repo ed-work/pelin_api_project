@@ -74,6 +74,7 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
     is_teacher = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+    me = serializers.SerializerMethodField()
 
     # def __init__(self, *args, **kwargs):
     #     fields = kwargs.pop('fields', None)
@@ -87,6 +88,8 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     #     if remove_fields:
     #         [self.fields.pop(field) for field in self.fields if
     #          field in remove_fields]
+    def get_me(self, obj):
+        return self.context['request'].user == obj
 
     @staticmethod
     def get_status(obj):
@@ -103,8 +106,8 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'student', 'teacher', 'status', 'last_login', 'email',
-                  'name', 'name', 'date_joined', 'is_active',
-                  'is_teacher', 'url', 'photo')
+                  'name', 'name', 'date_joined', 'is_active', 'phone',
+                  'is_teacher', 'url', 'photo', 'me')
         extra_kwargs = {
             'password': {'write_only': True}
         }

@@ -90,6 +90,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False)
 
     photo = VersatileImageField(upload_to=upload_to, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
 
     status = models.IntegerField(
         choices=STATUS_CHOICES, default=2)
@@ -105,9 +106,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.status == 1
 
     def get_profile(self):
-        if self.is_teacher():
-            return self.teacher
-        return self.student
+        return self.teacher if self.is_teacher() else self.student
 
 
 class Teacher(models.Model):
