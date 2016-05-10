@@ -31,6 +31,11 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
         self.permission_classes += (GroupPermission,)
         return super(GroupViewSet, self).get_permissions()
 
+    def get_queryset(self):
+        if self.request.user.is_teacher():
+            return self.queryset.filter(teacher=self.request.user)
+        return super(GroupViewSet, self).get_queryset()
+
     @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
     def join(self, request, pk=None):
         user = request.user

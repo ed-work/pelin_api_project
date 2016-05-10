@@ -28,7 +28,7 @@ class ConversationViewSet(BaseLoginRequired,
                 (Q(message__visible_to=None) | Q(message__visible_to=user))
             )\
             .select_related('sender', 'reciever')\
-            .distinct().order_by('-created_at')
+            .distinct().order_by('-updated_at')
 
     def get_serializer_context(self):
         c = super(ConversationViewSet, self).get_serializer_context()

@@ -41,3 +41,8 @@ class Message(models.Model):
 
     def __unicode__(self):
         return "%s: %s" % (self.user.name, self.text)
+
+    def save(self, **kwargs):
+        super(Message, self).save(kwargs)
+        self.conversation.updated_at = self.sent
+        self.conversation.save()
