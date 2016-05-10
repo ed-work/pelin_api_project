@@ -6,20 +6,15 @@ from apps.group.models import Group
 
 
 def generate_filename(self, filename):
-    """
-    generate destination FileField filename arg to the following pattern:
-    MEDIA_ROOT/<group_name>_<group_id>/filename
-    """
     filename = urllib2.unquote(filename)
-    return "%s_%s/%s" % (
-        self.lesson.group_pk, self.lesson.group.title, filename)
+    return "groups/%s/%s" % (self.lesson.group_id, filename)
 
 
 class Lesson(TimeStamped, TitleDescriptionModel):
     group = models.ForeignKey(Group)
 
     def __unicode__(self):
-        return "%s: %s" % (self.title, self.group.title)
+        return "%s: %s" % (self.title, self.group_pk)
 
 
 class LessonFiles(models.Model):

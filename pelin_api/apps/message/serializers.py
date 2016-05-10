@@ -40,7 +40,8 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ('id', 'created_at', 'target_user', 'url', 'user_id')
+        fields = (
+            'id', 'created_at', 'target_user', 'url', 'user_id', 'updated_at')
 
 
 class MessageSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):

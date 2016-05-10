@@ -43,6 +43,7 @@ class LessonSerializer(serializers.ModelSerializer):
                 for f in files:
                     LessonFiles.objects.create(lesson=lesson, file=f)
             except Exception as e:
+                print 'error upload file lesson'
                 print e
 
         return lesson

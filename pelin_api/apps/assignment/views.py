@@ -8,7 +8,6 @@ from rest_framework.response import Response
 
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
-from apps.group.permissions import IsMemberOrTeacher
 from .permissions import AssignmentPermission
 from .serializers import AssignmentSerializer, SubmittedAssignmentSerializer
 from .models import Assignment, SubmittedAssignment
@@ -19,11 +18,7 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     filter_fields = ['id', 'group', 'due_date']
 
     def get_permissions(self):
-        if self.action == 'retrieve':
-            self.permission_classes += (AssignmentPermission,)
-        else:
-            self.permission_classes += (IsMemberOrTeacher,
-                                        AssignmentPermission)
+        self.permission_classes += (AssignmentPermission,)
         return super(AssignmentViewSet, self).get_permissions()
 
     def get_queryset(self):

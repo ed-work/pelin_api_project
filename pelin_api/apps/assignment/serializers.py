@@ -6,21 +6,21 @@ from rest_framework.reverse import reverse
 from apps.core.serializers import UserSerializer
 from apps.group.serializers import GroupSerializer
 
-from .models import Assignment, AssignmentFiles, SubmittedAssignment
+from .models import Assignment, SubmittedAssignment
 
 
-class AssignmentFilesSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
+# class AssignmentFilesSerializer(serializers.ModelSerializer):
+#     name = serializers.SerializerMethodField()
 
-    def get_name(self, obj):
-        return basename(obj.file.name)
+#     def get_name(self, obj):
+#         return basename(obj.file.name)
 
-    class Meta:
-        model = AssignmentFiles
-        fields = ('id', 'name', 'file')
-        extra_kwargs = {
-            'assignment': {'required': False}
-        }
+#     class Meta:
+#         model = AssignmentFiles
+#         fields = ('id', 'name', 'file')
+#         extra_kwargs = {
+#             'assignment': {'required': False}
+#         }
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
@@ -28,8 +28,8 @@ class AssignmentSerializer(serializers.ModelSerializer):
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
-    files = AssignmentFilesSerializer(
-        required=False, read_only=True, many=True)
+    # files = AssignmentFilesSerializer(
+    #     required=False, read_only=True, many=True)
 
     class Meta:
         model = Assignment
@@ -73,19 +73,19 @@ class AssignmentSerializer(serializers.ModelSerializer):
     def get_is_passed(self, obj):
         return datetime.datetime.now() > obj.due_date.replace(tzinfo=None)
 
-    def create(self, validated_data):
-        assignment = super(AssignmentSerializer, self).create(validated_data)
+    # def create(self, validated_data):
+    #     assignment = super(AssignmentSerializer, self).create(validated_data)
 
-        if self.context['request'].FILES:
-            try:
-                files = self.context['request'].FILES.getlist('files')
-                for f in files:
-                    AssignmentFiles.objects.create(
-                        assignment=assignment, file=f)
-            except Exception as e:
-                print e
+    #     if self.context['request'].FILES:
+    #         try:
+    #             files = self.context['request'].FILES.getlist('files')
+    #             for f in files:
+    #                 AssignmentFiles.objects.create(
+    #                     assignment=assignment, file=f)
+    #         except Exception as e:
+    #             print e
 
-        return assignment
+    #     return assignment
 
 
 class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):

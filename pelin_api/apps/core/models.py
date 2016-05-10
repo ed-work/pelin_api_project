@@ -9,10 +9,6 @@ from versatileimagefield.fields import VersatileImageField
 
 
 def upload_to(self, filename):
-    """
-    generate destination ImageField to the following pattern:
-    MEDIA_ROOT/<user nim>_<username>/profile.jpg
-    """
     name = "profile." + filename.split(".")[1]
     return "users/%s/%s" % (self.pk, name)
 

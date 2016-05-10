@@ -16,7 +16,7 @@ from .apps import INSTALLED_APPS
 import datetime
 
 BASE_DIR = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 WSGI_DIR = os.path.join(PROJECT_DIR, 'wsgi')
 
@@ -70,13 +70,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Makassar'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
