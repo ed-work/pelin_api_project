@@ -1,5 +1,10 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from django_extensions.db.models import TitleDescriptionModel
+from notifications.signals import notify
+
 from apps.core.models import User, TimeStamped, generate_filename
 
 
@@ -32,3 +37,12 @@ class PendingApproval(TimeStamped):
 
     def __unicode__(self):
         return "%s: %s" % (self.group.title, self.user.name)
+
+
+@receiver(post_save, sender=PendingApproval)
+def pending_notify(sender, instance, **kwargs):
+    notify.send(
+        instance.user,
+        verb='meminta bergabung',
+        target=instance.group,
+        recipient=instance.group.teacher)

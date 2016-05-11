@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"post",
+				"post_save	instance"
+			],
+			[
+				"insa",
+				"instance	param"
+			],
+			[
+				"noti",
+				"notify	instance"
+			],
+			[
+				"reci",
+				"receiver	function"
+			],
+			[
+				"memb",
+				"member	forstmt"
+			],
+			[
+				"member",
+				"members"
+			],
+			[
+				"dispa",
+				"dispatch	module"
+			],
+			[
+				"post_",
+				"post_save	statement"
+			],
+			[
+				"su",
+				"super	class"
+			],
+			[
 				"auto",
 				"auto_now	param"
 			],
@@ -42,10 +78,6 @@
 			[
 				"kick",
 				"kickMember"
-			],
-			[
-				"memb",
-				"memberId"
 			],
 			[
 				"group",
@@ -112,10 +144,6 @@
 				"MemberService"
 			],
 			[
-				"post",
-				"postId"
-			],
-			[
 				"toggle",
 				"toggleComment"
 			],
@@ -134,10 +162,6 @@
 			[
 				"renderComm",
 				"renderCommentList"
-			],
-			[
-				"dispa",
-				"dispatchProps"
 			],
 			[
 				"feth",
@@ -490,48 +514,48 @@
 			[
 				"boa",
 				"board"
-			],
-			[
-				"array",
-				"array"
-			],
-			[
-				"Boa",
-				"board_id"
-			],
-			[
-				"BoardC",
-				"BoardCollaborator"
-			],
-			[
-				"Board",
-				"BoardCollaborator"
-			],
-			[
-				"ketem",
-				"ketemu_member"
-			],
-			[
-				"ketemu",
-				"ketemu_admin"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "config/settings/base.py",
+			"file": "apps/message/models.py",
 			"settings":
 			{
-				"buffer_size": 3113,
+				"buffer_size": 1587,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "apps/message/serializers.py",
+			"file": "apps/core/signals.py",
 			"settings":
 			{
-				"buffer_size": 2049,
+				"buffer_size": 1920,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "apps/post/models.py",
+			"settings":
+			{
+				"buffer_size": 702,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "apps/group/models.py",
+			"settings":
+			{
+				"buffer_size": 1029,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "apps/lesson/models.py",
+			"settings":
+			{
+				"buffer_size": 650,
 				"line_ending": "Unix"
 			}
 		}
@@ -550,6 +574,10 @@
 			[
 				"pep",
 				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"act",
+				"Virtualenv: Activate"
 			],
 			[
 				"jsx",
@@ -791,32 +819,37 @@
 	[
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message"
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core"
 	],
 	"file_history":
 	[
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/__init__.py",
+		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/notifications/signals.py",
+		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/django/dispatch/dispatcher.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/views.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/base.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/apps.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/views.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/openshift.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/functions.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/serializers.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/permissions.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/views.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/serializers.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/serializers.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/serializers.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/__init__.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/migrations/__init__.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/mixins.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/views.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/views.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/generics.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/functions.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/backends.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/pelin_api.sublime-project",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/permissions.py",
@@ -824,7 +857,6 @@
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/views.py",
 		"/media/d/dev/projects/skripsi/pelin_web/src/components/group/NewGroupModal.js",
 		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/LessonAdd.js",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_web/src/routes/group.js",
 		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/Lessons.js",
 		"/media/d/dev/projects/skripsi/pelin_web/src/pages/group/LessonContainer.js",
@@ -918,12 +950,7 @@
 		"/media/d/development/projects/react/redux-tutorial/11_src/src/promise-middleware.js",
 		"/media/d/development/projects/react/redux-tutorial/11_src/src/action-creators.js",
 		"/media/d/development/projects/react/redux-tutorial/11_src/webpack.config.js",
-		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/views.py",
-		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
-		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/models.py",
-		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
-		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/mixins.py",
-		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/viewsets.py"
+		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/views.py"
 	],
 	"find":
 	{
@@ -942,6 +969,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"recipient",
+			"insance",
+			"group_pk",
+			"self.request",
+			"generate_filename",
+			"file",
 			"lesson",
 			"group_pk",
 			"student",
@@ -1063,13 +1096,7 @@
 			"Signup",
 			"commons",
 			"Login",
-			"\"",
-			"NotFound",
-			"def dispat",
-			"def dispatch(",
-			"get_object_or",
-			"initial",
-			"def initial("
+			"\""
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1094,24 +1121,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "config/settings/base.py",
+					"file": "apps/message/models.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3113,
+						"buffer_size": 1587,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2301,
-								2301
+								1462,
+								1462
 							]
 						],
 						"settings":
@@ -1134,16 +1161,26 @@
 							],
 							"bh_regions":
 							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -1154,68 +1191,157 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1513.0,
+						"translation.y": 19.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "apps/core/signals.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1920,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1881,
+								1881
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 823.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "apps/message/serializers.py",
+					"buffer": 2,
+					"file": "apps/post/models.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2049,
+						"buffer_size": 702,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1556,
-								1556
+								283,
+								283
 							]
 						],
 						"settings":
@@ -1230,6 +1356,102 @@
 								{
 									"characters": ".#",
 									"selector": "text.html"
+								}
+							],
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "apps/group/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1029,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								826,
+								826
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
 								},
 								{
 									"characters": ".#",
@@ -1238,71 +1460,169 @@
 							],
 							"bh_regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 648.0,
+						"translation.x": -0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "apps/lesson/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 650,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								496,
+								496
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1373,8 +1693,48 @@
 		"selected_items":
 		[
 			[
+				"post/mod",
+				"apps/post/models.py"
+			],
+			[
+				"group/mod",
+				"apps/group/models.py"
+			],
+			[
+				"les/mod",
+				"apps/lesson/models.py"
+			],
+			[
+				"messa/vi",
+				"apps/message/views.py"
+			],
+			[
+				"message/mod",
+				"apps/message/models.py"
+			],
+			[
+				"settings/",
+				"config/settings/apps.py"
+			],
+			[
 				"open",
 				"config/settings/openshift.py"
+			],
+			[
+				"group/views",
+				"apps/group/views.py"
+			],
+			[
+				"mess/mod",
+				"apps/message/models.py"
+			],
+			[
+				"lesson/mod",
+				"apps/lesson/models.py"
+			],
+			[
+				"assig/mod",
+				"apps/assignment/models.py"
 			],
 			[
 				"mess/ser",
@@ -1395,10 +1755,6 @@
 			[
 				"messa/mod",
 				"apps/message/models.py"
-			],
-			[
-				"post/mod",
-				"apps/post/models.py"
 			],
 			[
 				"assi/mod",
@@ -1443,10 +1799,6 @@
 			[
 				"assign/view",
 				"apps/assignment/views.py"
-			],
-			[
-				"assig/mod",
-				"apps/assignment/models.py"
 			],
 			[
 				"assign/vi",
@@ -1851,38 +2203,6 @@
 			[
 				"actions/group",
 				"src/actions/group.js"
-			],
-			[
-				"apps/ur",
-				"apps/urls.py"
-			],
-			[
-				"core/views",
-				"apps/core/views.py"
-			],
-			[
-				"api/users",
-				"src/api/user.js"
-			],
-			[
-				"api/auth",
-				"src/api/auth.js"
-			],
-			[
-				"src/page/group.js",
-				"src/pages/group/Group.js"
-			],
-			[
-				"src/action/assign",
-				"src/actions/assignment.js"
-			],
-			[
-				"routes/ind",
-				"src/routes/index.js"
-			],
-			[
-				"src/app",
-				"src/components/App.js"
 			]
 		],
 		"width": 0.0
@@ -1909,7 +2229,7 @@
 	"settings":
 	{
 	},
-	"show_minimap": false,
+	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,

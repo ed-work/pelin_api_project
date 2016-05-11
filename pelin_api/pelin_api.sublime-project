@@ -14,7 +14,9 @@
 			"path": "."
 		}
 	],
-	"settings": {
+	"settings":
+	{
 		"python_interpreter": "/home/e/.virtualenvs/pelin/bin/python"
-	}
+	},
+	"virtualenv": "/home/e/.virtualenvs/pelin"
 }
