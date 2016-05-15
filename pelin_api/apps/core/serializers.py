@@ -3,6 +3,7 @@ from rest_framework.reverse import reverse
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 from versatileimagefield.serializers import VersatileImageFieldSerializer
+from notifications.models import Notification
 
 from apps.core.mixins import DynamicFieldsSerializer
 from .models import User, Student, Teacher
@@ -158,3 +159,8 @@ class NewUserSerializer(serializers.Serializer):
             raise serializers.ValidationError('Teacher must have a valid nik')
 
         return attrs
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification

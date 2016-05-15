@@ -111,3 +111,10 @@ JWT_AUTH = {
 API_CACHE_TIMEOUT = 300
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# TODO: add each value to env
+PUSHER = {
+    "APP_ID": "193977",
+    "KEY": "da45359a390da94367d7",
+    "SECRET": "8acded69dfb4d533532c",
+}

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"multi",
+				"multiprocessing	module"
+			],
+			[
+				"push",
+				"pusher_async	function"
+			],
+			[
 				"post",
 				"post_save	instance"
 			],
@@ -506,32 +514,33 @@
 			[
 				"slide",
 				"slideUp"
-			],
-			[
-				"appen",
-				"appendTo"
-			],
-			[
-				"boa",
-				"board"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "apps/message/models.py",
+			"contents": "- Post signal:\n    - async save to Notification model\n    - Notification signal:\n        - async send to pusher\n        - async send to GCM\n",
 			"settings":
 			{
-				"buffer_size": 1587,
+				"buffer_size": 140,
+				"line_ending": "Unix",
+				"name": "- Post signal:"
+			}
+		},
+		{
+			"file": "apps/core/realtime.py",
+			"settings":
+			{
+				"buffer_size": 606,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "apps/core/signals.py",
+			"file": "config/urls.py",
 			"settings":
 			{
-				"buffer_size": 1920,
+				"buffer_size": 957,
 				"line_ending": "Unix"
 			}
 		},
@@ -539,23 +548,7 @@
 			"file": "apps/post/models.py",
 			"settings":
 			{
-				"buffer_size": 702,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "apps/group/models.py",
-			"settings":
-			{
-				"buffer_size": 1029,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "apps/lesson/models.py",
-			"settings":
-			{
-				"buffer_size": 650,
+				"buffer_size": 1505,
 				"line_ending": "Unix"
 			}
 		}
@@ -574,6 +567,10 @@
 			[
 				"pep",
 				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"isor",
+				"ImportSort: Sort imports"
 			],
 			[
 				"act",
@@ -823,21 +820,22 @@
 	],
 	"file_history":
 	[
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/base.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/functions.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/apps.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/signals.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/__init__.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/models.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/notifications/signals.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/django/dispatch/dispatcher.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/views.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/base.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/apps.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/views.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/openshift.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/functions.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/serializers.py",
@@ -949,8 +947,7 @@
 		"/media/d/development/projects/react/todo_list/webpack.config.js",
 		"/media/d/development/projects/react/redux-tutorial/11_src/src/promise-middleware.js",
 		"/media/d/development/projects/react/redux-tutorial/11_src/src/action-creators.js",
-		"/media/d/development/projects/react/redux-tutorial/11_src/webpack.config.js",
-		"/media/d/development/projects/skripsi/pelin_api_project/pelin_api/apps/core/views.py"
+		"/media/d/development/projects/react/redux-tutorial/11_src/webpack.config.js"
 	],
 	"find":
 	{
@@ -958,7 +955,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 92.0,
+		"height": 158.0,
 		"where_history":
 		[
 			""
@@ -1121,24 +1118,23 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "apps/message/models.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1587,
+						"buffer_size": 140,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1462,
-								1462
+								140,
+								140
 							]
 						],
 						"settings":
@@ -1159,90 +1155,90 @@
 									"selector": "text.html"
 								}
 							],
+							"auto_name": "- Post signal:",
 							"bh_regions":
 							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
 							],
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"default_dir": "/media/d/dev/projects/skripsi/pelin_api_project/pelin_api",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 19.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "apps/core/signals.py",
+					"file": "apps/core/realtime.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1920,
+						"buffer_size": 606,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1881,
-								1881
+								355,
+								355
 							]
 						],
 						"settings":
@@ -1257,168 +1253,76 @@
 								{
 									"characters": ".#",
 									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
 								}
 							],
 							"bh_regions":
 							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
-								"bh_regex_content"
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"open_with_edit": true,
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 823.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "apps/post/models.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 702,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								283,
-								283
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"auto_complete_triggers":
-							[
-								{
-									"characters": "<",
-									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
-								}
-							],
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1428,20 +1332,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "apps/group/models.py",
+					"buffer": 2,
+					"file": "config/urls.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1029,
+						"buffer_size": 957,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								826,
-								826
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1456,101 +1360,9 @@
 								{
 									"characters": ".#",
 									"selector": "text.html"
-								}
-							],
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
-							],
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "apps/lesson/models.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 650,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								496,
-								496
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"auto_complete_triggers":
-							[
+								},
 								{
-									"characters": "<",
+									"characters": ".#",
 									"selector": "text.html"
 								},
 								{
@@ -1560,61 +1372,61 @@
 							],
 							"bh_regions":
 							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
-								"bh_regex_content"
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
 						},
@@ -1622,7 +1434,115 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "apps/post/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1505,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1504,
+								1504
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".#",
+									"selector": "text.html"
+								}
+							],
+							"bh_regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 625.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1697,6 +1617,34 @@
 				"apps/post/models.py"
 			],
 			[
+				"base.",
+				"config/settings/base.py"
+			],
+			[
+				"post/mode",
+				"apps/post/models.py"
+			],
+			[
+				"url.py",
+				"config/urls.py"
+			],
+			[
+				"base",
+				"config/settings/base.py"
+			],
+			[
+				"base.p",
+				"config/settings/base.py"
+			],
+			[
+				"apps.",
+				"config/settings/apps.py"
+			],
+			[
+				"assign/mod",
+				"apps/assignment/models.py"
+			],
+			[
 				"group/mod",
 				"apps/group/models.py"
 			],
@@ -1747,10 +1695,6 @@
 			[
 				"ass/seri",
 				"apps/assignment/serializers.py"
-			],
-			[
-				"base.",
-				"config/settings/base.py"
 			],
 			[
 				"messa/mod",
@@ -1835,10 +1779,6 @@
 			[
 				"ass/mo",
 				"apps/assignment/models.py"
-			],
-			[
-				"post/mode",
-				"apps/post/models.py"
 			],
 			[
 				"post/seri",
@@ -2183,26 +2123,6 @@
 			[
 				"reducer/groups",
 				"src/reducers/group.js"
-			],
-			[
-				"reducer/assign",
-				"src/reducers/assignment.js"
-			],
-			[
-				"reducers/group",
-				"src/reducers/group.js"
-			],
-			[
-				"api/groups",
-				"src/api/group.js"
-			],
-			[
-				"api/index",
-				"src/api/index.js"
-			],
-			[
-				"actions/group",
-				"src/actions/group.js"
 			]
 		],
 		"width": 0.0

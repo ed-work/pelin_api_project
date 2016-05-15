@@ -5,7 +5,6 @@ DEFAULT_DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'notifications',
 ]
 
 THIRD_PARTY_APPS = [
@@ -14,6 +13,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'versatileimagefield',
     'corsheaders',
+    'notifications',
 ]
 
 PROJECT_APPS = [

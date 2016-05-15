@@ -1,5 +1,6 @@
 from rest_framework import views, parsers, renderers, permissions, \
     viewsets, status
+from rest_framework.mixins import ListModelMixin
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
@@ -100,3 +101,13 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         serializer = GroupSerializer(joined_groups, many=True,
                                      context={'request': request})
         return Response(serializer.data)
+
+
+class NotificationViewset(
+        BaseLoginRequired,
+        ListModelMixin,
+        viewsets.GenericViewSet):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        return self.request.user.notifications.all()

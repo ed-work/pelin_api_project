@@ -13,8 +13,8 @@ router.register(r'users', core_views.UserViewset)
 router.register(r'groups', group_views.GroupViewSet)
 router.register(r'messages', message_views.ConversationViewSet,
                 base_name='message')
-# router.register(r'posts', group_post_views.GroupPostViewSet,
-#                 base_name='post')
+router.register(r'notifications', core_views.NotificationViewset,
+                base_name='notification')
 
 pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                      trailing_slash=False)
