@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import Lesson, LessonFiles
+from apps.core.mixins import DynamicFieldsSerializer
 
 
 class LessonFilesSerializer(serializers.ModelSerializer):
@@ -20,7 +21,7 @@ class LessonFilesSerializer(serializers.ModelSerializer):
         }
 
 
-class LessonSerializer(serializers.ModelSerializer):
+class LessonSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     group_url = serializers.SerializerMethodField()
     files = LessonFilesSerializer(required=False, read_only=True, many=True)
 

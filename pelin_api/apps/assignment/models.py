@@ -1,3 +1,5 @@
+import urllib2
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -6,8 +8,12 @@ from django_extensions.db.models import TitleDescriptionModel
 from notifications.signals import notify
 
 from apps.core.models import TimeStamped, User
-from apps.core.functions import generate_filename
 from apps.group.models import Group
+
+
+def generate_filename(self, filename):
+    filename = urllib2.unquote(filename)
+    return "group/%s/%s" % (self.assignment.group_id, filename)
 
 
 class Assignment(TimeStamped, TitleDescriptionModel):

@@ -23,6 +23,7 @@ PROJECT_APPS = [
     'apps.lesson',
     'apps.assignment',
     'apps.message',
+    'apps.notif'
 ]
 
 INSTALLED_APPS = DEFAULT_DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS

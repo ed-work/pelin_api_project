@@ -2,10 +2,12 @@ from rest_framework import serializers
 
 from apps.core.mixins import RequestContextSerializer
 from apps.core.serializers import UserSerializer
+from apps.core.mixins import DynamicFieldsSerializer
 from .models import Post, Comment
 
 
-class GroupPostSerializer(serializers.ModelSerializer):
+class GroupPostSerializer(DynamicFieldsSerializer,
+                          serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     me = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField()

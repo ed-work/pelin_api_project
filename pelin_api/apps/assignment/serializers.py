@@ -7,6 +7,7 @@ from apps.core.serializers import UserSerializer
 from apps.group.serializers import GroupSerializer
 
 from .models import Assignment, SubmittedAssignment
+from apps.core.mixins import DynamicFieldsSerializer
 
 
 # class AssignmentFilesSerializer(serializers.ModelSerializer):
@@ -23,7 +24,8 @@ from .models import Assignment, SubmittedAssignment
 #         }
 
 
-class AssignmentSerializer(serializers.ModelSerializer):
+class AssignmentSerializer(DynamicFieldsSerializer,
+                           serializers.ModelSerializer):
     is_submitted = serializers.SerializerMethodField()
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
