@@ -2,7 +2,6 @@ from multiprocessing import Process
 
 from pusher import Pusher
 from django.conf import settings
-from django.core import serializers
 
 
 pusher = Pusher(
@@ -12,7 +11,6 @@ pusher = Pusher(
 
 
 def pusher_async(channel, event, data):
-    data = serializers.serialize('json', [data])[1:-1]
     p = Process(target=pusher.trigger, args=(channel, event, data))
     p.start()
 

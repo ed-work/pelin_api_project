@@ -7,7 +7,6 @@ from notifications.signals import notify
 from apps.core.models import TimeStamped, User
 from apps.core.functions import generate_filename
 from apps.group.models import Group
-from apps.core.realtime import pusher_async
 
 
 class Post(TimeStamped):
@@ -39,7 +38,11 @@ def post_notify(sender, instance, **kwargs):
             verb='mengirim post',
             target=instance.group,
             recipient=member)
-    pusher_async('notifications', 'new-post', instance)
+    notify.send(
+        instance.user,
+        verb='mengirim post',
+        target=instance.group,
+        recipient=instance.group.teacher)
 
 
 @receiver(post_save, sender=Comment)

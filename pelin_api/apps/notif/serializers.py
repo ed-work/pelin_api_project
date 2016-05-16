@@ -2,7 +2,9 @@ from rest_framework import serializers
 from apps.core.serializers import UserSerializer
 from apps.group.serializers import GroupSerializer
 from notifications.models import Notification
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .realtime import pusher_async
 from apps.post.models import Post
 from apps.lesson.models import Lesson
 from apps.assignment.models import Assignment
@@ -35,3 +37,9 @@ class NotificationSerializer(DynamicFieldsSerializer,
         model = Notification
         fields = ('id', 'target', 'level', 'timestamp', 'actor',
                   'verb', 'action_object', 'unread')
+
+
+@receiver(post_save, sender=Notification)
+def notif_post_save(sender, instance, **kwargs):
+    serializer = NotificationSerializer(instance)
+    pusher_async(str(instance.recipient_id), 'new-notif', serializer.data)
