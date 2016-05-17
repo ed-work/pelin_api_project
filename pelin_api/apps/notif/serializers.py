@@ -32,11 +32,22 @@ class NotificationSerializer(DynamicFieldsSerializer,
     actor = UserSerializer(fields=['name', 'photo'])
     target = GroupSerializer(fields=['title', 'id'])
     action_object = ActionObjectField(read_only=True)
+    action_type = serializers.SerializerMethodField()
+
+    def get_action_type(self, obj):
+        if isinstance(obj.action_object, Lesson):
+            return 'lesson'
+        elif isinstance(obj.action_object, Post):
+            return 'post'
+        elif isinstance(obj.action_object, Assignment):
+            return 'assignment'
+        else:
+            return None
 
     class Meta:
         model = Notification
         fields = ('id', 'target', 'level', 'timestamp', 'actor',
-                  'verb', 'action_object', 'unread')
+                  'verb', 'action_object', 'unread', 'action_type')
 
 
 @receiver(post_save, sender=Notification)
