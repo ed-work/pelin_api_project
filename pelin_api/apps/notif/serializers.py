@@ -19,7 +19,7 @@ from apps.core.mixins import DynamicFieldsSerializer
 class ActionObjectField(serializers.RelatedField):
     def to_representation(self, value):
         if isinstance(value, Post):
-            serializer = GroupPostSerializer(value)
+            serializer = GroupPostSerializer(value, fields=['id', 'text'])
         elif isinstance(value, Lesson):
             serializer = LessonSerializer(value, fields=['title', 'id'])
         elif isinstance(value, Assignment):
