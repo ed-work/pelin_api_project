@@ -38,15 +38,3 @@ class SubmittedAssignment(TimeStamped):
 
     def __unicode__(self):
         return "%s: %s" % (self.user.name, self.assignment.title)
-
-
-@receiver(post_save, sender=Assignment)
-def assignment_notify(sender, instance, **kwargs):
-    if instance.group.members.exists():
-        for member in instance.group.members.all():
-            notify.send(
-                instance.group.teacher,
-                verb='menambahkan tugas',
-                action_object=instance,
-                target=instance.group,
-                recipient=member)

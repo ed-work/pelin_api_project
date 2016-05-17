@@ -46,7 +46,8 @@ class AssignmentSerializer(DynamicFieldsSerializer,
         if group:
             self.fields['group'] = GroupSerializer(fields=('id', 'title'))
 
-        if self.context.get('request').user.is_teacher():
+        if self.context.get('request') and \
+                self.context.get('request').user.is_teacher():
             self.fields.pop('is_submitted')
 
     def get_group_url(self, obj):

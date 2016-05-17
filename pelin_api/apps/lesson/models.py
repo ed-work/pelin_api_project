@@ -26,15 +26,3 @@ class Lesson(TimeStamped, TitleDescriptionModel):
 class LessonFiles(models.Model):
     lesson = models.ForeignKey(Lesson, related_name="files")
     file = models.FileField(upload_to=generate_filename)
-
-
-@receiver(post_save, sender=Lesson)
-def lesson_notify(sender, instance, **kwargs):
-    if instance.group.members.exists():
-        for member in instance.group.members.all():
-            notify.send(
-                instance.group.teacher,
-                verb='menambahkan materi',
-                action_object=instance,
-                target=instance.group,
-                recipient=member)

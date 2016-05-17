@@ -14,6 +14,14 @@ class NotificationViewset(
         ListModelMixin,
         GenericViewSet):
     serializer_class = NotificationSerializer
+    filter_fields = ['unread']
+
+    def list(self, request, *args, **kwargs):
+        if 'count' in request.query_params:
+            print 'cunting'
+            return Response({'count': self.get_queryset()
+                             .filter(unread=True).count()})
+        return super(NotificationViewset, self).list(request, *args, **kwargs)
 
     def get_queryset(self):
         return self.request.user.notifications.all()

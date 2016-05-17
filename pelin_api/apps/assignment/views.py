@@ -55,7 +55,8 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
             if serializer.is_valid(raise_exception=True):
                 serializer.save(assignment=assignment, user=request.user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data,
+                                status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors,
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -89,6 +90,11 @@ class MyAssignments(BaseLoginRequired, ListAPIView):
         group_ids = request.user.group_members.values_list('id', flat=True)
         assignments = Assignment.objects.filter(
             group__pk__in=group_ids).select_related('group')
+
+        if 'count' in request.query_params:
+            return Response({'count': assignments.filter(
+                due_date__gt=datetime.datetime.now()).count()})
+
         serializer = AssignmentSerializer(assignments, many=True, group=True,
                                           context={'request': request})
 

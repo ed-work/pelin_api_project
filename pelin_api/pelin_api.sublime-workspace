@@ -520,35 +520,10 @@
 	"buffers":
 	[
 		{
-			"contents": "- Post signal:\n    - async save to Notification model\n    - Notification signal:\n        - async send to pusher\n        - async send to GCM\n",
+			"file": "apps/post/models.py",
 			"settings":
 			{
-				"buffer_size": 140,
-				"line_ending": "Unix",
-				"name": "- Post signal:"
-			}
-		},
-		{
-			"file": "apps/notif/realtime.py",
-			"settings":
-			{
-				"buffer_size": 515,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "apps/notif/models.py",
-			"settings":
-			{
-				"buffer_size": 390,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "apps/notif/serializers.py",
-			"settings":
-			{
-				"buffer_size": 2110,
+				"buffer_size": 1895,
 				"line_ending": "Unix"
 			}
 		},
@@ -556,15 +531,7 @@
 			"file": "apps/notif/views.py",
 			"settings":
 			{
-				"buffer_size": 1054,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "apps/lesson/serializers.py",
-			"settings":
-			{
-				"buffer_size": 1529,
+				"buffer_size": 1401,
 				"line_ending": "Unix"
 			}
 		}
@@ -836,25 +803,30 @@
 	],
 	"file_history":
 	[
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/serializers.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/urls.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/views.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/serializers.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/views.py",
+		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/mixins.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/serializers.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/views.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/models.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/serializers.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/realtime.py",
+		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/apps.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/__init__.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/serializers.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/post/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/mypusher.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/views.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/serializers.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/notifications/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/views.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/models.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/models.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/fields.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/relations.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/serializers.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/urls.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/notif/models.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/functions.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/django/db/models/fields/related.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/group/views.py",
@@ -871,8 +843,6 @@
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/config/settings/openshift.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/message/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/permissions.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/assignment/views.py",
-		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/lesson/serializers.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/migrations/__init__.py",
 		"/media/d/dev/projects/skripsi/pelin_api_project/pelin_api/apps/core/mixins.py",
 		"/home/e/.virtualenvs/pelin/lib/python2.7/site-packages/rest_framework/generics.py",
@@ -960,10 +930,7 @@
 		"/media/d/dev/projects/skripsi/pelin_web/src/Root.js",
 		"/media/d/dev/projects/skripsi/pelin_web/src/main.js",
 		"/media/d/dev/projects/skripsi/pelin_web/webpack.config.js",
-		"/media/d/dev/projects/skripsi/pelin_web/index.html",
-		"/media/d/dev/projects/skripsi/pelin_web/.babelrc",
-		"/media/d/development/projects/react/pelin_web/src/main.js",
-		"/media/d/development/projects/react/pelin_web/webpack.config.js"
+		"/media/d/dev/projects/skripsi/pelin_web/index.html"
 	],
 	"find":
 	{
@@ -982,6 +949,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"filters =",
+			"filter =",
+			"def get(",
 			"core.realtime",
 			"get_serializer_class(self",
 			"get_serializer(self",
@@ -1106,10 +1076,7 @@
 			"fetchGroup",
 			"const",
 			"groups",
-			"Groups",
-			"groups",
-			"myGroups.items",
-			"items"
+			"Groups"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1134,23 +1101,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "apps/post/models.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 140,
+						"buffer_size": 1895,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								111,
-								111
+								1323,
+								1323
 							]
 						],
 						"settings":
@@ -1165,133 +1133,25 @@
 								{
 									"characters": ".#",
 									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
 								}
 							],
-							"auto_name": "- Post signal:",
 							"bh_regions":
 							[
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
-							],
-							"default_dir": "/media/d/dev/projects/skripsi/pelin_api_project/pelin_api",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "apps/notif/realtime.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 515,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								264,
-								264
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"auto_complete_triggers":
-							[
-								{
-									"characters": "<",
-									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
-								}
-							],
-							"bh_regions":
-							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -1302,259 +1162,63 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "apps/notif/models.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 390,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								390,
-								390
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"auto_complete_triggers":
-							[
-								{
-									"characters": "<",
-									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
-								}
-							],
-							"bh_regions":
-							[
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "apps/notif/serializers.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2110,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1823,
-								1823
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"auto_complete_triggers":
-							[
-								{
-									"characters": "<",
-									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
-								}
-							],
-							"bh_regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_regex_content"
 							],
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 703.0,
+						"translation.x": -0.0,
+						"translation.y": 697.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 1,
 					"file": "apps/notif/views.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1054,
+						"buffer_size": 1401,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								569,
-								569
+								322,
+								322
 							]
 						],
 						"settings":
@@ -1573,171 +1237,71 @@
 							],
 							"bh_regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "apps/lesson/serializers.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1529,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								208,
-								208
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"auto_complete_triggers":
-							[
-								{
-									"characters": "<",
-									"selector": "text.html"
-								},
-								{
-									"characters": ".#",
-									"selector": "text.html"
-								}
-							],
-							"bh_regions":
-							[
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
+						"translation.x": -0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1808,6 +1372,30 @@
 		"selected_items":
 		[
 			[
+				"post/mod",
+				"apps/post/models.py"
+			],
+			[
+				"urls",
+				"apps/urls.py"
+			],
+			[
+				"lesson/mod",
+				"apps/lesson/models.py"
+			],
+			[
+				"notif/seri",
+				"apps/notif/serializers.py"
+			],
+			[
+				"post/seri",
+				"apps/post/serializers.py"
+			],
+			[
+				"post/view",
+				"apps/post/views.py"
+			],
+			[
 				"apps",
 				"config/settings/apps.py"
 			],
@@ -1830,14 +1418,6 @@
 			[
 				"assign/mod",
 				"apps/assignment/models.py"
-			],
-			[
-				"urls",
-				"apps/urls.py"
-			],
-			[
-				"post/mod",
-				"apps/post/models.py"
 			],
 			[
 				"base.",
@@ -1894,10 +1474,6 @@
 			[
 				"mess/mod",
 				"apps/message/models.py"
-			],
-			[
-				"lesson/mod",
-				"apps/lesson/models.py"
 			],
 			[
 				"assig/mod",
@@ -1998,10 +1574,6 @@
 			[
 				"ass/mo",
 				"apps/assignment/models.py"
-			],
-			[
-				"post/seri",
-				"apps/post/serializers.py"
 			],
 			[
 				"message/view",
@@ -2310,14 +1882,6 @@
 			[
 				"grouplist",
 				"src/components/group/GroupList.js"
-			],
-			[
-				"meme",
-				"src/pages/group/Members.js"
-			],
-			[
-				"groups.js",
-				"src/pages/group/Groups.js"
 			]
 		],
 		"width": 0.0
