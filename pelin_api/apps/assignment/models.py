@@ -1,11 +1,8 @@
 import urllib2
 
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from django_extensions.db.models import TitleDescriptionModel
-from notifications.signals import notify
 
 from apps.core.models import TimeStamped, User
 from apps.group.models import Group
