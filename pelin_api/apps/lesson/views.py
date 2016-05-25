@@ -2,7 +2,6 @@ from rest_framework import viewsets
 
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
-from apps.group.permissions import IsMemberOrTeacher
 from .permissions import LessonPermission
 from .serializers import LessonSerializer
 from .models import Lesson
@@ -13,10 +12,7 @@ class LessonViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     filter_fields = ['title', 'description']
 
     def get_permissions(self):
-        if self.action == 'destroy':
-            self.permission_classes += (LessonPermission,)
-        else:
-            self.permission_classes += (IsMemberOrTeacher, LessonPermission)
+        self.permission_classes += (LessonPermission,)
         return super(LessonViewSet, self).get_permissions()
 
     def get_queryset(self):
