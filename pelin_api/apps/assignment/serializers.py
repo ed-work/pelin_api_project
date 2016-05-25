@@ -30,6 +30,7 @@ class AssignmentSerializer(DynamicFieldsSerializer,
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+    submitted_student = serializers.SerializerMethodField()
     # files = AssignmentFilesSerializer(
     #     required=False, read_only=True, many=True)
 
@@ -46,9 +47,11 @@ class AssignmentSerializer(DynamicFieldsSerializer,
         if group:
             self.fields['group'] = GroupSerializer(fields=('id', 'title'))
 
-        if self.context.get('request') and \
-                self.context.get('request').user.is_teacher():
-            self.fields.pop('is_submitted')
+        if self.context.get('request'):
+            if self.context.get('request').user.is_teacher():
+                self.fields.pop('is_submitted')
+            else:
+                self.fields.pop('submitted_student')
 
     def get_group_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.group.pk},
@@ -75,6 +78,9 @@ class AssignmentSerializer(DynamicFieldsSerializer,
 
     def get_is_passed(self, obj):
         return datetime.datetime.now() > obj.due_date.replace(tzinfo=None)
+
+    def get_submitted_student(self, obj):
+        return obj.submittedassignment_set.count()
 
     # def create(self, validated_data):
     #     assignment = super(AssignmentSerializer, self).create(validated_data)
@@ -105,7 +111,7 @@ class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
     user = UserSerializer(
-        fields=('id', 'first_name', 'name', 'student', 'url'))
+        fields=('id', 'first_name', 'name', 'student', 'url', 'photo'))
     assignment_url = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):

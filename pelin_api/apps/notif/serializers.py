@@ -83,14 +83,15 @@ def post_notify(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Comment)
 def comment_notify(sender, instance, **kwargs):
-    notif = Notification.objects.create(
-        actor=instance.user,
-        verb='mengomentari postingan',
-        target=instance.post.group,
-        action_object=instance.post,
-        recipient=instance.post.user)
-    notif.save()
-    send_pusher_notif(str(notif.recipient_id), notif)
+    if instance.user_id != instance.post.user_id:
+        notif = Notification.objects.create(
+            actor=instance.user,
+            verb='mengomentari postingan',
+            target=instance.post.group,
+            action_object=instance.post,
+            recipient=instance.post.user)
+        notif.save()
+        send_pusher_notif(str(notif.recipient_id), notif)
 
 
 @receiver(post_save, sender=Lesson)

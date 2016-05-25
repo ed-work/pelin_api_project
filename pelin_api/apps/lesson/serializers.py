@@ -9,13 +9,17 @@ from apps.core.mixins import DynamicFieldsSerializer
 
 class LessonFilesSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
+    size = serializers.SerializerMethodField()
 
     def get_name(self, obj):
         return basename(obj.file.name)
 
+    def get_size(self, obj):
+        return obj.file.size
+
     class Meta:
         model = LessonFiles
-        fields = ('id', 'name', 'file')
+        fields = ('id', 'name', 'file', 'size')
         extra_kwargs = {
             'lesson': {'required': False}
         }

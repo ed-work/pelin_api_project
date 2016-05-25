@@ -13,10 +13,16 @@ def generate_filename(self, filename):
     return "group/%s/%s" % (self.assignment.group_id, filename)
 
 
+def generate_filename_assignment(self, filename):
+    filename = urllib2.unquote(filename)
+    return "group/%s/%s" % (self.group_id, filename)
+
+
 class Assignment(TimeStamped, TitleDescriptionModel):
     group = models.ForeignKey(Group)
     due_date = models.DateTimeField()
-    file = models.FileField(upload_to=generate_filename, blank=True, null=True)
+    file = models.FileField(
+        upload_to=generate_filename_assignment, blank=True, null=True)
 
     def __unicode__(self):
         return "%s %s" % (self.title, self.due_date)

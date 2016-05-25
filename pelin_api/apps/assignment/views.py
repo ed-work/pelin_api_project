@@ -23,7 +23,9 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
 
     def get_queryset(self):
         assignments = Assignment.objects.filter(
-            group__pk=self.kwargs.get('group_pk')).select_related('group')
+            group__pk=self.kwargs.get('group_pk'))\
+            .order_by('-created_at', '-due_date')\
+            .select_related('group')
         return assignments
 
     def perform_create(self, serializer):
@@ -89,11 +91,11 @@ class MyAssignments(BaseLoginRequired, ListAPIView):
     def list(self, request, *args, **kwargs):
         group_ids = request.user.group_members.values_list('id', flat=True)
         assignments = Assignment.objects.filter(
-            group__pk__in=group_ids).select_related('group')
+            group__pk__in=group_ids, due_date__gt=datetime.datetime.now())\
+            .select_related('group')
 
         if 'count' in request.query_params:
-            return Response({'count': assignments.filter(
-                due_date__gt=datetime.datetime.now()).count()})
+            return Response({'count': assignments.count()})
 
         serializer = AssignmentSerializer(assignments, many=True, group=True,
                                           context={'request': request})
