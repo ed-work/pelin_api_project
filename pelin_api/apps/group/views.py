@@ -74,7 +74,9 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
     @detail_route(permission_classes=[IsStudent])
     def cancel(self, request, pk=None):
         user = request.user
-        pending = get_object_or_none(PendingApproval, user__id=user.id)
+        pending = get_object_or_none(PendingApproval,
+                                     user__id=user.id,
+                                     group__id=pk)
 
         if pending:
             pending.delete()
