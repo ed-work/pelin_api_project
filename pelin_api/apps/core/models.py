@@ -82,8 +82,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     name = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
+    username = models.CharField(max_length=15, null=True, blank=True)
 
     is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
 
     photo = VersatileImageField(upload_to=upload_to, blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
@@ -98,11 +101,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.name
 
+    def get_short_name(self):
+        return self.name.split(' ')[0]
+
     def is_teacher(self):
         return self.status == 1
 
     def get_profile(self):
         return self.teacher if self.is_teacher() else self.student
+
+    def save(self, *args, **kwargs):
+        self.username = self.email
+        super(User, self).save(*args, **kwargs)
 
 
 class Teacher(models.Model):

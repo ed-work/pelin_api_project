@@ -90,6 +90,7 @@ AUTH_USER_MODEL = 'core.User'
 
 AUTHENTICATION_BACKENDS = (
     'apps.core.backends.CustomAuthBackend',
+    'django.contrib.auth.backends.ModelBackend'
 )
 
 REST_FRAMEWORK = {

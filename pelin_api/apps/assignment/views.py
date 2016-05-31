@@ -95,7 +95,8 @@ class MyAssignments(BaseLoginRequired, ListAPIView):
             .select_related('group')
 
         if 'count' in request.query_params:
-            return Response({'count': assignments.count()})
+            count = assignments.exclude(submittedassignment__user=request.user)
+            return Response({'count': count.count()})
 
         serializer = AssignmentSerializer(assignments, many=True, group=True,
                                           context={'request': request})

@@ -8,6 +8,7 @@ from .lesson import views as lesson_views
 from .assignment import views as assignment_views
 from .message import views as message_views
 from .notif import views as notif_views
+from .video import views as video_views
 
 router = DefaultRouter(trailing_slash=False)
 router.register(r'users', core_views.UserViewset)
@@ -16,6 +17,7 @@ router.register(r'messages', message_views.ConversationViewSet,
                 base_name='message')
 router.register(r'notifications', notif_views.NotificationViewset,
                 base_name='notification')
+router.register(r'videos', video_views.VideoViewset, base_name='video')
 
 pendings_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                      trailing_slash=False)
