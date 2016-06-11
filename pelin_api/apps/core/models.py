@@ -82,7 +82,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     name = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
-    username = models.CharField(max_length=15, null=True, blank=True)
+    username = models.CharField(max_length=50, null=True, blank=True)
 
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -93,6 +93,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     status = models.IntegerField(
         choices=STATUS_CHOICES, default=2)
+
+    reg_id = models.CharField(max_length=162, blank=True, null=True)
 
     objects = UserManager()
 

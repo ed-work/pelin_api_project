@@ -20,6 +20,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^/', 'apps.video.views.index', name='home'),
+    url(r'^$', 'apps.video.views.index', name='home'),
     url(r'^api/', include('apps.urls', namespace='api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,7 +8,7 @@ import apps.lesson.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('group', '0002_auto_20160425_1119'),
+        ('group', '0001_initial'),
     ]
 
     operations = [

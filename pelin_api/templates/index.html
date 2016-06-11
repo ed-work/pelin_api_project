@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for video in videos %}
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 0">
+                    <video id="my-video" class="video-js" controls preload="auto" data-setup="{}" style='width: 100%; height:200px'>
+                        <source src="{{ MEDIA_URL }}{{video.file}}" type='video/mp4'>
+                    </video>
+
+                    <div class="card-content" style="padding: 10px">
+                        <p style="font-size: 16px; margin: 0">{{video.title}}</p>
+                        {% if video.description %}
+                        <p>{{video.description}}</p>
+                        {% endif %}
+                    </div>
+                    <hr style="margin: 0" />
+                    <div class="card-action" style="padding: 10px">
+                        <p class="pull-left">{{video.user.name}}</p>
+                        <a href='#' class="btn btn-primary pull-right">Lihat</a>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

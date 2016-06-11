@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0004_user_is_admin'),
+        ('core', '0001_initial'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.AlterField(
             model_name='user',
             name='username',
-            field=models.CharField(max_length=15, null=True, blank=True),
+            field=models.CharField(max_length=50, null=True, blank=True),
         ),
     ]

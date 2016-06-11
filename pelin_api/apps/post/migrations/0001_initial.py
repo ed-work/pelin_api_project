@@ -3,13 +3,13 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
-import apps.post.models
+import apps.core.functions
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('group', '0002_auto_20160425_1119'),
+        ('group', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now=True)),
                 ('updated_at', models.DateTimeField(auto_now_add=True)),
                 ('text', models.TextField()),
-                ('file', models.FileField(null=True, upload_to=apps.post.models.generate_filename, blank=True)),
+                ('file', models.FileField(null=True, upload_to=apps.core.functions.generate_filename, blank=True)),
                 ('group', models.ForeignKey(to='group.Group')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
                 ('votes', models.ManyToManyField(related_name='user_votes', to=settings.AUTH_USER_MODEL)),

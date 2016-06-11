@@ -50,13 +50,15 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -119,3 +121,7 @@ PUSHER = {
     "KEY": "da45359a390da94367d7",
     "SECRET": "8acded69dfb4d533532c",
 }
+
+FCM_URL = 'https://fcm.googleapis.com/fcm/send'
+FCM_SERVER_ID = os.environ.get('FCM_SERVER_ID',
+                               'AIzaSyAMh5nsSfbsd7-hEcpOHZWP5wLhPHzYPCg')

@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
                 ('reciever', models.ForeignKey(related_name='conversation_reciever', to=settings.AUTH_USER_MODEL)),
                 ('sender', models.ForeignKey(related_name='conversation_sender', to=settings.AUTH_USER_MODEL)),
             ],

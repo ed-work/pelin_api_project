@@ -107,9 +107,10 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
         model = User
         fields = ('id', 'student', 'teacher', 'status', 'last_login', 'email',
                   'name', 'name', 'date_joined', 'is_active', 'phone',
-                  'is_teacher', 'url', 'photo', 'me')
+                  'is_teacher', 'url', 'photo', 'me', 'reg_id')
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'reg_id': {'write_only': True, 'required': False}
         }
 
 

@@ -15,5 +15,6 @@ class VideoPermission(BasePermission):
             return True
         else:
             return request.user.is_admin or\
-                request.user.is_staff
+                request.user.is_staff or\
+                request.user.is_teacher()
         return True

@@ -20,6 +20,8 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now_add=True)),
                 ('title', models.CharField(max_length=255, verbose_name='title')),
                 ('description', models.TextField(null=True, verbose_name='description', blank=True)),
+                ('semester', models.IntegerField()),
+                ('major', models.CharField(max_length=5)),
                 ('members', models.ManyToManyField(related_name='group_members', to=settings.AUTH_USER_MODEL)),
                 ('teacher', models.ForeignKey(related_name='group_teacher', to=settings.AUTH_USER_MODEL)),
             ],
@@ -34,7 +36,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now=True)),
                 ('updated_at', models.DateTimeField(auto_now_add=True)),
                 ('group', models.ForeignKey(related_name='pendings', to='group.Group')),
-                ('student', models.ForeignKey(related_name='pending_approval', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(related_name='pending_approval', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'abstract': False,

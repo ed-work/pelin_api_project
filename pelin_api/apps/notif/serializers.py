@@ -4,7 +4,7 @@ from apps.group.serializers import GroupSerializer
 from notifications.models import Notification
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .realtime import pusher_async
+from .realtime import pusher_async, fcm_async
 from apps.post.models import Post, Comment
 from apps.lesson.models import Lesson
 from apps.assignment.models import Assignment
@@ -55,13 +55,19 @@ def send_pusher_notif(channels, data):
     pusher_async(channels, 'new-notif', serializer.data)
 
 
+def send_fcm_notif(reg_ids, data):
+    serializer = NotificationSerializer(data)
+    fcm_async(reg_ids, serializer.data)
+
+
 @receiver(post_save, sender=Post)
 def post_notify(sender, instance, **kwargs):
     channels = []
 
+    members = instance.group.members
     actor = instance.user
     target = instance.group
-    for member in instance.group.members.exclude(id=instance.user_id):
+    for member in members.exclude(id=instance.user_id):
         channels.append(str(member.id))
         notif = Notification.objects.create(
             actor=actor,
@@ -79,6 +85,7 @@ def post_notify(sender, instance, **kwargs):
         notif.save()
 
     send_pusher_notif(channels, notif)
+    send_fcm_notif(members.value_list('reg_id', flat=True), notif)
 
 
 @receiver(post_save, sender=Comment)
