@@ -18,7 +18,6 @@ class NotificationViewset(
 
     def list(self, request, *args, **kwargs):
         if 'count' in request.query_params:
-            print 'cunting'
             return Response({'count': self.get_queryset()
                              .filter(unread=True).count()})
         return super(NotificationViewset, self).list(request, *args, **kwargs)
