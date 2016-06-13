@@ -22,6 +22,11 @@ class VideoViewset(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    def get_queryset(self):
+        if 'mine' in self.request.query_params:
+            return Video.objects.filter(user=self.request.user)
+        return super(VideoViewset, self).get_queryset()
+
 
 def index(request):
     videos = Video.objects.all()

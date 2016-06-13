@@ -16,7 +16,8 @@ THIRD_PARTY_APPS = [
     'versatileimagefield',
     'corsheaders',
     'notifications',
-    'taggit'
+    'taggit',
+    'taggit_serializer'
 ]
 
 PROJECT_APPS = [
