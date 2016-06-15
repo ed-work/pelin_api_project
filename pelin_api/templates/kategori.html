@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h4 style="text-align:center;margin-bottom:30px">kategori: {{category}}</h4>
+    {% if videos %}
     {% for video in videos %}
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -14,6 +16,14 @@
                         {% if video.description %}
                         <p>{{video.description}}</p>
                         {% endif %}
+                        
+                        <p>
+                        {% for c in video.category.all|slice:":5" %}
+                        <a href="/kategori/{{ c.name }}">
+                            <span class="badge">{{ c.name }}</span>
+                        </a>
+                        {% endfor %}
+                        </p>
                     </div>
                     <hr style="margin: 0" />
                     <div class="card-action" style="padding: 10px">
@@ -25,6 +35,9 @@
             </div>
         </div>
     {% endfor %}
+    {% else %}
+    <h5>tidak ditemukan</h5>
+    {% endif %}
 {% endblock content %}
 
 {% block custom_js %}

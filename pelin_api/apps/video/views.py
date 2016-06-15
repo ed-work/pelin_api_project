@@ -30,7 +30,9 @@ class VideoViewset(ModelViewSet):
 
 
 def index(request):
-    videos = Video.objects.select_related('user')
+    videos = Video.objects\
+        .select_related('user')\
+        .prefetch_related('category')
     return render(request, 'index.html', {'videos': videos})
 
 
@@ -40,7 +42,8 @@ def search(request):
         videos = Video.objects.filter(
             Q(title__icontains=keyword) |
             Q(user__name__icontains=keyword) |
-            Q(category__name__in=[keyword])).distinct()
+            Q(category__name__in=[keyword]))\
+            .prefetch_related('category').distinct()
     except:
         keyword = ''
         videos = None
@@ -51,8 +54,12 @@ def search(request):
 
 
 def kategori(request, category):
-    videos = Video.objects.filter(category__name__in=[category])
-    return render(request, 'kategori.html', {'videos': videos})
+    videos = Video.objects\
+        .filter(category__name__in=[category])\
+        .prefetch_related('category')
+    return render(request, 'kategori.html', {
+        'videos': videos, 'category': category
+    })
 
 
 def video_detail(request, pk):

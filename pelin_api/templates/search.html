@@ -16,6 +16,14 @@
                         {% if video.description %}
                         <p>{{video.description}}</p>
                         {% endif %}
+                        
+                        <p>
+                        {% for c in video.category.all|slice:":5" %}
+                        <a href="/kategori/{{ c.name }}">
+                            <span class="badge">{{ c.name }}</span>
+                        </a>
+                        {% endfor %}
+                        </p>
                     </div>
                     <hr style="margin: 0" />
                     <div class="card-action" style="padding: 10px">
