@@ -16,7 +16,7 @@
                         {% if video.description %}
                         <p>{{video.description}}</p>
                         {% endif %}
-                        
+
                         <p>
                         {% for c in video.category.all|slice:":5" %}
                         <a href="/kategori/{{ c.name }}">
@@ -43,7 +43,10 @@
 {% block custom_js %}
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.venobox').venobox()
-        })
+            $('.venobox').venobox();
+
+            $('input[name=keyword]').val("{{keyword}}");
+            $('input[name=keyword]').focus();
+        });
     </script>
 {% endblock custom_js %}
