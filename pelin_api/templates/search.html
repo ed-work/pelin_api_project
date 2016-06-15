@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h4 style="text-align:center;margin-bottom:30px">search: {{keyword}}</h4>
+    {% if videos %}
     {% for video in videos %}
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -25,6 +27,9 @@
             </div>
         </div>
     {% endfor %}
+    {% else %}
+    <h5>tidak ditemukan</h5>
+    {% endif %}
 {% endblock content %}
 
 {% block custom_js %}
