@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'apps.video.views.index', name='home'),
     url(r'^search/$', 'apps.video.views.search', name='search'),
+    url(r'^register/$', 'apps.core.views.register', name='register'),
     url(r'^kategori/(?P<category>.*)/$',
         'apps.video.views.kategori', name='category'),
     url(r'^api/', include('apps.urls', namespace='api')),

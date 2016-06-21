@@ -26,6 +26,15 @@ class VideoViewset(ModelViewSet):
     def get_queryset(self):
         if 'mine' in self.request.query_params:
             return self.queryset.filter(user=self.request.user)
+
+        if 'search' in self.request.query_params:
+            keyword = self.request.query_params.get('search')
+            return self.queryset.filter(
+                Q(title__icontains=keyword) |
+                Q(user__name__icontains=keyword) |
+                Q(category__name__in=[keyword]))\
+                .prefetch_related('category').distinct()
+
         return super(VideoViewset, self).get_queryset()
 
 

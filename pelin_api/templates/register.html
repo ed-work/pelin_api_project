@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pelin - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <style>
+        body {
+            margin: 0; padding: 0
+        }
+        .bg {
+            background-image: url("{{ MEDIA_URL }}/registerbg.png");
+            background-size: cover;
+            background-position-y: 55%;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="paper">
+            <div style="position: relative, height: 100%">
+                <form>
+                    <div>
+                        <input id="name" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

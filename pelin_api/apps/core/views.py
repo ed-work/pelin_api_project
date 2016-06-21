@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.contrib import messages
 from rest_framework import views, parsers, renderers, permissions, \
     viewsets, status
 from rest_framework.authtoken.models import Token
@@ -7,7 +9,7 @@ from rest_framework.decorators import detail_route
 from . import serializers
 from . import permissions as perm
 from apps.group.serializers import GroupSerializer
-from .models import User
+from .models import User, Student
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
@@ -100,3 +102,30 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         serializer = GroupSerializer(joined_groups, many=True,
                                      context={'request': request})
         return Response(serializer.data)
+
+
+def register(request):
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        name = request.POST.get('name')
+        nim = request.POST.get('nim')
+        email = request.POST.get('email')
+        major = request.POST.get('major')
+
+        try:
+            u = User.objects.create(email=email, name=name)
+            u.set_password(password)
+            u.save()
+
+            s = Student.objects.create(user=u, nim=nim, major=major)
+            s.save()
+            messages.info(
+                request,
+                "Register berhasil, silahkan cek email untu konfirmasi.")
+        except:
+            messages.error(
+                request,
+                "Error! mohon cek kembali.")
+            print 'error register'
+
+    return render(request, 'register.html')

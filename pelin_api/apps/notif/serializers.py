@@ -85,7 +85,7 @@ def post_notify(sender, instance, **kwargs):
         notif.save()
 
     send_pusher_notif(channels, notif)
-    send_fcm_notif(members.value_list('reg_id', flat=True), notif)
+    # send_fcm_notif(members.value_list('reg_id', flat=True), notif)
 
 
 @receiver(post_save, sender=Comment)

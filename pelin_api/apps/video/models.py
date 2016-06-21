@@ -14,3 +14,6 @@ class Video(TimeStamped, TitleDescriptionModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Video, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title

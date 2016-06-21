@@ -25,7 +25,7 @@ class Assignment(TimeStamped, TitleDescriptionModel):
         upload_to=generate_filename_assignment, blank=True, null=True)
 
     def __unicode__(self):
-        return "%s %s" % (self.title, self.due_date)
+        return self.title
 
 
 # class AssignmentFiles(models.Model):
