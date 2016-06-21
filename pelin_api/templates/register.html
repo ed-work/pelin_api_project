@@ -16,20 +16,74 @@
             width: 100%;
             position: fixed;
         }
+        .paper {
+            position: absolute;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            padding: 20px;
+            margin-left: -160px;
+            margin-top: -240px;
+            width: 350px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body>
     <div class="bg">
-        <div class="paper">
+        <div class="paper z-depth-3">
             <div style="position: relative, height: 100%">
-                <form>
-                    <div>
-                        <input id="name" type="text" class="validate">
-                        <label for="last_name">Last Name</label>
+                <form method="POST" action="{% url 'register' %}"> {% csrf_token %}
+                    <div class="input-field">
+                        <input name="name" id="name" type="text" class="validate" autofocus autocomplete="off" required>
+                        <label for="name">Nama</label>
+                    </div>
+                    <div class="input-field">
+                        <input name="nim" id="nim" type="text" class="validate" autocomplete="off" required>
+                        <label for="nim">NIM</label>
+                    </div>
+                    <div class="input-field">
+                        <input name="email" id="email" type="email" class="validate" autocomplete="off" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field">
+                        <input name="password" id="password" type="password" class="validate" autocomplete="off" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-field">
+                        <select required name="major">
+                            <option value="" disabled selected>Jurusan</option>
+                            <option value="1">S1 TI</option>
+                            <option value="2">D3 TI</option>
+                            <option value="3">D3 MI</option>
+                            <option value="4">S1 DKV</option>
+                        </select>
+                    </div>
+                    
+                    {% if messages %}
+                        {% for m in messages %}
+                            <div class="card-panel {% if m.tags == 'error' %} red {% else %} teal {% endif %} darken-1">
+                                <span class="white-text">{{ m }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div style="margin-top: 40px">
+                        <a href="/kelas/login">Login</a>
+                        <button class="waves-effect waves-light btn" style="float: right">Register</button>
+                        <div style="clear: both"></div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
 </body>
 </html>

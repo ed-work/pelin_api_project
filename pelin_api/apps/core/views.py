@@ -121,11 +121,12 @@ def register(request):
             s.save()
             messages.info(
                 request,
-                "Register berhasil, silahkan cek email untu konfirmasi.")
-        except:
+                "Register berhasil, silahkan login")
+        except Exception, e:
             messages.error(
                 request,
-                "Error! mohon cek kembali.")
+                "Error! mohon cek kembali")
             print 'error register'
+            print e
 
     return render(request, 'register.html')
