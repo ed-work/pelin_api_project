@@ -29,5 +29,8 @@ urlpatterns = [
         name='password-reset-confirm'),
     url(r'^kategori/(?P<category>.*)/$',
         'apps.video.views.kategori', name='category'),
+    url(r'^materi/$', 'apps.group.views.materi', name='list-group'),
+    url(r'^materi/(?P<group_id>.+)/$',
+        'apps.group.views.materi_group', name='list-group-lessons'),
     url(r'^api/', include('apps.urls', namespace='api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

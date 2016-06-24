@@ -1,5 +1,4 @@
 from uuid import uuid4
-from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
 from django.shortcuts import render
@@ -15,6 +14,7 @@ from . import serializers
 from . import permissions as perm
 from apps.group.serializers import GroupSerializer
 from .models import User, Student, UserPasswordReset
+from .functions import send_password_reset_async
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
@@ -170,9 +170,8 @@ def password_reset(request):
             msg = get_template('password_reset_email.html').render(
                 Context(context))
 
-            mail = EmailMessage(subject, msg, to=to, from_email=from_email)
-            mail.content_subtype = 'html'
-            mail.send()
+            send_password_reset_async(
+                subject, msg, to=to, from_email=from_email)
             success = 'success'
             error = None
         else:

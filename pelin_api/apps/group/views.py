@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from rest_framework import status, permissions
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.generics import ListAPIView, get_object_or_404
@@ -220,3 +222,20 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
             return Response(
                 {'error': 'Student is not member of this group.'},
                 status=status.HTTP_404_NOT_FOUND)
+
+
+def materi(request):
+    groups = Group.objects.all()
+    return render(request, 'materi.html', {'groups': groups})
+
+
+def materi_group(request, group_id):
+    g = get_object_or_none(Group, pk=group_id)
+
+    if not g:
+        return HttpResponseRedirect('/materi')
+
+    lessons = g.lesson_set.select_related('group').all()
+
+    return render(request, 'materi_group.html',
+                  {'lessons': lessons, 'g': g})
