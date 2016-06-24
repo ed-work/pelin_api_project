@@ -158,3 +158,9 @@ class Student(models.Model):
 
     def __unicode__(self):
         return self.user.name
+
+
+class UserPasswordReset(models.Model):
+    user = models.ForeignKey(User)
+    code = models.CharField(max_length=40)
+    new_pass = models.CharField(max_length=15)

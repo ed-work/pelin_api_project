@@ -44,9 +44,6 @@ class ConversationViewSet(BaseLoginRequired,
             )
         except Conversation.DoesNotExist:
             conversation = None
-            # conversation = Conversation.objects.create(
-            #     sender=self.request.user,
-            #     reciever=other_user)
 
         return conversation
 
@@ -75,6 +72,13 @@ class ConversationViewSet(BaseLoginRequired,
             # return super(ConversationViewSet, self).retrieve(request, *args,
             #                                                  **kwargs)
             return Response([])
+
+    def list(self, request, *args, **kwargs):
+        if 'status' in request.query_params:
+            return Response({'unread': 10})
+
+        self.get_queryset().update(status='r')
+        return super(ConversationViewSet, self).list(request, *args, **kwargs)
 
     @detail_route(methods=['POST'])
     def reply(self, request, pk):

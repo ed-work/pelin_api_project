@@ -131,5 +131,6 @@ class SubmittedAssignmentSerializer(serializers.ModelSerializer):
         model = SubmittedAssignment
         extra_kwargs = {
             'assignment': {'required': False},
-            'user': {'required': False}
+            'user': {'required': False},
+            'text': {'required': False}
         }

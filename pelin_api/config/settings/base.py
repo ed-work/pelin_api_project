@@ -125,3 +125,11 @@ PUSHER = {
 FCM_URL = 'https://fcm.googleapis.com/fcm/send'
 FCM_SERVER_ID = os.environ.get('FCM_SERVER_ID',
                                'AIzaSyAMh5nsSfbsd7-hEcpOHZWP5wLhPHzYPCg')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pelin.stmikbumigora@gmail.com'
+EMAIL_HOST_PASSWORD = 'pelinpelinpelin'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
