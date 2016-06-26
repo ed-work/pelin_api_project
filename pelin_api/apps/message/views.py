@@ -77,7 +77,7 @@ class ConversationViewSet(BaseLoginRequired,
         if 'status' in request.query_params:
             return Response({'unread': 10})
 
-        self.get_queryset().update(status='r')
+        # self.get_queryset().update(status='r')
         return super(ConversationViewSet, self).list(request, *args, **kwargs)
 
     @detail_route(methods=['POST'])

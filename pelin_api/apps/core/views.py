@@ -145,7 +145,7 @@ def password_reset(request):
         try:
             u = Student.objects.select_related('user').\
                 get(nim=nim, user__email=email).user
-        except User.DoesNotExist:
+        except Student.DoesNotExist:
             u = None
 
         if u:

@@ -24,6 +24,6 @@ def send_password_reset(subject, msg, to, from_email):
 
 
 def send_password_reset_async(subject, msg, to, from_email):
-    p = Process(target=send_password_reset_async,
+    p = Process(target=send_password_reset,
                 args=[subject, msg, to, from_email])
     p.start()
