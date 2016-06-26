@@ -4,7 +4,9 @@ from rest_framework import status, permissions
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework.response import Response
-from rest_framework.mixins import ListModelMixin, DestroyModelMixin
+from rest_framework.mixins import (ListModelMixin,
+                                   DestroyModelMixin,
+                                   RetrieveModelMixin)
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from apps.core.models import User, Student
@@ -239,3 +241,13 @@ def materi_group(request, group_id):
 
     return render(request, 'materi_group.html',
                   {'lessons': lessons, 'g': g})
+
+
+class PublicGroupViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    serializer_class = GroupSerializer
+    queryset = Group.objects\
+        .select_related('teacher')\
+        .select_related('teacher__teacher')\
+        .prefetch_related('members')\
+        .prefetch_related('pendings')
+    filter_fields = ['id', 'teacher', 'members', 'title']

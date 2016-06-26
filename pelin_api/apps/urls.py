@@ -13,6 +13,7 @@ from .video import views as video_views
 router = DefaultRouter(trailing_slash=False)
 router.register(r'users', core_views.UserViewset)
 router.register(r'groups', group_views.GroupViewSet)
+router.register(r'public/groups', group_views.PublicGroupViewSet)
 router.register(r'messages', message_views.ConversationViewSet,
                 base_name='message')
 router.register(r'notifications', notif_views.NotificationViewset,
@@ -44,6 +45,10 @@ lesson_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                    trailing_slash=False)
 lesson_router.register(r'lessons', lesson_views.LessonViewSet,
                        base_name='lesson')
+public_lesson_router = NestedSimpleRouter(router, r'public/groups',
+                                          lookup='group', trailing_slash=False)
+public_lesson_router.register(r'lessons', lesson_views.PublicLessonViewSet,
+                              base_name='lesson')
 
 assignment_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                        trailing_slash=False)
@@ -68,5 +73,6 @@ urlpatterns += (
     group_post_router.urls +
     group_postcomment_router.urls +
     lesson_router.urls +
+    public_lesson_router.urls +
     assignment_router.urls
 )
