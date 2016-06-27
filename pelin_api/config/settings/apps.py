@@ -11,8 +11,8 @@ DEFAULT_DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'django_extensions',
     'rest_framework.authtoken',
+    'django_extensions',
     'versatileimagefield',
     'corsheaders',
     'notifications',

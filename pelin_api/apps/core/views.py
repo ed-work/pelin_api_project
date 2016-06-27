@@ -14,7 +14,7 @@ from . import serializers
 from . import permissions as perm
 from apps.group.serializers import GroupSerializer
 from .models import User, Student, UserPasswordReset
-from .functions import send_password_reset_async
+from .functions import send_forgot_password_async
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
@@ -137,7 +137,7 @@ def register(request):
     return render(request, 'register.html')
 
 
-def password_reset(request):
+def forgot_password(request):
     if request.method == 'POST':
         nim = request.POST.get('nim')
         email = request.POST.get('email')
@@ -167,10 +167,10 @@ def password_reset(request):
             context = {'nim': u.student.nim,
                        'confirm_code': confirm_code,
                        'new_pass': new_pass}
-            msg = get_template('password_reset_email.html').render(
+            msg = get_template('forgot_password_email.html').render(
                 Context(context))
 
-            send_password_reset_async(
+            send_forgot_password_async(
                 subject, msg, to=to, from_email=from_email)
             success = 'success'
             error = None
@@ -181,11 +181,11 @@ def password_reset(request):
         success = None
         error = None
 
-    return render(request, 'password_reset.html',
+    return render(request, 'forgot_password.html',
                   {'success': success, 'error': error})
 
 
-def password_reset_confirm(request):
+def forgot_password_confirm(request):
     if 'code' in request.GET:
         code = request.GET.get('code')
 
@@ -204,5 +204,9 @@ def password_reset_confirm(request):
         success = None
 
     return render(request,
-                  'password_reset_confirm.html',
+                  'forgot_password_confirm.html',
                   {'code': code, 'success': success})
+
+
+def kelas(request):
+    return render(request, 'kelas.html')

@@ -1,22 +1,21 @@
-from django.shortcuts import render
+from apps.core.functions import get_object_or_none
+from apps.core.models import Student, User
+from apps.core.serializers import UserSerializer
+from apps.core.views import BaseLoginRequired
 from django.http import HttpResponseRedirect
-from rest_framework import status, permissions
+from django.shortcuts import render
+from rest_framework import permissions, status
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.generics import ListAPIView, get_object_or_404
-from rest_framework.response import Response
-from rest_framework.mixins import (ListModelMixin,
-                                   DestroyModelMixin,
+from rest_framework.mixins import (DestroyModelMixin, ListModelMixin,
                                    RetrieveModelMixin)
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from apps.core.models import User, Student
-from apps.core.functions import get_object_or_none
-from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
-from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
-    IsTeacherGroup
-from apps.core.views import BaseLoginRequired
-from apps.core.serializers import UserSerializer
+from .permissions import (GroupPermission, IsMemberOrTeacherGroup, IsStudent,
+                          IsTeacherGroup)
+from .serializers import GroupSerializer, PendingApproveSerializer
 
 
 class GroupViewSet(BaseLoginRequired, ModelViewSet):
@@ -237,7 +236,8 @@ def materi_group(request, group_id):
     if not g:
         return HttpResponseRedirect('/materi')
 
-    lessons = g.lesson_set.select_related('group').all()
+    lessons = g.lesson_set.select_related('group')\
+        .prefetch_related('files').all()
 
     return render(request, 'materi_group.html',
                   {'lessons': lessons, 'g': g})
