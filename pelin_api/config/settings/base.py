@@ -124,7 +124,7 @@ PUSHER = {
 
 FCM_URL = 'https://fcm.googleapis.com/fcm/send'
 FCM_SERVER_ID = os.environ.get('FCM_SERVER_ID',
-                               'AIzaSyAMh5nsSfbsd7-hEcpOHZWP5wLhPHzYPCg')
+                               'AIzaSyCLM423-7OAxnEcCNKL2K8Y-xhunAHspas')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

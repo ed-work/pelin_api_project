@@ -3,6 +3,9 @@ from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
+from apps.core.functions import get_object_or_none
+
 from .serializers import VideoSerializer
 from .permissions import VideoPermission
 from .models import Video
@@ -72,9 +75,6 @@ def kategori(request, category):
 
 
 def video_detail(request, pk):
-    try:
-        video = Video.objects.get(pk=pk)
-    except Video.DoesNotFound:
-        video = None
+    video = get_object_or_none(Video, pk=pk)
 
     return render(request, 'video_detail.html', {'video': video})

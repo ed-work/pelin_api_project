@@ -1,19 +1,18 @@
-from rest_framework import serializers
+from apps.assignment.models import Assignment
+from apps.assignment.serializers import AssignmentSerializer
+from apps.core.mixins import DynamicFieldsSerializer
 from apps.core.serializers import UserSerializer
 from apps.group.serializers import GroupSerializer
-from notifications.models import Notification
+from apps.lesson.models import Lesson
+from apps.lesson.serializers import LessonSerializer
+from apps.post.models import Comment, Post
+from apps.post.serializers import GroupPostSerializer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .realtime import pusher_async, fcm_async
-from apps.post.models import Post, Comment
-from apps.lesson.models import Lesson
-from apps.assignment.models import Assignment
+from notifications.models import Notification
+from rest_framework import serializers
 
-from apps.post.serializers import GroupPostSerializer
-from apps.lesson.serializers import LessonSerializer
-from apps.assignment.serializers import AssignmentSerializer
-
-from apps.core.mixins import DynamicFieldsSerializer
+from .realtime import fcm_async, pusher_async
 
 
 class ActionObjectField(serializers.RelatedField):
@@ -56,8 +55,9 @@ def send_pusher_notif(channels, data):
 
 
 def send_fcm_notif(reg_ids, data):
-    serializer = NotificationSerializer(data)
-    fcm_async(reg_ids, serializer.data)
+    if reg_ids:
+        serializer = NotificationSerializer(data)
+        fcm_async(reg_ids, serializer.data)
 
 
 @receiver(post_save, sender=Post)
@@ -85,7 +85,6 @@ def post_notify(sender, instance, **kwargs):
         notif.save()
 
     send_pusher_notif(channels, notif)
-    # send_fcm_notif(members.value_list('reg_id', flat=True), notif)
 
 
 @receiver(post_save, sender=Comment)
@@ -104,7 +103,8 @@ def comment_notify(sender, instance, **kwargs):
 @receiver(post_save, sender=Lesson)
 def lesson_notify(sender, instance, **kwargs):
     group = instance.group
-    if group.members.exists():
+    members = group.members
+    if members.exists():
         channels = []
         for member in group.members.all():
             channels.append(str(member.id))
@@ -116,6 +116,9 @@ def lesson_notify(sender, instance, **kwargs):
                 recipient=member)
             notif.save()
         send_pusher_notif(channels, notif)
+
+        reg_ids = members.values_list('reg_id', flat=True).exclude(reg_id=None)
+        send_fcm_notif(reg_ids, notif)
 
 
 @receiver(post_save, sender=Assignment)
@@ -134,3 +137,6 @@ def assignment_notify(sender, instance, **kwargs):
                 recipient=member)
             notif.save()
         send_pusher_notif(channels, notif)
+
+        reg_ids = members.values_list('reg_id', flat=True).exclude(reg_id=None)
+        send_fcm_notif(reg_ids, notif)

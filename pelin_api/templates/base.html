@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pelin</title>
+    <title>Pelin {% block page_title %}{% endblock page_title %} </title>
     <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.6.0/venobox.min.css" type="text/css" media="screen" />
     <style type="text/css">
@@ -25,7 +25,7 @@
 <body style="background-color: #eee !important">
     <header>
     <div style="height: 120px; padding: 40px;" class="navbar-inverse">
-        <h3 style="color: #fff; margin: 0; display: inline">Pelin</h3>
+        <a href="/"><h3 style="color: #fff; margin: 0; display: inline">Pelin</h3></a>
         <a href="/register" class="register-btn">Register</a>
     </div>
     <nav class="navbar navbar-inverse" style="border-radius: 0">

@@ -1,4 +1,5 @@
 import requests
+import json
 from multiprocessing import Process
 
 from pusher import Pusher
@@ -32,11 +33,22 @@ def pusher_async(channel, event, data):
 
 
 def fcm(register_ids, data):
-    data = {
-        'notification': data,
-        'registration_ids': register_ids,
-    }
-    requests.post(settings.FCM_URL, data=data, headers=HEADERS)
+    for reg_id in register_ids:
+        print reg_id
+        data = {
+            'data': {
+                'teacher_name': data['actor']['name'],
+                'verb': data['verb'],
+                'group_title': data['target']['title'],
+                'group_id': data['target']['id'],
+                'action_type': data['action_type']
+            },
+            'to': reg_id
+        }
+        req = requests.post(settings.FCM_URL,
+                            data=json.dumps(data),
+                            headers=HEADERS)
+        print "%s %s" % (req.status_code, req.reason)
 
 
 def fcm_async(register_ids, data):
