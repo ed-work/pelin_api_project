@@ -75,6 +75,7 @@ def post_notify(sender, instance, **kwargs):
             target=target,
             recipient=member)
         notif.save()
+        send_pusher_notif(channels, notif)
     if instance.user_id != instance.group.teacher_id:
         channels.append(str(instance.group.teacher_id))
         notif = Notification.objects.create(
@@ -83,8 +84,7 @@ def post_notify(sender, instance, **kwargs):
             target=target,
             recipient=target.teacher)
         notif.save()
-
-    send_pusher_notif(channels, notif)
+        send_pusher_notif(channels, notif)
 
 
 @receiver(post_save, sender=Comment)

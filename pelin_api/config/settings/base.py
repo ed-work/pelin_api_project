@@ -111,8 +111,6 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer'
 }
 
-API_CACHE_TIMEOUT = 300
-
 CORS_ORIGIN_ALLOW_ALL = True
 
 # TODO: add each value to env

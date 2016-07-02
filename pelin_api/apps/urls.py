@@ -56,10 +56,10 @@ assignment_router.register(r'assignments', assignment_views.AssignmentViewSet,
                            base_name='assignment')
 
 urlpatterns = [
-    url(r'^jwt', 'rest_framework_jwt.views.obtain_jwt_token',
+    url(r'^auth', 'rest_framework_jwt.views.obtain_jwt_token',
         name='obtain-jwt'),
-    url(r'^auth', core_views.CustomObtainAuthToken.as_view(),
-        name='obtain-token'),
+    # url(r'^auth', core_views.CustomObtainAuthToken.as_view(),
+    #     name='obtain-token'),
     url(r'^tokeninfo', 'rest_framework_jwt.views.verify_jwt_token',
         name='verify-token'),
     url(r'^my_assignments', assignment_views.MyAssignments.as_view(),
