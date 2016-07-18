@@ -3,14 +3,19 @@ from rest_framework.reverse import reverse
 
 from .models import Group, PendingApproval
 from apps.core.serializers import UserSerializer
+from apps.core.mixins import DynamicFieldsSerializer
 
 
-class GroupSerializer(serializers.ModelSerializer):
+class GroupSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     teacher = UserSerializer(required=False, remove_fields=['student'])
+    is_owner = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
     is_joined = serializers.SerializerMethodField()
-    pending_approve = serializers.SerializerMethodField()
+    is_pending = serializers.SerializerMethodField()
     members = serializers.SerializerMethodField()
+
+    def get_is_owner(self, obj):
+        return self.context.get('request').user.id == obj.teacher_id
 
     def get_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.pk},
@@ -19,8 +24,9 @@ class GroupSerializer(serializers.ModelSerializer):
     def get_is_joined(self, obj):
         return self.context['request'].user in obj.members.all()
 
-    def get_pending_approve(self, obj):
-        return self.context['request'].user in obj.pendings.all()
+    def get_is_pending(self, obj):
+        return obj.pendings.filter(
+            user__pk=self.context['request'].user.pk).exists()
 
     def get_members(self, obj):
         return obj.members.count()
@@ -34,8 +40,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class PendingApproveSerializer(serializers.ModelSerializer):
-    student = UserSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = PendingApproval
-        fields = ('id', 'student')
+        fields = ('id', 'user')

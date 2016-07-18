@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_title %}- {{video.title}}{% endblock page_title %}
+
+{% block content %}
+    <div class="col-md-8 col-md-offset-2">
+        <div>
+            <iframe width="100%" height="400" style="border: 0" 
+                src="http://www.youtube.com/embed/{{video.youtube_id}}">
+            </iframe>
+        </div>
+
+        <div class="panel panel-default" style="padding: 15px;">
+            <h5>{{video.title}}</h5>
+            <span>{{video.user.name}}</span>
+            {% if video.category.count %}
+            <div>
+                {% for c in video.category.all %}
+                <a href="/kategori/{{ c.name }}">
+                    <span class="badge">{{ c.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="panel panel-default" style="padding: 15px">
+            <p style="font-size: 16px; margin: 0">{{video.description}}</p>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block custom_js %}
+    
+{% endblock custom_js %}

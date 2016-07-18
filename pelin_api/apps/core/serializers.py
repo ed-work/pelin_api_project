@@ -63,17 +63,18 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     student = StudentSerializer(required=False)
     teacher = TeacherSerializer(required=False)
     photo = VersatileImageFieldSerializer(
-            sizes=[
-                ('full', 'url'),
-                ('medium', 'thumbnail__350x350'),
-                ('small', 'thumbnail__100x100'),
-                ('thumbnail', 'thumbnail__50x50')
-            ]
+        sizes=[
+            ('full', 'url'),
+            ('medium', 'thumbnail__350x350'),
+            ('small', 'thumbnail__100x100'),
+            ('thumbnail', 'thumbnail__50x50')
+        ]
     )
 
     status = serializers.SerializerMethodField()
     is_teacher = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+    me = serializers.SerializerMethodField()
 
     # def __init__(self, *args, **kwargs):
     #     fields = kwargs.pop('fields', None)
@@ -87,6 +88,8 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     #     if remove_fields:
     #         [self.fields.pop(field) for field in self.fields if
     #          field in remove_fields]
+    def get_me(self, obj):
+        return self.context['request'].user == obj
 
     @staticmethod
     def get_status(obj):
@@ -103,10 +106,11 @@ class UserSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'student', 'teacher', 'status', 'last_login', 'email',
-                  'name', 'name', 'date_joined', 'is_active',
-                  'is_teacher', 'url', 'photo')
+                  'name', 'name', 'date_joined', 'is_active', 'phone',
+                  'is_teacher', 'url', 'photo', 'me', 'reg_id')
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'reg_id': {'write_only': True, 'required': False}
         }
 
 

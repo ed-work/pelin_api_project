@@ -8,7 +8,6 @@ from rest_framework.response import Response
 
 from apps.core.views import BaseLoginRequired
 from apps.group.models import Group
-from apps.group.permissions import IsMemberOrTeacher
 from .permissions import AssignmentPermission
 from .serializers import AssignmentSerializer, SubmittedAssignmentSerializer
 from .models import Assignment, SubmittedAssignment
@@ -19,12 +18,14 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     filter_fields = ['id', 'group', 'due_date']
 
     def get_permissions(self):
-        self.permission_classes += (IsMemberOrTeacher, AssignmentPermission)
+        self.permission_classes += (AssignmentPermission,)
         return super(AssignmentViewSet, self).get_permissions()
 
     def get_queryset(self):
         assignments = Assignment.objects.filter(
-            group__pk=self.kwargs.get('group_pk')).select_related('group')
+            group__pk=self.kwargs.get('group_pk'))\
+            .order_by('-created_at', '-due_date')\
+            .select_related('group')
         return assignments
 
     def perform_create(self, serializer):
@@ -42,24 +43,27 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         if datetime.datetime.now() < assignment.due_date.replace(tzinfo=None):
             try:
                 submitted_assignment = SubmittedAssignment.objects.get(
-                    assignment=assignment, student=request.user)
+                    assignment=assignment, user=request.user)
             except SubmittedAssignment.DoesNotExist:
                 submitted_assignment = None
 
             if submitted_assignment:
                 serializer = SubmittedAssignmentSerializer(
-                    submitted_assignment, data=request.data, partial=True)
+                    submitted_assignment, data=request.data, partial=True,
+                    context={'request': request})
             else:
-                serializer = SubmittedAssignmentSerializer(data=request.data)
+                serializer = SubmittedAssignmentSerializer(
+                    data=request.data, context={'request': request})
 
             if serializer.is_valid(raise_exception=True):
-                serializer.save(assignment=assignment, student=request.user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                serializer.save(assignment=assignment, user=request.user)
+                return Response(serializer.data,
+                                status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors,
                                 status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error': 'The assignment has passed deadline.'},
+            return Response({'detail': 'The assignment has passed deadline.'},
                             status=status.HTTP_403_FORBIDDEN)
 
     @detail_route(methods=['GET'])
@@ -73,21 +77,28 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         else:
             try:
                 submitted_assignment = SubmittedAssignment.objects.get(
-                    assignment__pk=pk, student=request.user)
+                    assignment__pk=pk, user=request.user)
                 serializer = SubmittedAssignmentSerializer(
                     submitted_assignment, context={'request': request})
                 return Response(serializer.data)
             except SubmittedAssignment.DoesNotExist:
                 return Response(
-                    {'error': 'You have not submitted to this assignment.'},
+                    {'detail': 'You have not submitted to this assignment.'},
                     status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyAssignments(BaseLoginRequired, ListAPIView):
     def list(self, request, *args, **kwargs):
         group_ids = request.user.group_members.values_list('id', flat=True)
-        assignments = Assignment.objects.filter(group__pk__in=group_ids).select_related('group')
-        serializer = AssignmentSerializer(assignments, many=True,
+        assignments = Assignment.objects.filter(
+            group__pk__in=group_ids, due_date__gt=datetime.datetime.now())\
+            .select_related('group')
+
+        if 'count' in request.query_params:
+            count = assignments.exclude(submittedassignment__user=request.user)
+            return Response({'count': count.count()})
+
+        serializer = AssignmentSerializer(assignments, many=True, group=True,
                                           context={'request': request})
 
         return Response(serializer.data)

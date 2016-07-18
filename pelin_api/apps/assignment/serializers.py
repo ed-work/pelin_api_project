@@ -4,42 +4,54 @@ import datetime
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from apps.core.serializers import UserSerializer
+from apps.group.serializers import GroupSerializer
 
-from .models import Assignment, AssignmentFiles, SubmittedAssignment
-
-
-class AssignmentFilesSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
-
-    def get_name(self, obj):
-        return basename(obj.file.name)
-
-    class Meta:
-        model = AssignmentFiles
-        fields = ('id', 'name', 'file')
-        extra_kwargs = {
-            'assignment': {'required': False}
-        }
+from .models import Assignment, SubmittedAssignment
+from apps.core.mixins import DynamicFieldsSerializer
 
 
-class AssignmentSerializer(serializers.ModelSerializer):
+# class AssignmentFilesSerializer(serializers.ModelSerializer):
+#     name = serializers.SerializerMethodField()
+
+#     def get_name(self, obj):
+#         return basename(obj.file.name)
+
+#     class Meta:
+#         model = AssignmentFiles
+#         fields = ('id', 'name', 'file')
+#         extra_kwargs = {
+#             'assignment': {'required': False}
+#         }
+
+
+class AssignmentSerializer(DynamicFieldsSerializer,
+                           serializers.ModelSerializer):
     is_submitted = serializers.SerializerMethodField()
     is_passed = serializers.SerializerMethodField()
     group_url = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
-    files = AssignmentFilesSerializer(
-        required=False, read_only=True, many=True)
+    submitted_student = serializers.SerializerMethodField()
+    # files = AssignmentFilesSerializer(
+    #     required=False, read_only=True, many=True)
 
     class Meta:
         model = Assignment
         extra_kwargs = {
-            'group': {'required': False, 'write_only': True}
+            'group': {'required': False}
         }
 
     def __init__(self, *args, **kwargs):
+        group = kwargs.pop('group', None)
         super(AssignmentSerializer, self).__init__(*args, **kwargs)
-        if self.context.get('request').user.is_teacher():
-            self.fields.pop('is_submitted')
+        # print self.fields.get('group')
+        if group:
+            self.fields['group'] = GroupSerializer(fields=('id', 'title'))
+
+        if self.context.get('request'):
+            if self.context.get('request').user.is_teacher():
+                self.fields.pop('is_submitted')
+            else:
+                self.fields.pop('submitted_student')
 
     def get_group_url(self, obj):
         return reverse('api:group-detail', kwargs={'pk': obj.group.pk},
@@ -56,7 +68,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
     def get_is_submitted(self, obj):
         try:
             assignment = SubmittedAssignment.objects.get(
-                student=self.context.get('request').user, assignment=obj)
+                user=self.context.get('request').user, assignment=obj)
         except SubmittedAssignment.DoesNotExist:
             assignment = None
 
@@ -66,6 +78,23 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     def get_is_passed(self, obj):
         return datetime.datetime.now() > obj.due_date.replace(tzinfo=None)
+
+    def get_submitted_student(self, obj):
+        return obj.submittedassignment_set.count()
+
+    # def create(self, validated_data):
+    #     assignment = super(AssignmentSerializer, self).create(validated_data)
+
+    #     if self.context['request'].FILES:
+    #         try:
+    #             files = self.context['request'].FILES.getlist('files')
+    #             for f in files:
+    #                 AssignmentFiles.objects.create(
+    #                     assignment=assignment, file=f)
+    #         except Exception as e:
+    #             print e
+
+    #     return assignment
 
 
 class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
@@ -81,20 +110,14 @@ class SubmittedAssignmentFileSerializer(serializers.ModelSerializer):
 
 
 class SubmittedAssignmentSerializer(serializers.ModelSerializer):
-    student = UserSerializer(
-        fields=('id', 'first_name', 'name', 'student', 'url'))
+    user = UserSerializer(
+        fields=('id', 'first_name', 'name', 'student', 'url', 'photo'))
     assignment_url = serializers.SerializerMethodField()
-    file = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super(SubmittedAssignmentSerializer, self).__init__(*args, **kwargs)
         if not self.context.get('request').user.is_teacher():
-            self.fields.pop('student')
-
-    def get_file(self, obj):
-        serializer = SubmittedAssignmentFileSerializer(obj, context={
-            'request': self.context.get('request')})
-        return serializer.data
+            self.fields.pop('user')
 
     def get_assignment_url(self, obj):
         return reverse('api:assignment-detail',
@@ -108,5 +131,6 @@ class SubmittedAssignmentSerializer(serializers.ModelSerializer):
         model = SubmittedAssignment
         extra_kwargs = {
             'assignment': {'required': False},
-            'student': {'required': False}
+            'user': {'required': False},
+            'text': {'required': False}
         }

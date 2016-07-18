@@ -1,0 +1,5 @@
+.fuse*
+*.pyc
+.idea/
+*.sublime-*
+media/

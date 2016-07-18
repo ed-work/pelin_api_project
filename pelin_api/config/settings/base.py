@@ -13,9 +13,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from .apps import INSTALLED_APPS
+import datetime
 
 BASE_DIR = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 WSGI_DIR = os.path.join(PROJECT_DIR, 'wsgi')
 
@@ -49,13 +50,15 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -69,13 +72,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Makassar'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -89,6 +92,7 @@ AUTH_USER_MODEL = 'core.User'
 
 AUTHENTICATION_BACKENDS = (
     'apps.core.backends.CustomAuthBackend',
+    'django.contrib.auth.backends.ModelBackend'
 )
 
 REST_FRAMEWORK = {
@@ -102,6 +106,28 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.CustomPaginationClass',
 }
 
-API_CACHE_TIMEOUT = 300
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# TODO: add each value to env
+PUSHER = {
+    "APP_ID": "193977",
+    "KEY": "da45359a390da94367d7",
+    "SECRET": "8acded69dfb4d533532c",
+}
+
+FCM_URL = 'https://fcm.googleapis.com/fcm/send'
+FCM_SERVER_ID = os.environ.get('FCM_SERVER_ID',
+                               'AIzaSyCLM423-7OAxnEcCNKL2K8Y-xhunAHspas')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pelin.stmikbumigora@gmail.com'
+EMAIL_HOST_PASSWORD = 'pelinpelinpelin'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

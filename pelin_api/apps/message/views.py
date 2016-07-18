@@ -20,10 +20,15 @@ class ConversationViewSet(BaseLoginRequired,
         self.user = self.request.user
 
     def get_queryset(self):
-        return Conversation.objects.filter(
-            Q(sender=self.request.user) | Q(reciever=self.request.user))\
-            .select_related('sender')\
-            .select_related('reciever').order_by('-created_at')
+        user = self.user
+        return Conversation.objects\
+            .filter(
+                (Q(sender=user) | Q(reciever=user)) &
+                (Q(message__isnull=False)) &
+                (Q(message__visible_to=None) | Q(message__visible_to=user))
+            )\
+            .select_related('sender', 'reciever')\
+            .distinct().order_by('-updated_at')
 
     def get_serializer_context(self):
         c = super(ConversationViewSet, self).get_serializer_context()
@@ -39,9 +44,6 @@ class ConversationViewSet(BaseLoginRequired,
             )
         except Conversation.DoesNotExist:
             conversation = None
-            # conversation = Conversation.objects.create(
-            #     sender=self.request.user,
-            #     reciever=other_user)
 
         return conversation
 
@@ -54,14 +56,15 @@ class ConversationViewSet(BaseLoginRequired,
         conversation = self.get_object()
 
         if conversation:
-            messages = conversation.message_set\
-                .filter(Q(visible_to=self.user) | Q(visible_to=None))\
-                .select_related('user')\
-                .select_related('user')\
-                .order_by('-sent')
+            messages = conversation.message_set \
+                .filter(Q(visible_to=self.user) | Q(visible_to=None)) \
+                .select_related('user') \
+                .select_related('user') \
+                .order_by('sent')
             # messages_page = self.paginate_queryset(messages)
             serializer = MessageSerializer(
                 messages, many=True,
+                remove_fields=['visible_to'],
                 context={'request': self.request, 'user': self.user})
             # return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
@@ -69,6 +72,13 @@ class ConversationViewSet(BaseLoginRequired,
             # return super(ConversationViewSet, self).retrieve(request, *args,
             #                                                  **kwargs)
             return Response([])
+
+    def list(self, request, *args, **kwargs):
+        if 'status' in request.query_params:
+            return Response({'unread': 10})
+
+        # self.get_queryset().update(status='r')
+        return super(ConversationViewSet, self).list(request, *args, **kwargs)
 
     @detail_route(methods=['POST'])
     def reply(self, request, pk):
