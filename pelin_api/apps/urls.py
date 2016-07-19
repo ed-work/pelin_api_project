@@ -59,6 +59,10 @@ assignment_router.register(r'assignments', assignment_views.AssignmentViewSet,
 exam_router = NestedSimpleRouter(router, r'groups', lookup='group',
                                  trailing_slash=False)
 exam_router.register(r'exams', exam_views.ExamViewSet, base_name='exam')
+question_router = NestedSimpleRouter(exam_router, r'exams', lookup='exam',
+                                     trailing_slash=False)
+question_router.register(
+    r'questions', exam_views.QuestionViewSet, base_name='question')
 
 urlpatterns = [
     url(r'^auth', 'rest_framework_jwt.views.obtain_jwt_token',
@@ -80,5 +84,6 @@ urlpatterns += (
     lesson_router.urls +
     public_lesson_router.urls +
     assignment_router.urls +
-    exam_router.urls
+    exam_router.urls +
+    question_router.urls
 )

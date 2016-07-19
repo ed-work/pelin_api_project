@@ -13,3 +13,6 @@ class ExamSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
+        extra_kwargs = {
+            'exam': {'required': False, 'write_only': True}
+        }
