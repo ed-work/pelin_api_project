@@ -9,6 +9,7 @@ from .assignment import views as assignment_views
 from .message import views as message_views
 from .notif import views as notif_views
 from .video import views as video_views
+from .exam import views as exam_views
 
 router = DefaultRouter(trailing_slash=False)
 router.register(r'users', core_views.UserViewset)
@@ -55,6 +56,10 @@ assignment_router = NestedSimpleRouter(router, r'groups', lookup='group',
 assignment_router.register(r'assignments', assignment_views.AssignmentViewSet,
                            base_name='assignment')
 
+exam_router = NestedSimpleRouter(router, r'groups', lookup='group',
+                                 trailing_slash=False)
+exam_router.register(r'exams', exam_views.ExamViewSet, base_name='exam')
+
 urlpatterns = [
     url(r'^auth', 'rest_framework_jwt.views.obtain_jwt_token',
         name='obtain-jwt'),
@@ -74,5 +79,6 @@ urlpatterns += (
     group_postcomment_router.urls +
     lesson_router.urls +
     public_lesson_router.urls +
-    assignment_router.urls
+    assignment_router.urls +
+    exam_router.urls
 )

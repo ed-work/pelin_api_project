@@ -28,7 +28,8 @@ PROJECT_APPS = [
     'apps.assignment',
     'apps.message',
     'apps.notif',
-    'apps.video'
+    'apps.video',
+    'apps.exam'
 ]
 
 INSTALLED_APPS = DEFAULT_DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
