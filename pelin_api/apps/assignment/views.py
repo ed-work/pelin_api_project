@@ -7,7 +7,6 @@ from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.response import Response
 
 from apps.core.views import BaseLoginRequired
-from apps.group.models import Group
 from .permissions import AssignmentPermission
 from .serializers import AssignmentSerializer, SubmittedAssignmentSerializer
 from .models import Assignment, SubmittedAssignment
@@ -29,8 +28,8 @@ class AssignmentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
         return assignments
 
     def perform_create(self, serializer):
-        group = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
-        serializer.save(group=group)
+        # group = get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
+        serializer.save(group_id=self.kwargs.get('group_pk'))
 
     @detail_route(methods=['post'])
     def submit(self, request, group_pk, pk):

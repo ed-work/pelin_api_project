@@ -6,6 +6,9 @@ class ExamPermission(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
+        if not request.user.is_teacher() and view.action == 'answer':
+            return True
+
         return request.user.is_teacher()
 
     def has_object_permission(self, request, view, obj):
