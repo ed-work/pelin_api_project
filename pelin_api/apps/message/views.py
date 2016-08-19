@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status, mixins
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from apps.core.models import User
 from apps.core.views import BaseLoginRequired
@@ -56,28 +56,25 @@ class ConversationViewSet(BaseLoginRequired,
         conversation = self.get_object()
 
         if conversation:
+            conversation.unread_by = None
+            conversation.save()
             messages = conversation.message_set \
                 .filter(Q(visible_to=self.user) | Q(visible_to=None)) \
                 .select_related('user') \
                 .select_related('user') \
                 .order_by('sent')
-            # messages_page = self.paginate_queryset(messages)
             serializer = MessageSerializer(
                 messages, many=True,
                 remove_fields=['visible_to'],
                 context={'request': self.request, 'user': self.user})
-            # return self.get_paginated_response(serializer.data)
             return Response(serializer.data)
         else:
-            # return super(ConversationViewSet, self).retrieve(request, *args,
-            #                                                  **kwargs)
             return Response([])
 
     def list(self, request, *args, **kwargs):
         if 'status' in request.query_params:
             return Response({'unread': 10})
 
-        # self.get_queryset().update(status='r')
         return super(ConversationViewSet, self).list(request, *args, **kwargs)
 
     @detail_route(methods=['POST'])
@@ -98,3 +95,8 @@ class ConversationViewSet(BaseLoginRequired,
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+    @list_route(methods=['GET'])
+    def unread_count(self, request):
+        count = self.get_queryset().filter(unread_by=request.user).count()
+        return Response({'count': count})
