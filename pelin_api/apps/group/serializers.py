@@ -13,6 +13,7 @@ class GroupSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     is_joined = serializers.SerializerMethodField()
     is_pending = serializers.SerializerMethodField()
     members = serializers.SerializerMethodField()
+    semester = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         return self.context.get('request').user.id == obj.teacher_id
@@ -30,6 +31,9 @@ class GroupSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
 
     def get_members(self, obj):
         return obj.members.count()
+
+    def get_semester(self, obj):
+        return obj.get_semester_display()
 
     class Meta:
         model = Group

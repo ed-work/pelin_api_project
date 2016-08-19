@@ -22,7 +22,7 @@ class ExamViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(group_id=self.kwargs.get('group_pk'))
 
-    @detail_route(methods=['post'])
+    @detail_route(methods=['POST'])
     def answer(self, request, group_pk, pk):
         if StudentAnswer.objects.filter(
                 user=request.user).exists():
@@ -31,44 +31,47 @@ class ExamViewSet(BaseLoginRequired, viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            answers = ujson.loads(request.POST.get('answer'))
+            answers = ujson.loads(request.body).get('answer')
+            answers = ujson.loads(answers)
+            print type(answers)
             bulks = []
             for i in answers:
                 bulks.append(
                     StudentAnswer(
                         question_id=int(i),
                         user=request.user,
-                        answer=answers[i])
+                        answer=answers.get(i))
                 )
             student_answers = StudentAnswer.objects.bulk_create(bulks)
 
             try:
                 trues = [i for i in student_answers if i.is_true]
                 exam = Exam.objects.get(id=pk)
-                score = float(len(trues)) / exam.question_set.count()
+                score_float = float(len(trues)) / exam.question_set.count()
+                score = float('%.2f' % (score_float))
                 Score.objects.create(
                     user=request.user,
                     score=score,
                     exam=exam)
+                return Response({'score': score})
             except Exception, e:
                 print e
                 return Response(
                     {'error': 'bad request'},
                     status=status.HTTP_400_BAD_REQUEST)
-
-            return Response({'status': 'success'})
         except Exception, e:
             print e
             return Response(
                 {'error': 'bad request'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-    @detail_route(methods=['get'])
+    @detail_route(methods=['GET'])
     def scores(self, request, group_pk, pk):
         scores = Score.objects.filter(exam_id=pk)\
             .select_related('user')\
             .select_related('user__student')
-        serializer = ScoreSerializer(scores, many=True)
+        serializer = ScoreSerializer(scores, many=True,
+                                     context={'request': request})
         return Response(data=serializer.data)
 
 
@@ -76,7 +79,8 @@ class QuestionViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
 
     def get_queryset(self):
-        return Question.objects.filter(exam_id=self.kwargs.get('exam_pk'))
+        return Question.objects.filter(
+            exam_id=self.kwargs.get('exam_pk')).order_by('-id')
 
     def get_permissions(self):
         if QuestionPermission not in self.permission_classes:

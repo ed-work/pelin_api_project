@@ -23,16 +23,29 @@ class ExamSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super(QuestionSerializer, self).__init__(*args, **kwargs)
+        if self.context.get('request'):
+            if not self.context.get('request').user.is_teacher():
+                self.fields.pop('answer_key')
+
     class Meta:
         model = Question
         extra_kwargs = {
-            'exam': {'required': False, 'write_only': True},
-            'answer_key': {'write_only': True}
+            'exam': {'required': False, 'write_only': True}
         }
 
 
 class ScoreSerializer(serializers.ModelSerializer):
-    user = UserSerializer(fields=['id', 'name', 'student'])
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, obj):
+        print self.context.get('request')
+        ss = UserSerializer(
+            obj.user,
+            fields=('id', 'name', 'student', 'photo'),
+            context={'request': self.context.get('request')})
+        return ss.data
 
     class Meta:
         model = Score

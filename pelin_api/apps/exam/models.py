@@ -6,6 +6,7 @@ from apps.group.models import Group
 
 class Exam(TitleDescriptionModel, TimeStamped):
     group = models.ForeignKey(Group)
+    duration = models.IntegerField()
 
     def __str__(self):
         return self.title
