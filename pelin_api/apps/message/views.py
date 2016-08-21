@@ -85,7 +85,8 @@ class ConversationViewSet(BaseLoginRequired,
             other_user = User.objects.get_with(self.kwargs.get('pk'))
             conversation = conversation = Conversation.objects.create(
                 sender=self.request.user,
-                reciever=other_user)
+                reciever=other_user,
+                unread_by=other_user)
         serializer = MessageSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
