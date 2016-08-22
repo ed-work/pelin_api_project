@@ -5,9 +5,14 @@ from apps.core.serializers import UserSerializer
 
 class ExamSerializer(serializers.ModelSerializer):
     score = serializers.SerializerMethodField()
+    taken = serializers.SerializerMethodField()
 
     def get_score(self, obj):
         return obj.get_score(self.context.get('request').user)
+
+    def get_taken(self, obj):
+        score = obj.get_score(self.context.get('request').user)
+        return False if score is None else True
 
     def __init__(self, *args, **kwargs):
         super(ExamSerializer, self).__init__(*args, **kwargs)
