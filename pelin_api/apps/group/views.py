@@ -1,18 +1,21 @@
-from rest_framework import status, permissions
+from apps.core.functions import get_object_or_none
+from apps.core.models import Student, User
+from apps.core.serializers import UserSerializer
+from apps.core.views import BaseLoginRequired
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from rest_framework import permissions, status
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.mixins import (DestroyModelMixin, ListModelMixin,
+                                   RetrieveModelMixin)
 from rest_framework.response import Response
-from rest_framework.mixins import ListModelMixin, DestroyModelMixin
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from apps.core.models import User, Student
-from apps.core.functions import get_object_or_none
-from .serializers import GroupSerializer, PendingApproveSerializer
 from .models import Group, PendingApproval
-from .permissions import GroupPermission, IsStudent, IsMemberOrTeacherGroup, \
-    IsTeacherGroup
-from apps.core.views import BaseLoginRequired
-from apps.core.serializers import UserSerializer
+from .permissions import (GroupPermission, IsMemberOrTeacherGroup, IsStudent,
+                          IsTeacherGroup)
+from .serializers import GroupSerializer, PendingApproveSerializer
 
 
 class GroupViewSet(BaseLoginRequired, ModelViewSet):
@@ -31,13 +34,18 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
         self.permission_classes += (GroupPermission,)
         return super(GroupViewSet, self).get_permissions()
 
+    def get_queryset(self):
+        if self.request.user.is_teacher():
+            return self.queryset.filter(teacher=self.request.user)
+        return super(GroupViewSet, self).get_queryset()
+
     @detail_route(permission_classes=[permissions.IsAuthenticated, IsStudent])
     def join(self, request, pk=None):
         user = request.user
         obj = self.get_object()
 
         if obj.pendings.filter(
-                student__pk=user.pk).exists():
+                user__pk=user.pk).exists():
             msg = {'detail': 'Your join request in this group is pending.'}
             status_code = status.HTTP_400_BAD_REQUEST
         elif obj.members.filter(pk=user.pk).exists():
@@ -45,7 +53,7 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
             status_code = status.HTTP_400_BAD_REQUEST
         else:
             PendingApproval.objects.create(
-                student=user, group=self.get_object()
+                user=user, group=self.get_object()
             )
             msg = {'detail': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
@@ -69,7 +77,9 @@ class GroupViewSet(BaseLoginRequired, ModelViewSet):
     @detail_route(permission_classes=[IsStudent])
     def cancel(self, request, pk=None):
         user = request.user
-        pending = get_object_or_none(PendingApproval, student__id=user.id)
+        pending = get_object_or_none(PendingApproval,
+                                     user__id=user.id,
+                                     group__id=pk)
 
         if pending:
             pending.delete()
@@ -106,7 +116,7 @@ class PendingApprovalViewSet(BaseLoginRequired, ListModelMixin,
         if self.get_queryset():
             group = Group.objects.get(pk=group_pk)
             users = User.objects.filter(
-                pk__in=self.get_queryset().values_list('student', flat=True))
+                pk__in=self.get_queryset().values_list('user', flat=True))
             group.members.add(*users)
             group.save()
             self.get_queryset().delete()
@@ -135,9 +145,9 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
         nim = self.request.query_params.get('nim')
         student = get_object_or_none(Student, nim=nim)
 
-        return self.check_nim_exist(nim) or\
-            self.check_student_exist(student) or\
-            self.check_student_group(student) or \
+        return self.check_nim_exist(nim) or \
+            self.check_student_exist(student) or \
+            self.check_student_group(request, student) or \
             self.add_or_pending(request, student)
 
     @list_route(permission_classes=[IsTeacherGroup])
@@ -172,15 +182,19 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
     def get_group(self):
         return get_object_or_404(Group, pk=self.kwargs.get('group_pk'))
 
-    def check_student_group(self, student):
+    def check_student_group(self, request, student):
         group = self.get_group()
-        if student in group.members.all():
+        if student.user in group.members.all():
             return Response(
                 {'error': 'Already member in this group.'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        if group.pendings.filter(
-                student__pk=student.user.pk).exists():
+        if group.pendings.filter(user__pk=student.user.pk).exists():
+            if request.user.is_teacher():
+                self.get_group().members.add(student.user)
+                group.pendings.get(user_id=student.user.pk).delete()
+                return Response({'success': 'User has been added to group.'},
+                                status=status.HTTP_201_CREATED)
             return Response(
                 {'error': 'Student in pending approval.'},
                 status=status.HTTP_400_BAD_REQUEST)
@@ -193,7 +207,7 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
 
         else:
             PendingApproval.objects.create(
-                student=student.user, group=self.get_group()
+                user=student.user, group=self.get_group()
             )
             msg = {'success': 'Wait for approval.'}
             status_code = status.HTTP_200_OK
@@ -209,3 +223,31 @@ class MemberListViewSet(BaseLoginRequired, ListAPIView,
             return Response(
                 {'error': 'Student is not member of this group.'},
                 status=status.HTTP_404_NOT_FOUND)
+
+
+def materi(request):
+    groups = Group.objects.all()
+    return render(request, 'materi.html', {'groups': groups})
+
+
+def materi_group(request, group_id):
+    g = get_object_or_none(Group, pk=group_id)
+
+    if not g:
+        return HttpResponseRedirect('/materi')
+
+    lessons = g.lesson_set.select_related('group')\
+        .prefetch_related('files').all()
+
+    return render(request, 'materi_group.html',
+                  {'lessons': lessons, 'g': g})
+
+
+class PublicGroupViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    serializer_class = GroupSerializer
+    queryset = Group.objects\
+        .select_related('teacher')\
+        .select_related('teacher__teacher')\
+        .prefetch_related('members')\
+        .prefetch_related('pendings')
+    filter_fields = ['id', 'teacher', 'members', 'title']

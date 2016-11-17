@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 *.pyc
 .idea/
 migrations/
 !migrations/__init__py
+=======
+.fuse*
+*.pyc
+.idea/
+*.sublime-*
+media/
+>>>>>>> develop

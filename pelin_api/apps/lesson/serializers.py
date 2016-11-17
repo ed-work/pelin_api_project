@@ -4,23 +4,28 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import Lesson, LessonFiles
+from apps.core.mixins import DynamicFieldsSerializer
 
 
 class LessonFilesSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
+    size = serializers.SerializerMethodField()
 
     def get_name(self, obj):
         return basename(obj.file.name)
 
+    def get_size(self, obj):
+        return obj.file.size
+
     class Meta:
         model = LessonFiles
-        fields = ('id', 'name', 'file')
+        fields = ('id', 'name', 'file', 'size')
         extra_kwargs = {
             'lesson': {'required': False}
         }
 
 
-class LessonSerializer(serializers.ModelSerializer):
+class LessonSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):
     group_url = serializers.SerializerMethodField()
     files = LessonFilesSerializer(required=False, read_only=True, many=True)
 
@@ -42,7 +47,8 @@ class LessonSerializer(serializers.ModelSerializer):
                 files = self.context['request'].FILES.getlist('files')
                 for f in files:
                     LessonFiles.objects.create(lesson=lesson, file=f)
-            except Exception, e:
+            except Exception as e:
+                print 'error upload file lesson'
                 print e
 
         return lesson

@@ -20,5 +20,23 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'apps.video.views.index', name='home'),
+    url(r'^search/$', 'apps.video.views.search', name='search'),
+    url(r'^register/$', 'apps.core.views.register', name='register'),
+    url(r'^forgot_password/$', 'apps.core.views.forgot_password',
+        name='password-reset'),
+    url(r'^forgot_password/confirm$',
+        'apps.core.views.forgot_password_confirm',
+        name='password-reset-confirm'),
+    url(r'^kategori/(?P<category>.*)/$',
+        'apps.video.views.kategori', name='category'),
+    url(r'^materi/$', 'apps.group.views.materi', name='list-group'),
+    url(r'^video/(?P<pk>.+)/$',
+        'apps.video.views.video_detail',
+        name='video-detail'),
+    url(r'^materi/(?P<group_id>.+)/$',
+        'apps.group.views.materi_group', name='list-group-lessons'),
+    url(r'^kelas/$', 'apps.core.views.kelas', name='kelas'),
+    url(r'^kelas/.*$', 'apps.core.views.kelas', name='kelas'),
     url(r'^api/', include('apps.urls', namespace='api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

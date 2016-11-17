@@ -69,7 +69,7 @@ class CommentViewSet(BaseLoginRequired, viewsets.ModelViewSet):
     def get_queryset(self):
         return self.p.comment_set \
             .select_related('user', 'user__student', 'user__teacher') \
-            .order_by('-created_at')
+            .order_by('created_at')
 
     def get_p(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_pk'))

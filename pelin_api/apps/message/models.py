@@ -11,7 +11,10 @@ STATUS_CHOICES = (
 class Conversation(models.Model):
     sender = models.ForeignKey(User, related_name='conversation_sender')
     reciever = models.ForeignKey(User, related_name='conversation_reciever')
+    unread_by = models.ForeignKey(
+        User, related_name='conversation_unread_by', null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return "%s:%s" % (self.sender.name, self.reciever.name)
@@ -40,3 +43,10 @@ class Message(models.Model):
 
     def __unicode__(self):
         return "%s: %s" % (self.user.name, self.text)
+
+    def save(self, **kwargs):
+        super(Message, self).save(kwargs)
+        self.conversation.updated_at = self.sent
+        self.conversation.unread_by = self.conversation.get_target_user(
+            self.user)
+        self.conversation.save()

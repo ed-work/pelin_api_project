@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4 style="text-align:center;margin-bottom:30px">kategori: {{category}}</h4>
+    {% if videos %}
+    {% for video in videos %}
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 0">
+                    <a href="http://www.youtu.be/{{video.youtube_id}}" class="venobox" data-type="youtube">
+                        <img src="http://img.youtube.com/vi/{{video.youtube_id}}/0.jpg" width="100%">
+                    </a>
+
+                    <div class="card-content" style="padding: 10px">
+                        <p style="font-size: 16px; margin: 0">{{video.title}}</p>
+                        <p>
+                        {% for c in video.category.all|slice:":5" %}
+                        <a href="/kategori/{{ c.name }}">
+                            <span class="badge">{{ c.name }}</span>
+                        </a>
+                        {% endfor %}
+                        </p>
+                    </div>
+                    <hr style="margin: 0" />
+                    <div class="card-action" style="padding: 10px">
+                        <p class="pull-left">{{video.user.name}}</p>
+                        <a href="/video/{{video.id}}" class="btn btn-primary pull-right">Detail</a>
+                        <div style="clear: both"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+    <h5>tidak ditemukan</h5>
+    {% endif %}
+{% endblock content %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.venobox').venobox()
+        })
+    </script>
+{% endblock custom_js %}

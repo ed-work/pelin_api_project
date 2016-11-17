@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h5>Pilih group</h5>
+    <div style="margin-top: 30px">
+    {% for g in groups %}
+    <div class="col-md-4">
+        <div class="panel panel-default" href="/materi/{{g.id}}" style="cursor: pointer">
+            <div class="panel-body">
+                <p style="font-size: 16px; margin: 0">{{g.title}}</p>
+                <p style="color: #9E9E9E">{{g.teacher.name}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+{% endblock content %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+        $('.panel').click(function() {
+            window.location.href = $(this).attr('href');
+        })
+    </script>
+{% endblock custom_js %}
