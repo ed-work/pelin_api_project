@@ -34,7 +34,6 @@ def pusher_async(channel, event, data):
 
 def fcm(register_ids, data):
     for reg_id in register_ids:
-        print reg_id
         data = {
             'data': {
                 'teacher_name': data['actor']['name'],
@@ -54,10 +53,3 @@ def fcm(register_ids, data):
 def fcm_async(register_ids, data):
     p = Process(target=fcm, args=(register_ids, data))
     p.start()
-
-
-# TODO: send notification to pusher
-# TODO: send notification to GCM
-
-# TODO: pusher function wrapper with multiprocess
-# TODO: GCM function wrapper with multiprocess
