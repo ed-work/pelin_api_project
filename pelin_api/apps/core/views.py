@@ -3,6 +3,7 @@ from django.template import Context
 from django.template.loader import get_template
 from django.shortcuts import render
 from django.contrib import messages
+from django.db.models import Q
 from shortid import ShortId
 from rest_framework import views, parsers, renderers, permissions, \
     viewsets, status
@@ -51,7 +52,8 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.filter(is_superuser=False) \
         .select_related('student', 'teacher')
-    filter_fields = ['id', 'student', 'teacher', 'email', 'status']
+    filter_fields = ['id', 'student',
+                     'teacher', 'email', 'status']
 
     def get_permissions(self):
         if self.request.method == 'POST':
@@ -107,6 +109,18 @@ class UserViewset(BaseLoginRequired, viewsets.ModelViewSet):
         serializer = GroupSerializer(joined_groups, many=True,
                                      context={'request': request})
         return Response(serializer.data)
+
+    def list(self, request, *args, **kwargs):
+        if 'q' in request.query_params:
+            q = request.query_params.get('q')
+            users = User.objects.filter(Q(student__nim__icontains=q) |
+                                        Q(teacher__username__icontains=q))\
+                .select_related('student', 'teacher')
+            serializer = serializers.UserSerializer(
+                users, many=True, context={'request': request},
+                fields=['id', 'name', 'student', 'teacher', 'photo'])
+            return Response(serializer.data)
+        return super(UserViewset, self).list(request, *args, **kwargs)
 
 
 def register(request):

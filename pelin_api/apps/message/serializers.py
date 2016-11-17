@@ -9,6 +9,7 @@ class ConversationSerializer(serializers.ModelSerializer):
     target_user = serializers.SerializerMethodField()
     user_id = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
+    unread = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super(ConversationSerializer, self).__init__(*args, **kwargs)
@@ -38,10 +39,14 @@ class ConversationSerializer(serializers.ModelSerializer):
         return reverse('api:message-detail', kwargs={'pk': pk},
                        request=self.context.get('request'))
 
+    def get_unread(self, obj):
+        return obj.unread_by == self.context.get('request').user
+
     class Meta:
         model = Conversation
         fields = (
-            'id', 'created_at', 'target_user', 'url', 'user_id', 'updated_at')
+            'id', 'created_at', 'target_user', 'url',
+            'user_id', 'updated_at', 'unread')
 
 
 class MessageSerializer(DynamicFieldsSerializer, serializers.ModelSerializer):

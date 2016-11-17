@@ -17,9 +17,20 @@ class GroupFileModel(models.Model):
 
 
 class Group(TimeStamped, TitleDescriptionModel):
+    SEMESTER_CHOICES = (
+        (1, 'I'),
+        (2, 'II'),
+        (3, 'III'),
+        (4, 'IV'),
+        (5, 'V'),
+        (6, 'VI'),
+        (7, 'VII'),
+        (8, 'VII'),
+    )
+
     teacher = models.ForeignKey(User, related_name='group_teacher')
     members = models.ManyToManyField(User, related_name='group_members')
-    semester = models.IntegerField()
+    semester = models.IntegerField(choices=SEMESTER_CHOICES)
     major = models.CharField(max_length=5)
 
     def __unicode__(self):
