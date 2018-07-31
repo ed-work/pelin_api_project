@@ -4,7 +4,7 @@ NAME="pelin"
 # change this
 USER=dayat
 REPO_NAME=pelin_api_project
-PROJECT_NAME=pelin
+PROJECT_NAME=pelin_api
 
 SETTINGSDIR_NAME=config
 SETTINGS_NAME=settings.local
