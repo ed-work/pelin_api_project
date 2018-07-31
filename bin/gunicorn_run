@@ -1,14 +1,14 @@
 #!/bin/bash
 
-NAME="inventory"
+NAME="pelin"
 # change this
 USER=dayat
-REPO_NAME=inventory
-PROJECT_NAME=inventory
+REPO_NAME=pelin_api_project
+PROJECT_NAME=pelin
 
-SETTINGSDIR_NAME=inventory
-SETTINGS_NAME=settings
-PORT=8000
+SETTINGSDIR_NAME=config
+SETTINGS_NAME=settings.local
+PORT=9001
 
 BASEDIR=/home/$USER/$REPO_NAME
 DJANGODIR=$BASEDIR/$PROJECT_NAME
