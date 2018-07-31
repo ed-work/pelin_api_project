@@ -1,11 +1,11 @@
 from .base import *
 from .apps import INSTALLED_APPS
 
-LOCAL_APPS = [
-    'debug_toolbar',
-]
+# LOCAL_APPS = [
+#     'debug_toolbar',
+# ]
 
-INSTALLED_APPS += LOCAL_APPS
+# INSTALLED_APPS += LOCAL_APPS
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
