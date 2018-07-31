@@ -1,0 +1,8 @@
+[program:paud_speechdelay_celery]
+command = /home/paud/.virtualenvs/speechdelay/bin/celery -A speechdelay worker -l info
+directory = /home/paud/paud_speechdelay_project/speechdelay
+user = paud
+stdout_logfile = /home/paud/paud_speechdelay_project/gunicorn_supervisor.log
+redirect_stderr = true
+environment=LANG=en_US.UTF-8,LC_ALL=en_US.UTF-8
+

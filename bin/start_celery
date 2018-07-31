@@ -1,0 +1,5 @@
+source /home/paud/.virtualenvs/speechdelay/bin/activate
+cd ../speechdelay
+
+celery -A speechdelay worker -l info
+

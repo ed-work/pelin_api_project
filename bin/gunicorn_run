@@ -1,0 +1,32 @@
+#!/bin/bash
+
+NAME="inventory"
+# change this
+USER=dayat
+REPO_NAME=inventory
+PROJECT_NAME=inventory
+
+SETTINGSDIR_NAME=inventory
+SETTINGS_NAME=settings
+PORT=8000
+
+BASEDIR=/home/$USER/$REPO_NAME
+DJANGODIR=$BASEDIR/$PROJECT_NAME
+WORKERS=4
+DJANGO_SETTINGS_MODULE=$SETTINGSDIR_NAME.$SETTINGS_NAME
+DJANGO_WSGI_MODULE=$SETTINGSDIR_NAME.wsgi
+
+cd $DJANGODIR
+# source /etc/profile
+# source $BASEDIR/env/bin/activate
+source /home/$USER/.virtualenvs/$PROJECT_NAME/bin/activate
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+exec /home/$USER/.virtualenvs/$PROJECT_NAME/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+        --name $NAME \
+        --workers $WORKERS \
+        --user $USER \
+        --bind 0.0.0.0:$PORT \
+        --log-level=debug \
+	--timeout 1000
