@@ -40,5 +40,5 @@ urlpatterns = [
     # url(r'^kelas/.*$', 'apps.core.views.kelas', name='kelas'),
     url(r'^api/', include('apps.urls', namespace='api')),
     url(r'^$', 'apps.core.views.kelas', name='kelas'),
-    url(r'^.*$', 'apps.core.views.kelas', name='kelas'),
+    url(r'^/.*$', 'apps.core.views.kelas', name='kelas'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
