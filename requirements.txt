@@ -43,4 +43,4 @@ six==1.10.0
 sqlparse==0.1.18
 traitlets==4.1.0
 ujson==1.35
-urllib3==1.14
+urllib3==1.26.5
